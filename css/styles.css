@@ -229,8 +229,8 @@ ul, ol {
 }
 
 @keyframes fadeSection {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(16px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ---- Shader Background ---- */
@@ -445,12 +445,13 @@ ul, ol {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  will-change: transform;
 }
 
 .glass-panel:hover {
   border-color: rgba(61, 90, 254, 0.3);
-  box-shadow: 0 0 20px rgba(61, 90, 254, 0.05);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(61, 90, 254, 0.08);
 }
 
 /* ---- Shimmer Border ---- */
@@ -568,13 +569,15 @@ ul, ol {
 }
 
 @keyframes float {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
+  0%   { transform: translateY(0) rotate(-0.5deg); }
+  33%  { transform: translateY(-12px) rotate(0.5deg); }
+  66%  { transform: translateY(-20px) rotate(-0.3deg); }
+  100% { transform: translateY(0) rotate(-0.5deg); }
 }
 
 .float-anim {
   animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(61,90,254,0.2));
 }
 
 @keyframes pulse-glow {
@@ -1060,12 +1063,13 @@ ul, ol {
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
+  will-change: transform;
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(61, 90, 254, 0.1);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 60px rgba(61, 90, 254, 0.15), 0 0 0 1px rgba(61, 90, 254, 0.2);
 }
 
 .project-card__image {
