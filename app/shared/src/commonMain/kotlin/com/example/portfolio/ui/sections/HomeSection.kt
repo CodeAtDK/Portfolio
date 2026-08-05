@@ -42,11 +42,11 @@ fun HomeSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TechChip(
-                text = "📍 Pune, India",
+                text = "LOC: Pune, India",
                 textColor = TertiaryCyan
             )
             TechChip(
-                text = "🟢 Available for roles",
+                text = "STATUS: Available for roles",
                 textColor = Color(0xFF4CAF50)
             )
         }
@@ -69,7 +69,7 @@ fun HomeSection(
             text = "I'm Dhruva Khatavkar, an Android Developer specializing in Jetpack Compose, Kotlin, and AI integrations. I craft fluid, performant applications with a deep focus on modern architectural patterns.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.widthIn(max = 640.dp)
+            modifier = Modifier.widthIn(max = 680.dp)
         )
 
         // Action Buttons
@@ -97,7 +97,7 @@ fun HomeSection(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
             ) {
                 Text(
-                    text = "🤖 Meet Dhruva AI",
+                    text = "Meet Dhruva AI",
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
                     color = PrimaryBlue
                 )
@@ -119,12 +119,12 @@ fun HomeSection(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "⚡ ASK DHRUVA AI",
+                        text = "// ASK DHRUVA AI",
                         style = MaterialTheme.typography.labelSmall,
                         color = TertiaryCyan
                     )
                     Text(
-                        text = "Open Interactive Chat →",
+                        text = "Open Interactive Chat ->",
                         style = MaterialTheme.typography.labelSmall,
                         color = PrimaryBlue
                     )

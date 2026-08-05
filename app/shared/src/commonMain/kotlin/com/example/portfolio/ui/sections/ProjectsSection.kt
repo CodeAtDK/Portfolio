@@ -33,7 +33,7 @@ fun ProjectsSection(
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = "Each project represents a hands-on journey through modern Android development — from architecture and APIs to polished UI with Jetpack Compose and Multiplatform capabilities.",
+                text = "Each project represents a hands-on journey through modern Android development - from architecture and APIs to polished UI with Jetpack Compose and Multiplatform capabilities.",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

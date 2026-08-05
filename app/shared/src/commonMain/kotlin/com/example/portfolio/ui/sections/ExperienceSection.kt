@@ -33,7 +33,7 @@ fun ExperienceSection(
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = "From academic foundations in engineering to hands-on Android and Multiplatform development — every step has sharpened my product intuition and technical craftsmanship.",
+                text = "From academic foundations in engineering to hands-on Android and Multiplatform development - every step has sharpened my product intuition and technical craftsmanship.",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -45,15 +45,15 @@ fun ExperienceSection(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             ExperienceCardItem(
-                timeframe = "2022 – 2026",
-                title = "B.Tech — Electronics & Communication Engineering",
+                timeframe = "2022 - 2026",
+                title = "B.Tech - Electronics & Communication Engineering",
                 subtitle = "Jaypee Institute of Information Technology, Noida",
                 description = "Developed a strong foundation in programming, algorithms, and embedded systems alongside specialization in modern Android mobile application architecture.",
                 tags = listOf("System Design", "Algorithms", "Kotlin", "Engineering")
             )
 
             ExperienceCardItem(
-                timeframe = "Aug 2023 – Present",
+                timeframe = "Aug 2023 - Present",
                 title = "Android & KMP Developer",
                 subtitle = "Self-Directed Open Source Projects",
                 description = "Built production-quality mobile applications using Kotlin, Jetpack Compose, MVVM, Hilt, and Firebase. Implemented real-time features, REST APIs, and Gemini AI integration across multiple specialized domains including healthcare and agriculture.",

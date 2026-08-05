@@ -36,6 +36,7 @@ val OnTertiaryContainer = Color(0xFFD3F8FF)
 // Semantic & Text
 val OnSurface = Color(0xFFE5E2E1)
 val OnSurfaceVariant = Color(0xFFC5C5D9)
+val TextSecondary = OnSurfaceVariant
 val OutlineDark = Color(0xFF8E8FA2)
 val OutlineVariantDark = Color(0xFF444656)
 val ErrorLight = Color(0xFFFFB4AB)

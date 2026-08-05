@@ -1,7 +1,6 @@
 package com.example.portfolio.ui.sections
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,52 +16,91 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.portfolio.ui.components.GlassCard
 import com.example.portfolio.ui.components.TechChip
 import com.example.portfolio.ui.theme.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-data class ChatMessage(
-    val text: String,
+private data class ChatMessage(
     val isUser: Boolean,
+    val text: String,
     val insightTitle: String? = null,
-    val insightText: String? = null,
     val tags: List<String> = emptyList()
 )
 
 @Composable
-fun AIWorkspaceSection(
-    modifier: Modifier = Modifier
-) {
+fun AIWorkspaceSection(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
+    var inputQuery by remember { mutableStateOf("") }
+    var isThinking by remember { mutableStateOf(false) }
 
-    var inputText by remember { mutableStateOf("") }
     val messages = remember {
         mutableStateListOf(
             ChatMessage(
-                text = "👋 Hi! I'm Dhruva AI, trained directly on Dhruva Khatavkar's codebase skills, project case studies, and engineering philosophy. How can I assist you today?",
                 isUser = false,
-                insightTitle = "System Capability",
-                insightText = "Ask about Kotlin development, Jetpack Compose architectures, AI integrations, or Kotlin Multiplatform (KMP) capabilities.",
-                tags = listOf("Kotlin", "Jetpack Compose", "KMP", "Gemini AI")
+                text = "Hi! I'm Dhruva AI, trained directly on Dhruva Khatavkar's codebase skills, project case studies, and engineering philosophy. How can I assist you today?",
+                insightTitle = "Quick Suggested Inquiries:",
+                tags = listOf(
+                    "What is your tech stack?",
+                    "Explain AI integration experience.",
+                    "Tell me about FoodBridge architecture.",
+                    "Why Kotlin Multiplatform over React Native?"
+                )
             )
         )
     }
 
-    fun handleSend(query: String) {
-        if (query.isBlank()) return
-        messages.add(ChatMessage(text = query, isUser = true))
-        inputText = ""
+    fun submitQuery(queryText: String) {
+        if (queryText.isBlank() || isThinking) return
+        val cleanQuery = queryText.trim()
+        inputQuery = ""
 
-        val response = generateAIResponse(query)
-        messages.add(response)
+        messages.add(ChatMessage(isUser = true, text = cleanQuery))
 
         coroutineScope.launch {
-            if (messages.isNotEmpty()) {
-                listState.animateScrollToItem(messages.size - 1)
+            listState.animateScrollToItem(messages.size - 1)
+            isThinking = true
+            delay(1100)
+            isThinking = false
+
+            val q = cleanQuery.lowercase()
+            val response = when {
+                q.contains("stack") || q.contains("skills") || q.contains("technologies") -> ChatMessage(
+                    isUser = false,
+                    text = "My primary engineering domain resides within Kotlin, Jetpack Compose, and Kotlin Multiplatform (KMP). On the backend, I leverage Ktor and Supabase for real-time synchronization, supplemented by Firebase Auth and custom RESTful endpoints.",
+                    insightTitle = "Key Capabilities:",
+                    tags = listOf("Kotlin", "Jetpack Compose", "KMP", "Ktor", "Supabase", "Coroutines")
+                )
+                q.contains("ai") || q.contains("ml") || q.contains("model") -> ChatMessage(
+                    isUser = false,
+                    text = "I integrate edge AI capabilities directly into Android environments using ONNX Runtime and TensorFlow Lite, while connecting cloud reasoning engines (OpenAI & Gemini API) to power dynamic, context-aware mobile features like automated crop anomaly detection in Agri Connect.",
+                    insightTitle = "AI Architecture Focus:",
+                    tags = listOf("ONNX", "TensorFlow Lite", "OpenAI API", "Gemini API", "Edge ML")
+                )
+                q.contains("foodbridge") -> ChatMessage(
+                    isUser = false,
+                    text = "FoodBridge is a real-time humanitarian application designed to connect surplus food donors with active volunteer networks. Built on Clean Architecture with MVVM, it uses Supabase Realtime WebSocket pipelines to broadcast expiring food supplies with zero latency.",
+                    insightTitle = "Architectural Pillars:",
+                    tags = listOf("Clean Architecture", "MVVM", "WebSockets", "Jetpack Compose")
+                )
+                q.contains("kmp") || q.contains("multiplatform") || q.contains("react") || q.contains("flutter") -> ChatMessage(
+                    isUser = false,
+                    text = "Kotlin Multiplatform allows native performance and direct API access across Android, iOS, and the Web (WASM) without bridging bottlenecks or rendering compromises seen in hybrid JS layers. Sharing business logic while compiling to native composables is the modern standard for scaling apps.",
+                    insightTitle = "KMP Strategic Advantages:",
+                    tags = listOf("Native Performance", "WASM Compilation", "Zero Bridge Latency", "Shared Domain Layer")
+                )
+                else -> ChatMessage(
+                    isUser = false,
+                    text = "I am specifically engineered to detail Dhruva Khatavkar's development experience, Android architectures, and open-source contributions! Try exploring his projects or technical stack.",
+                    insightTitle = "Recommended Inquiries:",
+                    tags = listOf("What is your tech stack?", "Explain AI integration experience.", "Why Kotlin Multiplatform over React Native?")
+                )
             }
+
+            messages.add(response)
+            listState.animateScrollToItem(messages.size - 1)
         }
     }
 
@@ -72,107 +110,84 @@ fun AIWorkspaceSection(
             .padding(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        // Header
+        // Section Header
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "AI WORKSPACE",
-                style = MaterialTheme.typography.labelSmall,
-                color = TertiaryCyan
-            )
-            Text(
-                text = "Chat with Dhruva AI.",
-                style = MaterialTheme.typography.displayMedium,
+                text = "Interactive AI Workspace",
+                style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = "An interactive neural simulation trained on my portfolio expertise and application architectures.",
-                style = MaterialTheme.typography.bodyLarge,
+                text = "Engage with a conversational simulator built on Dhruva's engineering philosophy and technical repository.",
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
 
-        // Suggested Prompt Chips
-        FlowRowWrapper {
-            val prompts = listOf(
-                "What is your tech stack?",
-                "Explain AI integration experience.",
-                "Show me your best UI work."
-            )
-            prompts.forEach { prompt ->
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(PrimaryContainer.copy(alpha = 0.25f))
-                        .border(1.dp, PrimaryBlue.copy(alpha = 0.45f), RoundedCornerShape(100.dp))
-                        .clickable { handleSend(prompt) }
-                        .padding(horizontal = 14.dp, vertical = 8.dp)
-                ) {
-                    Text(
-                        text = "⚡ $prompt",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = PrimaryBlue
-                    )
-                }
-            }
-        }
-
-        // Chat Box Container
+        // Chat Container
         GlassCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 380.dp, max = 500.dp),
+                .heightIn(min = 400.dp, max = 540.dp),
             contentPadding = 16.dp
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                // Messages List
                 LazyColumn(
                     state = listState,
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
-                    items(messages) { msg ->
-                        ChatBubble(message = msg)
+                    items(messages) { message ->
+                        ChatMessageBubble(message = message, onTagClick = { submitQuery(it) })
+                    }
+
+                    if (isThinking) {
+                        item {
+                            ThinkingBubble()
+                        }
                     }
                 }
 
                 // Input Bar
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(SurfaceContainerHigh)
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     TextField(
-                        value = inputText,
-                        onValueChange = { inputText = it },
-                        placeholder = { Text("Ask about my skills or Android projects...", color = OnSurfaceVariant.copy(alpha = 0.6f)) },
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(16.dp))
-                            .border(1.dp, GlassBorder, RoundedCornerShape(16.dp)),
+                        value = inputQuery,
+                        onValueChange = { inputQuery = it },
+                        modifier = Modifier.weight(1f),
+                        placeholder = { Text("Ask about my skills, projects, or KMP philosophy...", color = TextSecondary) },
                         colors = TextFieldDefaults.colors(
-                            focusedContainerColor = SurfaceContainerHighest.copy(alpha = 0.4f),
-                            unfocusedContainerColor = SurfaceContainerLow.copy(alpha = 0.6f),
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
-                            focusedTextColor = OnSurface,
-                            unfocusedTextColor = OnSurface
-                        )
+                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                        ),
+                        singleLine = true
                     )
 
-                    IconButton(
-                        onClick = { handleSend(inputText) },
+                    Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .size(52.dp)
+                            .size(40.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .background(PrimaryContainer)
+                            .clickable { submitQuery(inputQuery) }
                     ) {
                         Text(
-                            text = "➤",
+                            text = ">>",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                             color = Color.White
                         )
@@ -184,9 +199,12 @@ fun AIWorkspaceSection(
 }
 
 @Composable
-private fun ChatBubble(message: ChatMessage) {
-    val bg = if (message.isUser) PrimaryContainer.copy(alpha = 0.25f) else SurfaceContainerHighest.copy(alpha = 0.6f)
+private fun ChatMessageBubble(
+    message: ChatMessage,
+    onTagClick: (String) -> Unit
+) {
     val align = if (message.isUser) Alignment.End else Alignment.Start
+    val bgColor = if (message.isUser) PrimaryBlue.copy(alpha = 0.22f) else SurfaceContainerLow
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -194,21 +212,17 @@ private fun ChatBubble(message: ChatMessage) {
     ) {
         Box(
             modifier = Modifier
-                .widthIn(max = 680.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(bg)
-                .border(1.dp, if (message.isUser) PrimaryBlue.copy(alpha = 0.35f) else GlassBorder, RoundedCornerShape(20.dp))
+                .widthIn(max = 640.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(bgColor)
                 .padding(16.dp)
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = if (message.isUser) "👤 You" else "🤖 Dhruva AI",
-                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp),
-                        color = if (message.isUser) PrimaryBlue else TertiaryCyan,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = if (message.isUser) "USER" else "DHRUVA AI",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (message.isUser) PrimaryBlue else TertiaryCyan
+                )
 
                 Text(
                     text = message.text,
@@ -216,31 +230,25 @@ private fun ChatBubble(message: ChatMessage) {
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-                if (message.insightTitle != null && message.insightText != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(PrimaryContainer.copy(alpha = 0.15f))
-                            .border(1.dp, PrimaryBlue.copy(alpha = 0.25f), RoundedCornerShape(12.dp))
-                            .padding(12.dp)
-                    ) {
-                        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Text(
-                                text = "💡 ${message.insightTitle}",
-                                style = MaterialTheme.typography.labelMedium,
-                                color = PrimaryBlue,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                            Text(
-                                text = message.insightText,
-                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 13.sp),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            if (message.tags.isNotEmpty()) {
-                                FlowRowWrapper {
-                                    message.tags.forEach { t -> TechChip(text = t) }
-                                }
+                if (message.insightTitle != null) {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(
+                            text = message.insightTitle,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = TextSecondary
+                        )
+
+                        @OptIn(ExperimentalLayoutApi::class)
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            message.tags.forEach { tag ->
+                                TechChip(
+                                    text = tag,
+                                    textColor = PrimaryBlue,
+                                    modifier = Modifier.clickable { onTagClick(tag) }
+                                )
                             }
                         }
                     }
@@ -250,42 +258,20 @@ private fun ChatBubble(message: ChatMessage) {
     }
 }
 
-private fun generateAIResponse(query: String): ChatMessage {
-    val q = query.lowercase()
-    return when {
-        q.contains("tech") || q.contains("stack") || q.contains("tool") || q.contains("kotlin") -> {
-            ChatMessage(
-                text = "My primary engineering toolkit revolves around Kotlin and the Android ecosystem. I build responsive user interfaces with Jetpack Compose, asynchronous flows with Coroutines + StateFlow, Dependency Injection via Hilt, and local database persistence with Room.",
-                isUser = false,
-                insightTitle = "Core Android & KMP Architecture",
-                insightText = "All state management is designed around unidirectional data flow (UDF) patterns to ensure deterministic UI rendering across platforms.",
-                tags = listOf("Kotlin", "Jetpack Compose", "Coroutines", "Hilt", "Room")
-            )
-        }
-        q.contains("ai") || q.contains("gemini") || q.contains("neural") || q.contains("integration") -> {
-            ChatMessage(
-                text = "I integrate conversational and analytical AI capabilities directly into native mobile apps using Google's Gemini AI SDKs and real-time backend REST endpoints. For example, in CareNest, AI assistant models assist caregivers in parsing medication regimens and summarizing elderly patient health metrics.",
-                isUser = false,
-                insightTitle = "AI Integration Case Study: CareNest",
-                insightText = "Utilized prompt engineering and structural JSON schemas to provide real-time healthcare inferences with minimal network latency.",
-                tags = listOf("Gemini AI", "REST API", "JSON Parsing", "Retrofit")
-            )
-        }
-        q.contains("ui") || q.contains("design") || q.contains("compose") || q.contains("best") -> {
-            ChatMessage(
-                text = "My UI philosophy centers on creating fluid, state-driven interfaces with smooth micro-interactions, responsive adaptability, and deep visual polish like the Synthetic Noir theme you are experiencing right now in this Compose Multiplatform application!",
-                isUser = false,
-                insightTitle = "Synthetic Noir Design System",
-                insightText = "Constructed with atomic design tokens, custom Compose Canvas animations, and high-contrast OLED typography.",
-                tags = listOf("Compose UI", "Material 3", "Canvas", "Animations")
-            )
-        }
-        else -> {
-            ChatMessage(
-                text = "I'm equipped to discuss Dhruva Khatavkar's development career, architectural skills, Android apps (FoodBridge, Agri Connect, CareNest), or Kotlin Multiplatform initiatives. What would you like to explore in detail?",
-                isUser = false,
-                tags = listOf("Android SDK", "KMP", "UI/UX Architecture", "Open to Roles")
-            )
-        }
+@Composable
+private fun ThinkingBubble() {
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(SurfaceContainerLow)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Dhruva AI is analyzing repository context...",
+            style = MaterialTheme.typography.labelSmall,
+            color = TextSecondary
+        )
     }
 }
