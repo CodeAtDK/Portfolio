@@ -1190,3 +1190,107 @@ ul, ol {
   .md-show { display: block; }
   .md-flex { display: flex; }
 }
+
+/* =========================================================
+   📱 MOBILE & NATIVE BROWSER OPTIMIZATIONS (Android & iOS)
+   ========================================================= */
+
+@media (max-width: 640px) {
+  /* Prevent horizontal wobble and scrolling on small viewports */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Compact Bottom Navigation to perfectly fit all 7 items without crowding */
+  .bottom-nav {
+    padding: 0 2px !important;
+    justify-content: space-between !important;
+  }
+  .bottom-nav__item {
+    flex: 1;
+    padding: 4px 1px !important;
+    min-width: 0 !important;
+    border-radius: var(--rounded-md);
+  }
+  .bottom-nav__item .material-symbols-outlined {
+    font-size: 20px !important;
+    margin-bottom: 2px;
+  }
+  .bottom-nav__label {
+    font-size: 9px !important;
+    letter-spacing: -0.3px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+  }
+
+  /* Prevent automatic mobile input zooming in Safari/Android browsers */
+  input, textarea, select, .ai-section__input {
+    font-size: 16px !important;
+  }
+
+  /* AI Chat Workspace Mobile Sizing */
+  #ai-chat, .ai-section__response {
+    padding: 12px !important;
+    border-radius: var(--rounded-lg) !important;
+  }
+  .ai-section__prompt-btn {
+    font-size: 11px !important;
+    padding: 6px 12px !important;
+  }
+  .ai-section__input-wrap {
+    padding: 4px 8px !important;
+  }
+
+  /* Responsive Project & Experience Card Spacing */
+  .glass-card, .p-8 {
+    padding: 20px !important;
+  }
+  .p-6 {
+    padding: 14px !important;
+  }
+  .gap-8, .gap-6 {
+    gap: 16px !important;
+  }
+  .py-24 {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+  .py-12 {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+
+  /* Typography formatting for narrower phone screens */
+  h1, .hero-title {
+    font-size: 32px !important;
+    line-height: 1.2 !important;
+    word-break: break-word !important;
+  }
+  h2, .section-title {
+    font-size: 24px !important;
+  }
+  
+  /* Guarantee bottom navigation bar doesn't overlap content or chat inputs */
+  .main-content {
+    padding-bottom: 90px !important;
+  }
+}
+
+/* Extra small devices (<= 400px wide, e.g. iPhone SE / smaller Androids) */
+@media (max-width: 400px) {
+  .bottom-nav__label {
+    font-size: 8px !important;
+  }
+  .bottom-nav__item .material-symbols-outlined {
+    font-size: 18px !important;
+  }
+  h1, .hero-title {
+    font-size: 28px !important;
+  }
+  .container {
+    padding: 0 12px !important;
+  }
+}
