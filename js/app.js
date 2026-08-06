@@ -21,6 +21,7 @@ let activeSection = 'home';
 
 // ---- Initialize App ----
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initShader();
   initAnimations();
   initNavigation();
@@ -34,6 +35,38 @@ document.addEventListener('DOMContentLoaded', () => {
     switchSection(hash);
   }
 });
+
+// ---- Theme Management (Light / Dark Mode) ----
+function initTheme() {
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  const themeIcon = document.getElementById('theme-icon');
+  if (!themeBtn || !themeIcon) return;
+
+  const savedTheme = localStorage.getItem('portfolio_theme');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const currentTheme = savedTheme || (prefersLight ? 'light' : 'dark');
+
+  if (currentTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeIcon.textContent = 'dark_mode';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    themeIcon.textContent = 'light_mode';
+  }
+
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('portfolio_theme', 'dark');
+      themeIcon.textContent = 'light_mode';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('portfolio_theme', 'light');
+      themeIcon.textContent = 'dark_mode';
+    }
+  });
+}
 
 // ---- Navigation ----
 function initNavigation() {
@@ -60,6 +93,35 @@ function initNavigation() {
       switchSection(link.dataset.nav);
     });
   });
+
+  // ---- Smart Auto-Hiding Floating Dock (Mobile) ----
+  const bottomNav = document.querySelector('.bottom-nav');
+  let lastScrollY = window.scrollY;
+  let scrollTimeout;
+
+  if (bottomNav) {
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+
+      // Ignore tiny scroll jitter
+      if (Math.abs(currentScrollY - lastScrollY) > 8) {
+        if (currentScrollY > lastScrollY && currentScrollY > 60) {
+          // Scrolling down -> Hide dock to free up viewport screen space
+          bottomNav.classList.add('bottom-nav--hidden');
+        } else {
+          // Scrolling up -> Reveal dock smoothly
+          bottomNav.classList.remove('bottom-nav--hidden');
+        }
+        lastScrollY = currentScrollY;
+      }
+
+      // Always reappear whenever the user pauses scrolling (300ms of stillness)
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        bottomNav.classList.remove('bottom-nav--hidden');
+      }, 300);
+    }, { passive: true });
+  }
 }
 
 function switchSection(sectionId) {
@@ -174,6 +236,7 @@ Guidelines: Be warm, professional, engaging, and enthusiastic about Android & Ko
 
     const msg = document.createElement('div');
     if (isLoading) msg.id = 'ai-loading-msg';
+    msg.className = isUser ? 'msg-user' : 'msg-bot';
     msg.style.cssText = `
       display: flex; gap: 16px; align-items: flex-start;
       padding: 16px; border-radius: 16px; margin-bottom: 12px;

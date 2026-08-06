@@ -81,6 +81,137 @@
   --top-bar-height: 72px;
 }
 
+/* ============================================================
+   🌞 MATERIAL 3 CRISP WHITE THEME (Light Mode)
+   ============================================================ */
+[data-theme="light"] {
+  /* Backgrounds */
+  --background: #FAFAFD;
+  --surface: #FFFFFF;
+  --surface-dim: #EFEFF5;
+  --surface-bright: #FFFFFF;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F5F5F9;
+  --surface-container: #ECECF2;
+  --surface-container-high: #E4E4EB;
+  --surface-container-highest: #DCDCE4;
+  --surface-variant: #D1D1DC;
+  --canvas-base: #F4F4FA;
+
+  /* Primary (Deep Vibrant Indigo / Royal Blue for max contrast) */
+  --primary: #1A32D6;
+  --primary-container: #E0E2FF;
+  --on-primary: #FFFFFF;
+  --on-primary-container: #00105C;
+  --inverse-primary: #BBC3FF;
+  --primary-fixed: #DEE0FF;
+  --primary-fixed-dim: #1A32D6;
+  --surface-tint: #1A32D6;
+
+  /* Secondary (Deep Violet) */
+  --secondary: #5C16C5;
+  --secondary-container: #E9DDFF;
+  --on-secondary: #FFFFFF;
+  --on-secondary-container: #22005D;
+
+  /* Tertiary (Deep Teal / Cyan) */
+  --tertiary: #006874;
+  --tertiary-container: #93F1FF;
+  --on-tertiary: #FFFFFF;
+  --on-tertiary-container: #001F24;
+
+  /* On Surface / Text */
+  --on-surface: #19191D;
+  --on-surface-variant: #434450;
+  --on-background: #19191D;
+  --inverse-surface: #2E2F33;
+  --inverse-on-surface: #F0F0F6;
+
+  /* Outline */
+  --outline: #747682;
+  --outline-variant: #C2C3CE;
+}
+
+/* ---- Light Theme Structural Overrides & Glassmorphism ---- */
+[data-theme="light"] #shader-bg {
+  filter: invert(1) brightness(0.96) contrast(1.05);
+  opacity: 0.25 !important;
+}
+
+[data-theme="light"] .top-bar,
+[data-theme="light"] .side-nav,
+[data-theme="light"] .bottom-nav {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .top-bar__logo,
+[data-theme="light"] .top-bar__btn,
+[data-theme="light"] .nav-item:not(.active),
+[data-theme="light"] .bottom-nav__item:not(.active) {
+  color: var(--on-surface) !important;
+}
+
+[data-theme="light"] .glass-card,
+[data-theme="light"] .project-card,
+[data-theme="light"] .skill-item,
+[data-theme="light"] .experience-item {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .glass-card:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 12px 36px rgba(26, 50, 214, 0.1) !important;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] .ai-section__input-wrap {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  color: var(--on-surface) !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder,
+[data-theme="light"] .ai-section__input::placeholder {
+  color: var(--outline) !important;
+}
+
+[data-theme="light"] .ai-section__prompt-btn {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  color: var(--on-surface) !important;
+}
+
+[data-theme="light"] .ai-section__prompt-btn:hover {
+  background: var(--primary-container) !important;
+  color: var(--on-primary-container) !important;
+  border-color: var(--primary) !important;
+}
+
+[data-theme="light"] .tag,
+[data-theme="light"] .status-badge {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: var(--on-surface) !important;
+}
+
+[data-theme="light"] .msg-user {
+  background: rgba(26, 50, 214, 0.08) !important;
+  border-color: rgba(26, 50, 214, 0.2) !important;
+}
+
+[data-theme="light"] .msg-bot {
+  background: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important;
+}
+
 /* ---- Reset & Base ---- */
 *, *::before, *::after {
   margin: 0;
@@ -369,23 +500,31 @@ ul, ol {
   font-variation-settings: 'FILL' 1;
 }
 
-/* ---- Bottom Navigation (Mobile) ---- */
+/* ---- Bottom Navigation Dock (Mobile Floating Island) ---- */
 .bottom-nav {
   display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
+  position: fixed !important;
+  bottom: 16px;
+  left: 12px;
+  right: 12px;
+  z-index: 9999;
   justify-content: space-around;
   align-items: center;
   height: var(--bottom-nav-height);
-  padding: 0 8px;
-  background: rgba(19, 19, 19, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  padding: 0 6px;
+  background: rgba(26, 26, 26, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--rounded-full);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1), opacity 0.35s ease;
+}
+
+.bottom-nav--hidden {
+  transform: translateY(160%) !important;
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
@@ -1202,24 +1341,27 @@ ul, ol {
     max-width: 100vw !important;
   }
 
-  /* Compact Bottom Navigation to perfectly fit all 7 items without crowding */
+  /* Compact Bottom Dock to fit all 7 items cleanly inside floating pill */
   .bottom-nav {
-    padding: 0 2px !important;
+    padding: 0 4px !important;
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 12px !important;
     justify-content: space-between !important;
   }
   .bottom-nav__item {
     flex: 1;
-    padding: 4px 1px !important;
+    padding: 4px 0 !important;
     min-width: 0 !important;
-    border-radius: var(--rounded-md);
+    border-radius: var(--rounded-lg);
   }
   .bottom-nav__item .material-symbols-outlined {
-    font-size: 20px !important;
-    margin-bottom: 2px;
+    font-size: 19px !important;
+    margin-bottom: 1px;
   }
   .bottom-nav__label {
-    font-size: 9px !important;
-    letter-spacing: -0.3px !important;
+    font-size: 8.5px !important;
+    letter-spacing: -0.4px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
