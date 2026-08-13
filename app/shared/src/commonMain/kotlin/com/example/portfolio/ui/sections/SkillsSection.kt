@@ -10,17 +10,16 @@ import androidx.compose.ui.unit.dp
 import com.example.portfolio.ui.components.PortfolioCard
 import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.components.TechChip
+import com.example.portfolio.ui.components.fadeInSlideUp
 import com.example.portfolio.ui.theme.*
 
 @Composable
 fun SkillsSection(
-    modifier: Modifier = Modifier,
-    isDesktop: Boolean = true
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 40.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         SectionHeader(number = "02", title = "Skills")
@@ -31,114 +30,69 @@ fun SkillsSection(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        if (isDesktop) {
-            // Bento Grid Desktop Layout
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                // Row 1
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    SkillGroupCard(
-                        category = "ANDROID & CROSS-PLATFORM",
-                        categoryColor = PrimaryGreen,
-                        title = "Core Development",
-                        skills = listOf("Kotlin", "Java", "Jetpack Compose", "XML", "MVVM / MVI", "Clean Architecture"),
-                        watermark = "📱",
-                        modifier = Modifier.weight(2f)
-                    )
-                    SkillGroupCard(
-                        category = "CORE LIBRARIES",
-                        categoryColor = SecondaryWarm,
-                        title = "Architecture & Perf",
-                        skills = listOf("Coroutines & Flow", "Hilt / Dagger", "Room DB", "Retrofit", "Navigation", "WorkManager", "StateFlow"),
-                        watermark = "⚙️",
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                
-                // Row 2
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    SkillGroupCard(
-                        category = "INTEGRATIONS",
-                        categoryColor = TertiaryBlue,
-                        title = "Backend & Cloud",
-                        skills = listOf("Firebase", "Firestore", "REST APIs", "Gemini AI", "Postman"),
-                        watermark = "☁️",
-                        modifier = Modifier.weight(1f)
-                    )
-                    SkillGroupCard(
-                        category = "WORKFLOW",
-                        categoryColor = TextDim,
-                        title = "Tools & Practices",
-                        skills = listOf("Android Studio", "Git / GitHub", "Material Design 3", "JUnit", "Agile / Scrum"),
-                        watermark = "🔧",
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                // Row 3
-                SkillGroupCard(
-                    category = "LANGUAGES & MULTIPLATFORM",
-                    categoryColor = PrimaryGreen,
-                    title = "Growing Beyond Android",
-                    description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
-                    skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
-                    watermark = "🌍",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        } else {
-            // Mobile Stacked Layout
-            Column(
+        // Bento Grid Desktop Layout
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            // Row 1
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 SkillGroupCard(
                     category = "ANDROID & CROSS-PLATFORM",
                     categoryColor = PrimaryGreen,
+                    accentColor = AccentGreen,
                     title = "Core Development",
                     skills = listOf("Kotlin", "Java", "Jetpack Compose", "XML", "MVVM / MVI", "Clean Architecture"),
                     watermark = "📱",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.weight(2f).fadeInSlideUp(delayMs = 0)
                 )
                 SkillGroupCard(
                     category = "CORE LIBRARIES",
                     categoryColor = SecondaryWarm,
+                    accentColor = AccentOrange,
                     title = "Architecture & Perf",
                     skills = listOf("Coroutines & Flow", "Hilt / Dagger", "Room DB", "Retrofit", "Navigation", "WorkManager", "StateFlow"),
                     watermark = "⚙️",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 100)
                 )
+            }
+            
+            // Row 2
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 SkillGroupCard(
                     category = "INTEGRATIONS",
                     categoryColor = TertiaryBlue,
+                    accentColor = AccentBlue,
                     title = "Backend & Cloud",
                     skills = listOf("Firebase", "Firestore", "REST APIs", "Gemini AI", "Postman"),
                     watermark = "☁️",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 150)
                 )
                 SkillGroupCard(
                     category = "WORKFLOW",
                     categoryColor = TextDim,
+                    accentColor = AccentMuted,
                     title = "Tools & Practices",
                     skills = listOf("Android Studio", "Git / GitHub", "Material Design 3", "JUnit", "Agile / Scrum"),
                     watermark = "🔧",
-                    modifier = Modifier.fillMaxWidth()
-                )
-                SkillGroupCard(
-                    category = "LANGUAGES & MULTIPLATFORM",
-                    categoryColor = PrimaryGreen,
-                    title = "Growing Beyond Android",
-                    description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
-                    skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
-                    watermark = "🌍",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 200)
                 )
             }
+
+            // Row 3
+            SkillGroupCard(
+                category = "LANGUAGES & MULTIPLATFORM",
+                categoryColor = PrimaryGreen,
+                accentColor = AccentGreen,
+                title = "Growing Beyond Android",
+                description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
+                skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
+                watermark = "🌍",
+                modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 250)
+            )
         }
     }
 }
@@ -148,6 +102,7 @@ fun SkillsSection(
 private fun SkillGroupCard(
     category: String,
     categoryColor: Color,
+    accentColor: Color,
     title: String,
     description: String? = null,
     skills: List<String>,
@@ -156,7 +111,8 @@ private fun SkillGroupCard(
 ) {
     PortfolioCard(
         modifier = modifier,
-        watermarkEmoji = watermark
+        watermarkEmoji = watermark,
+        accentBorderColor = accentColor.copy(alpha = 0.5f) // Colored left accent
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(

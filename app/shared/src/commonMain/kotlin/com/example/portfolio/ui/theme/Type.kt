@@ -7,12 +7,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 val PortfolioTypography = Typography(
-    // Display Large (Hero Desktop headings) - 44sp / bold
+    // Display Large (Hero Desktop headings) - 48sp / bold — larger for breathing room
     displayLarge = TextStyle(
-        fontFamily = FontFamily.Default, // Represents Space Grotesk in HTML
+        fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 42.sp,
-        lineHeight = 50.sp,
+        fontSize = 48.sp,
+        lineHeight = 56.sp,
         letterSpacing = (-0.02f).sp
     ),
     // Display Medium (Mobile Hero & Section Titles) - 28sp / bold
@@ -31,6 +31,14 @@ val PortfolioTypography = Typography(
         lineHeight = 28.sp,
         letterSpacing = (-0.01f).sp
     ),
+    // Title Large (Nav brand, large titles) - 20sp / bold
+    titleLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        lineHeight = 28.sp,
+        letterSpacing = (-0.01f).sp
+    ),
     // Title Medium (Sub-card & list headings) - 16sp / semi-bold
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -40,7 +48,7 @@ val PortfolioTypography = Typography(
     ),
     // Body Large (Hero & introduction paragraphs) - 17sp
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default, // Represents Inter in HTML
+        fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 17.sp,
         lineHeight = 26.sp

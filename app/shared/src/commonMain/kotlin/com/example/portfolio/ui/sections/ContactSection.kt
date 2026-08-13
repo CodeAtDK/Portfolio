@@ -1,6 +1,7 @@
 package com.example.portfolio.ui.sections
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.portfolio.ui.components.PortfolioCard
 import com.example.portfolio.ui.components.SectionHeader
+import com.example.portfolio.ui.components.fadeInSlideUp
 import com.example.portfolio.ui.theme.*
 
 @Composable
@@ -26,8 +28,7 @@ fun ContactSection(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 40.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         SectionHeader(number = "06", title = "Contact")
@@ -40,7 +41,8 @@ fun ContactSection(modifier: Modifier = Modifier) {
             PortfolioCard(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .fadeInSlideUp(delayMs = 0),
                 contentPadding = 0.dp
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
@@ -65,6 +67,8 @@ fun ContactSection(modifier: Modifier = Modifier) {
                         )
                     }
 
+                    HorizontalDivider(color = BorderDark, thickness = 1.dp)
+
                     if (messageSent) {
                         Column(
                             modifier = Modifier
@@ -73,6 +77,11 @@ fun ContactSection(modifier: Modifier = Modifier) {
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
+                            Text(
+                                text = "✓",
+                                style = MaterialTheme.typography.displayMedium,
+                                color = PrimaryGreen
+                            )
                             Text(
                                 text = "[SUCCESS] Message Sent!",
                                 style = MaterialTheme.typography.titleMedium,
@@ -87,7 +96,7 @@ fun ContactSection(modifier: Modifier = Modifier) {
                             Button(
                                 onClick = { messageSent = false; name = ""; email = ""; message = "" },
                                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
-                                shape = RoundedCornerShape(8.dp)
+                                shape = RoundedCornerShape(12.dp)
                             ) {
                                 Text("Send Another Message", color = BackgroundDark)
                             }
@@ -103,19 +112,19 @@ fun ContactSection(modifier: Modifier = Modifier) {
                                 color = PrimaryGreen
                             )
 
-                            CustomFormTextField(
+                            ContactFormTextField(
                                 value = name,
                                 onValueChange = { name = it },
                                 placeholder = "Your Name"
                             )
 
-                            CustomFormTextField(
+                            ContactFormTextField(
                                 value = email,
                                 onValueChange = { email = it },
                                 placeholder = "Email Address"
                             )
 
-                            CustomFormTextField(
+                            ContactFormTextField(
                                 value = message,
                                 onValueChange = { message = it },
                                 placeholder = "Project Inquiry / Message Details",
@@ -129,7 +138,7 @@ fun ContactSection(modifier: Modifier = Modifier) {
                                     containerColor = PrimaryGreen,
                                     contentColor = BackgroundDark
                                 ),
-                                shape = RoundedCornerShape(8.dp),
+                                shape = RoundedCornerShape(12.dp),
                                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp),
                                 modifier = Modifier.align(Alignment.End)
                             ) {
@@ -143,34 +152,41 @@ fun ContactSection(modifier: Modifier = Modifier) {
                 }
             }
 
-            // Right Column: Contact Details & Links
+            // Right Column: Contact Details & Links with icons
             Column(
                 modifier = Modifier
-                    .widthIn(min = 260.dp, max = 320.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+                    .widthIn(min = 260.dp, max = 320.dp)
+                    .fadeInSlideUp(delayMs = 200),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                PortfolioCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text("Email", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = PrimaryGreen)
-                        Text("dhruvakhatavkar29@gmail.com", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("Location", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = TertiaryBlue)
-                        Text("Pune, Maharashtra, India\nOpen to Remote / Hybrid roles", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("Socials", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = SecondaryWarm)
-                        Text("GitHub: github.com/DhruvaKhatavkar\nLinkedIn: linkedin.com/in/dhruva-khatavkar", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                }
+                ContactDetailCard(
+                    icon = "📧",
+                    label = "Email",
+                    labelColor = PrimaryGreen,
+                    value = "dhruvakhatavkar29@gmail.com"
+                )
+                ContactDetailCard(
+                    icon = "📍",
+                    label = "Location",
+                    labelColor = TertiaryBlue,
+                    value = "Pune, Maharashtra, India\nOpen to Remote / Hybrid roles"
+                )
+                ContactDetailCard(
+                    icon = "🔗",
+                    label = "Socials",
+                    labelColor = SecondaryWarm,
+                    value = "GitHub: github.com/DhruvaKhatavkar\nLinkedIn: linkedin.com/in/dhruva-khatavkar"
+                )
             }
         }
 
-        // Footer Copyright
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
-            contentAlignment = Alignment.Center
+        // Footer — divider + copyright
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
+            HorizontalDivider(color = BorderDark, thickness = 1.dp)
             Text(
                 text = "© 2026 Dhruva Khatavkar // Built with Native Compose Multiplatform",
                 style = MaterialTheme.typography.labelSmall,
@@ -182,7 +198,37 @@ fun ContactSection(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun CustomFormTextField(
+private fun ContactDetailCard(
+    icon: String,
+    label: String,
+    labelColor: Color,
+    value: String
+) {
+    PortfolioCard(modifier = Modifier.fillMaxWidth()) {
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = icon, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = labelColor
+                )
+            }
+            Text(
+                text = value,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun ContactFormTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
@@ -195,8 +241,9 @@ private fun CustomFormTextField(
         placeholder = { Text(placeholder, color = TextMuted) },
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(SurfaceDark),
+            .clip(RoundedCornerShape(12.dp))
+            .background(SurfaceDark)
+            .border(1.dp, GlassBorder, RoundedCornerShape(12.dp)),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,

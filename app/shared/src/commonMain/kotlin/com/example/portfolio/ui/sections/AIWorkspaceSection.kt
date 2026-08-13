@@ -1,6 +1,7 @@
 package com.example.portfolio.ui.sections
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.example.portfolio.ui.components.PortfolioCard
 import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.components.TechChip
+import com.example.portfolio.ui.components.rememberPulseAlpha
+import com.example.portfolio.ui.components.rememberTypingDots
 import com.example.portfolio.ui.theme.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -100,8 +103,7 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 40.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         SectionHeader(number = "05", title = "Dhruva AI")
@@ -114,7 +116,7 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
             contentPadding = 0.dp // Padding handled internally
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                // Terminal Header
+                // Terminal Header with status indicator
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -128,12 +130,27 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                         Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFFBD2E)))
                         Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFF27C93F)))
                     }
-                    Text(
-                        text = "dhruva-ai-terminal",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = TextMuted
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Pulsing status dot
+                        val statusAlpha = rememberPulseAlpha(minAlpha = 0.3f, maxAlpha = 1f, durationMs = 2000)
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(PrimaryGreen.copy(alpha = statusAlpha))
+                        )
+                        Text(
+                            text = "dhruva-ai-terminal",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = TextMuted
+                        )
+                    }
                 }
+
+                HorizontalDivider(color = BorderDark, thickness = 1.dp)
 
                 // Messages List
                 LazyColumn(
@@ -156,6 +173,8 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                     }
                 }
 
+                HorizontalDivider(color = BorderDark, thickness = 1.dp)
+
                 // Input Bar
                 Row(
                     modifier = Modifier
@@ -170,8 +189,9 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                         onValueChange = { inputQuery = it },
                         modifier = Modifier
                             .weight(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(SurfaceDark),
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(SurfaceDark)
+                            .border(1.dp, GlassBorder, RoundedCornerShape(12.dp)),
                         placeholder = { Text("Ask about my skills or projects...", color = TextMuted) },
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
@@ -188,7 +208,7 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .size(48.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(12.dp))
                             .background(PrimaryGreen)
                             .clickable { submitQuery(inputQuery) }
                     ) {
@@ -210,20 +230,32 @@ private fun ChatMessageBubble(
     onTagClick: (String) -> Unit
 ) {
     val align = if (message.isUser) Alignment.End else Alignment.Start
-    val bgColor = if (message.isUser) PrimaryGreen.copy(alpha = 0.1f) else SurfaceContainerHighest
+    val bgColor = if (message.isUser) PrimaryGreen.copy(alpha = 0.08f) else SurfaceContainerHigh
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = align
     ) {
-        Box(
+        Row(
             modifier = Modifier
                 .widthIn(max = 640.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(12.dp))
                 .background(bgColor)
-                .padding(16.dp)
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            // Left accent border for user messages
+            if (message.isUser) {
+                Box(
+                    modifier = Modifier
+                        .width(3.dp)
+                        .fillMaxHeight()
+                        .background(PrimaryGreen.copy(alpha = 0.5f))
+                )
+            }
+
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
                 Text(
                     text = if (message.isUser) "> user_query" else "> dhruva_ai_response",
                     style = MaterialTheme.typography.labelSmall,
@@ -266,16 +298,18 @@ private fun ChatMessageBubble(
 
 @Composable
 private fun ThinkingBubble() {
+    val dots = rememberTypingDots()
+
     Row(
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(SurfaceContainerHighest)
+            .clip(RoundedCornerShape(12.dp))
+            .background(SurfaceContainerHigh)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "> generating_response...",
+            text = "> generating_response$dots",
             style = MaterialTheme.typography.labelSmall,
             color = TextMuted
         )
