@@ -1,114 +1,193 @@
 package com.example.portfolio.ui.sections
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import com.example.portfolio.ui.components.GlassCard
-import com.example.portfolio.ui.components.TechChip
+import androidx.compose.ui.unit.sp
+import com.example.portfolio.ui.components.PortfolioCard
+import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.theme.*
 
 @Composable
 fun ProjectsSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isDesktop: Boolean = true
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+            .padding(vertical = 40.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        // Header
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(
-                text = "PROJECTS",
-                style = MaterialTheme.typography.labelSmall,
-                color = TertiaryCyan
-            )
-            Text(
-                text = "Real-world apps I've built.",
-                style = MaterialTheme.typography.displayMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = "Each project represents a hands-on journey through modern Android development - from architecture and APIs to polished UI with Jetpack Compose and Multiplatform capabilities.",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        SectionHeader(number = "03", title = "Projects")
 
-        // Projects List
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            verticalArrangement = Arrangement.spacedBy(80.dp)
         ) {
             ProjectCardItem(
-                category = "FOOD RESCUE PLATFORM",
-                categoryColor = PrimaryBlue,
                 title = "FoodBridge",
-                description = "A platform connecting surplus food donors with NGOs to reduce food waste and feed communities in need. Featuring real-time matching with location-based services.",
-                tags = listOf("Kotlin", "Jetpack Compose", "Firebase", "Maps API", "Coroutines")
+                description = "A platform connecting surplus food donors with NGOs to reduce food waste and feed communities in need. Real-time matching with location-based services.",
+                tags = listOf("Kotlin", "Compose", "Firebase", "Maps API"),
+                linkUrl = "https://dhruvasho.github.io/foodbridge-case-study.html",
+                emoji = "🍽️",
+                gradient = ProjectGradient1,
+                isDesktop = isDesktop,
+                isReversed = false
             )
 
             ProjectCardItem(
-                category = "FARMER MARKETPLACE",
-                categoryColor = TertiaryCyan,
                 title = "Agri Connect",
-                description = "A direct farmer-to-consumer marketplace enabling agricultural trade without middlemen. Features include real-time pricing dashboards, crop cataloging, and secure order management.",
-                tags = listOf("Kotlin", "MVVM Architecture", "Retrofit", "Room DB", "REST APIs")
+                description = "A direct farmer-to-consumer marketplace enabling agricultural trade without middlemen. Features include real-time pricing, crop cataloging, and order management.",
+                tags = listOf("Kotlin", "MVVM", "Retrofit", "Room"),
+                linkUrl = "https://dhruvasho.github.io/agriconnect-case-study.html",
+                emoji = "🌾",
+                gradient = ProjectGradient2,
+                isDesktop = isDesktop,
+                isReversed = true
             )
 
             ProjectCardItem(
-                category = "HEALTHCARE & ELDERLY CARE",
-                categoryColor = SecondaryPurple,
                 title = "CareNest",
-                description = "An elderly care management application with medication tracking, health monitoring dashboards, and caregiver communication tools powered by AI assistant insights.",
-                tags = listOf("Kotlin", "Compose", "Hilt DI", "Gemini AI", "StateFlow")
+                description = "An elderly care management application with medication tracking, health monitoring dashboards, and caregiver communication features.",
+                tags = listOf("Kotlin", "Compose", "Hilt", "Gemini AI"),
+                linkUrl = "https://dhruvasho.github.io/carenest-case-study.html",
+                emoji = "❤️",
+                gradient = ProjectGradient3,
+                isDesktop = isDesktop,
+                isReversed = false
             )
-
+            
             ProjectCardItem(
-                category = "CROSS-PLATFORM PORTFOLIO",
-                categoryColor = PrimaryBlue,
-                title = "Compose Multiplatform Portfolio",
-                description = "A reactive, shader-styled portfolio application compiled natively for Android, iOS, and Web WASM using shared Kotlin logic and the Synthetic Noir design system.",
-                tags = listOf("KMP", "Compose Multiplatform", "WASM", "iOS SwiftUI Host", "Canvas Graphics")
+                title = "This Portfolio",
+                description = "A developer-crafted portfolio site with a terminal-themed design system. Features an embedded AI assistant powered by Google Gemini.",
+                tags = listOf("HTML", "CSS", "JavaScript", "KMP"),
+                linkUrl = null,
+                emoji = "🌐",
+                gradient = ProjectGradient4,
+                isDesktop = isDesktop,
+                isReversed = true
             )
         }
     }
 }
 
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 private fun ProjectCardItem(
-    category: String,
-    categoryColor: androidx.compose.ui.graphics.Color,
     title: String,
     description: String,
-    tags: List<String>
+    tags: List<String>,
+    linkUrl: String?,
+    emoji: String,
+    gradient: Brush,
+    isDesktop: Boolean,
+    isReversed: Boolean
 ) {
-    GlassCard(modifier = Modifier.fillMaxWidth()) {
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    val uriHandler = LocalUriHandler.current
+
+    val visualBlock = @Composable {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(280.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(SurfaceDark)
+                .background(gradient)
+                .border(1.dp, BorderDark, RoundedCornerShape(10.dp)),
+            contentAlignment = Alignment.Center
+        ) {
             Text(
-                text = category,
-                style = MaterialTheme.typography.labelSmall,
-                color = categoryColor
+                text = emoji,
+                style = MaterialTheme.typography.displayLarge.copy(fontSize = 72.sp),
+                modifier = Modifier.alpha(0.2f)
             )
+        }
+    }
+
+    val contentBlock = @Composable {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
+            
+            // Tags with "//" separator
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                tags.forEachIndexed { index, tag ->
+                    Text(
+                        text = tag,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextMuted
+                    )
+                    if (index < tags.size - 1) {
+                        Text(
+                            text = "//",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = PrimaryGreen
+                        )
+                    }
+                }
+            }
+
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            FlowRowWrapper {
-                tags.forEach { tag ->
-                    TechChip(text = tag)
-                }
+
+            if (linkUrl != null) {
+                Text(
+                    text = "View Case Study ->",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = PrimaryGreen,
+                    modifier = Modifier
+                        .clickable { uriHandler.openUri(linkUrl) }
+                        .padding(top = 8.dp)
+                )
             }
+        }
+    }
+
+    if (isDesktop) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(48.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (isReversed) {
+                Box(modifier = Modifier.weight(1f)) { contentBlock() }
+                Box(modifier = Modifier.weight(1.1f)) { visualBlock() }
+            } else {
+                Box(modifier = Modifier.weight(1.1f)) { visualBlock() }
+                Box(modifier = Modifier.weight(1f)) { contentBlock() }
+            }
+        }
+    } else {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            visualBlock()
+            contentBlock()
         }
     }
 }

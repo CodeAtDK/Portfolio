@@ -76,7 +76,7 @@
           <div class="hero__tags fade-up visible">
             <span class="hero__tag glass-card">
               <span class="material-symbols-outlined" style="font-size:16px">location_on</span>
-              Pune, India
+              Beed, India
             </span>
             <span class="hero__tag glass-card">
               <span class="material-symbols-outlined" style="font-size:16px;color:#4CAF50">fiber_manual_record</span>
@@ -96,6 +96,10 @@
             <button class="btn-primary" onclick="switchSection('projects')">
               Explore My Work
             </button>
+            <a href="resume.html" class="btn-secondary" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+              <span class="material-symbols-outlined">description</span>
+              View Resume
+            </a>
             <button class="btn-secondary" onclick="switchSection('ai')">
               <span class="material-symbols-outlined">smart_toy</span>
               Meet Dhruva AI
@@ -181,26 +185,11 @@
           </p>
         </div>
         <div class="hero__visual">
-          <div class="glass-panel rounded-2xl" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:rgba(61,90,254,0.05);border-radius:50%;filter:blur(100px);animation:pulse-glow 3s infinite;"></div>
-            <div style="position:relative;z-index:10;width:75%;height:75%;display:flex;gap:16px;transform:rotate(-5deg);transition:transform 0.7s;">
-              <div class="glass-panel rounded-xl" style="flex:1;overflow:hidden;">
-                <div style="height:24px;background:var(--surface-container-highest);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;padding:0 12px;gap:8px;">
-                  <div style="width:8px;height:8px;border-radius:50%;background:var(--error);"></div>
-                  <div style="width:8px;height:8px;border-radius:50%;background:var(--tertiary);"></div>
-                </div>
-                <div style="padding:16px;display:flex;flex-direction:column;gap:12px;">
-                  <div style="height:16px;width:50%;background:var(--surface-variant);border-radius:6px;"></div>
-                  <div style="height:80px;width:100%;background:rgba(61,90,254,0.15);border-radius:6px;"></div>
-                  <div style="height:16px;width:75%;background:var(--surface-variant);border-radius:6px;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpB7CpwBSFK7bfRHHTIvxUNLPjAcGTn8K9uH5JLprKxCdNVvzTeqbT2zsvB96MPSg7V5vvTE354_2nUan1DTAblNrkGzd4YbbUXuNp3pg7Hi5xFvW5bx0yNu5gNZnMGmgbcytS3fR3mdtu2aAso16s7dlqauFFH3-RE2yEj-p40oJbqVYS6FnitAERkUlxrsrkieGF3MgTQLwtih0BpO7Hvbc-QOb7n_uA7MEimo7ej-g-wqPbJq3Z" alt="Dhruva Khatavkar" class="hero__image glass-card">
         </div>
       </div>
 
-      <div style="height:96px;"></div>
+      <div class="section-spacer"></div>
 
       <!-- My Journey Timeline -->
       <div class="fade-up">
@@ -268,7 +257,7 @@
         </div>
       </div>
 
-      <div style="height:128px;"></div>
+      <div class="section-spacer"></div>
 
       <!-- Development Philosophy -->
       <div class="fade-up">
@@ -298,7 +287,7 @@
         </div>
       </div>
 
-      <div style="height:128px;"></div>
+      <div class="section-spacer"></div>
 
       <!-- Strengths & Currently Exploring -->
       <div class="fade-up" style="display:grid;grid-template-columns:1fr;gap:48px;">
@@ -331,7 +320,7 @@
         </div>
       </div>
 
-      <div style="height:128px;"></div>
+      <div class="section-spacer"></div>
 
       <!-- CTA -->
       <div class="fade-up">
@@ -365,13 +354,15 @@
             <span class="material-symbols-outlined text-primary" style="font-size:64px;">android</span>
           </div>
           <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-primary mb-2">Hands-On Project Experience</span>
-            <h3 class="text-headline-md mb-6">Android Development</h3>
+            <span class="text-label-sm text-primary mb-2">Android &amp; Cross-Platform</span>
+            <h3 class="text-headline-md mb-6">Core Development</h3>
             <div class="flex flex-wrap gap-2 mt-auto">
               <span class="tech-chip">Kotlin</span>
-              <span class="tech-chip">Android SDK</span>
+              <span class="tech-chip">Java</span>
               <span class="tech-chip">Jetpack Compose</span>
-              <span class="tech-chip">MVVM</span>
+              <span class="tech-chip">XML</span>
+              <span class="tech-chip">MVVM / MVI</span>
+              <span class="tech-chip">Clean Architecture</span>
             </div>
           </div>
         </div>
@@ -382,13 +373,16 @@
             <span class="material-symbols-outlined text-secondary" style="font-size:64px;">memory</span>
           </div>
           <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-secondary mb-2">Strong Foundation</span>
+            <span class="text-label-sm text-secondary mb-2">Core Libraries</span>
             <h3 class="text-headline-md mb-6">Architecture &amp; Perf</h3>
             <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">Coroutines</span>
-              <span class="tech-chip">Flow</span>
-              <span class="tech-chip">Hilt</span>
-              <span class="tech-chip">Room</span>
+              <span class="tech-chip">Coroutines &amp; Flow</span>
+              <span class="tech-chip">Hilt / Dagger</span>
+              <span class="tech-chip">Room DB</span>
+              <span class="tech-chip">Retrofit</span>
+              <span class="tech-chip">Navigation Component</span>
+              <span class="tech-chip">WorkManager</span>
+              <span class="tech-chip">LiveData / StateFlow</span>
             </div>
           </div>
         </div>
@@ -403,9 +397,10 @@
             <h3 class="text-headline-md mb-6">Backend &amp; Cloud</h3>
             <div class="flex flex-wrap gap-2 mt-auto">
               <span class="tech-chip">Firebase</span>
+              <span class="tech-chip">Firestore</span>
               <span class="tech-chip">REST APIs</span>
-              <span class="tech-chip">Retrofit</span>
               <span class="tech-chip">Gemini AI</span>
+              <span class="tech-chip">Postman</span>
             </div>
           </div>
         </div>
@@ -416,12 +411,15 @@
             <span class="material-symbols-outlined" style="font-size:64px;color:var(--primary-fixed-dim,#bbc3ff);">palette</span>
           </div>
           <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm mb-2" style="color:var(--primary-fixed-dim,#bbc3ff);">Design Focus</span>
-            <h3 class="text-headline-md mb-6">Product UI</h3>
+            <span class="text-label-sm mb-2" style="color:var(--primary-fixed-dim,#bbc3ff);">Workflow</span>
+            <h3 class="text-headline-md mb-6">Tools &amp; Practices</h3>
             <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">Figma</span>
-              <span class="tech-chip">Material Design</span>
-              <span class="tech-chip">Accessibility</span>
+              <span class="tech-chip">Android Studio</span>
+              <span class="tech-chip">Git / GitHub</span>
+              <span class="tech-chip">Material Design 3</span>
+              <span class="tech-chip">JUnit</span>
+              <span class="tech-chip">Agile / Scrum</span>
+              <span class="tech-chip">ZegoCloud SDK</span>
             </div>
           </div>
         </div>
@@ -432,13 +430,16 @@
             <span class="material-symbols-outlined text-tertiary" style="font-size:64px;">devices</span>
           </div>
           <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-tertiary mb-2">Currently Exploring</span>
+            <span class="text-label-sm text-tertiary mb-2">Languages &amp; Multiplatform</span>
             <h3 class="text-headline-md mb-2">Growing Beyond Android</h3>
-            <p class="text-body-md text-on-surface-variant mb-6" style="max-width:512px;">Exploring cross-platform capabilities to share business logic and UI across iOS, Android, and Web.</p>
+            <p class="text-body-md text-on-surface-variant mb-6" style="max-width:512px;">Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.</p>
             <div class="flex flex-wrap gap-2 mt-auto">
               <span class="tech-chip">KMP</span>
-              <span class="tech-chip">Compose Multiplatform</span>
+              <span class="tech-chip">CMP</span>
               <span class="tech-chip">Ktor</span>
+              <span class="tech-chip">C++ / C</span>
+              <span class="tech-chip">Python</span>
+              <span class="tech-chip">SQL</span>
             </div>
           </div>
         </div>
@@ -566,63 +567,98 @@
 
       <div class="flex flex-col gap-8">
 
-        <!-- Education -->
+        <!-- ADM Internship -->
         <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--primary-container);">
           <div class="flex gap-4" style="align-items:flex-start;">
             <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(61,90,254,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-primary">school</span>
+              <span class="material-symbols-outlined text-primary">work</span>
             </div>
             <div style="flex:1;">
-              <span class="text-label-sm text-tertiary">2022 – 2026</span>
-              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">B.Tech — Electronics & Communication Engineering</h3>
-              <p class="text-body-md text-on-surface-variant">Jaypee Institute of Information Technology, Noida</p>
-              <p class="text-body-md text-on-surface-variant" style="margin-top:12px;">
-                Developed a strong foundation in programming, algorithms, and system design alongside my specialization in Android development.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Android Dev Journey -->
-        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--secondary-container);">
-          <div class="flex gap-4" style="align-items:flex-start;">
-            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(98,0,234,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-secondary">phone_android</span>
-            </div>
-            <div style="flex:1;">
-              <span class="text-label-sm text-tertiary">Aug 2023 – Present</span>
-              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">Android Developer — Self-Directed Projects</h3>
-              <p class="text-body-md text-on-surface-variant">Independent / Open Source</p>
-              <p class="text-body-md text-on-surface-variant" style="margin-top:12px;">
-                Built multiple production-quality Android applications using Kotlin, Jetpack Compose, MVVM, Firebase, and REST APIs. Projects include FoodBridge, Agri Connect, and CareNest — each solving real-world problems with modern Android architecture.
-              </p>
+              <span class="text-label-sm text-tertiary">Oct 2024 – Jan 2025 • Remote</span>
+              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">Android Developer Intern</h3>
+              <p class="text-body-md text-on-surface-variant font-semibold">ADM Education and Welfare Society</p>
+              <ul class="text-body-md text-on-surface-variant" style="margin-top:12px; list-style-type:disc; padding-left:20px; display:flex; flex-direction:column; gap:8px;">
+                <li>Built a modular Android application in Kotlin, following MVVM architecture, to manage internship placements for a large student base.</li>
+                <li>Designed responsive UIs with Jetpack Compose and structured state with Coroutines/Flow, improving user navigation flow by 25%.</li>
+                <li>Integrated Firebase Realtime Database and Auth with Hilt-based dependency injection to handle concurrent user sessions and secure data storage.</li>
+              </ul>
               <div class="flex flex-wrap gap-2" style="margin-top:16px;">
-                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">3+ Apps Built</span>
+                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Kotlin</span>
                 <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Jetpack Compose</span>
-                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">AI Integration</span>
+                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">MVVM</span>
+                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Hilt</span>
+                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Firebase</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Current -->
-        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--tertiary-container);position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:rgba(0,218,243,0.05);border-radius:50%;filter:blur(60px);"></div>
-          <div class="flex gap-4" style="align-items:flex-start;position:relative;z-index:10;">
-            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(0,218,243,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-tertiary">rocket_launch</span>
+        <!-- Education 1 -->
+        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--secondary-container);">
+          <div class="flex gap-4" style="align-items:flex-start;">
+            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(98,0,234,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined text-secondary">school</span>
             </div>
             <div style="flex:1;">
-              <span class="text-label-sm" style="color:var(--tertiary);">Now</span>
-              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">Exploring Kotlin Multiplatform</h3>
-              <p class="text-body-md text-on-surface-variant">Expanding beyond Android</p>
-              <p class="text-body-md text-on-surface-variant" style="margin-top:12px;">
-                Currently learning KMP, Compose Multiplatform, and Ktor to share business logic across Android, iOS, and Web while preserving native UX quality.
+              <span class="text-label-sm text-tertiary">2022 – 2026</span>
+              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">B.Tech in Electronics &amp; Communication</h3>
+              <p class="text-body-md text-on-surface-variant">Jaypee Institute of Information Technology, Noida</p>
+              <p class="text-body-md text-on-surface-variant" style="margin-top:8px;">
+                Relevant Coursework: Data Structures, DBMS, OS, OOPS
               </p>
             </div>
           </div>
         </div>
+
+        <!-- Education 2 -->
+        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--tertiary-container);position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:rgba(0,218,243,0.05);border-radius:50%;filter:blur(60px);"></div>
+          <div class="flex gap-4" style="align-items:flex-start;position:relative;z-index:10;">
+            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(0,218,243,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined text-tertiary">history_edu</span>
+            </div>
+            <div style="flex:1;">
+              <span class="text-label-sm" style="color:var(--tertiary);">2019 – 2021</span>
+              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">Higher Secondary Education (PCM)</h3>
+              <p class="text-body-md text-on-surface-variant">Late M.E Bhore Junior College, Padali</p>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Resume Preview Block -->
+      <div class="mt-16 fade-up">
+        <h2 class="text-headline-md font-bold text-on-surface mb-2" style="font-size:32px;">Resume</h2>
+        <p class="text-body-md text-on-surface-variant mb-6 max-w-2xl">
+          Download or open my latest resume to review project depth, technical stack, and problem-solving track record.
+        </p>
+        
+        <div class="flex gap-4 mb-8">
+          <a href="Dhruva_Khatavkar_Resume.pdf" download class="flex items-center gap-2 px-5 py-2.5 rounded-full font-label-sm font-semibold transition-all hover:scale-105" style="background:#FFE6D3; color:#1A1A1A; text-decoration:none; box-shadow:0 4px 15px rgba(255, 230, 211, 0.2);">
+            <span class="material-symbols-outlined text-[18px]">download</span>
+            Download Resume
+          </a>
+          <a href="resume.html" class="flex items-center gap-2 px-5 py-2.5 rounded-full font-label-sm font-semibold transition-all hover:scale-105 glass-panel" style="color:var(--on-surface); text-decoration:none;">
+            <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+            Open Resume
+          </a>
+        </div>
+
+        <!-- Preview Container -->
+        <div class="glass-panel rounded-2xl overflow-hidden relative resume-preview-container" style="height:1200px; border:1px solid rgba(255,255,255,0.05);">
+          <!-- Header bar -->
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5" style="background:rgba(0,0,0,0.2);">
+            <span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
+            <span class="text-label-sm text-on-surface-variant font-semibold">Resume Preview</span>
+          </div>
+          <!-- Embedded PDF -->
+          <div class="w-full bg-black/20 flex justify-center" style="height: calc(100% - 48px); padding: 16px;">
+             <iframe src="Dhruva_Khatavkar_Resume.pdf#toolbar=0&navpanes=0&scrollbar=0" style="width: 100%; height: 100%; min-height: 1100px; border:none; border-radius: 8px; background:white; max-width:850px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);"></iframe>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ========== AI WORKSPACE SECTION ========== -->
@@ -735,7 +771,7 @@
             </a>
             <div class="flex items-center gap-3 text-on-surface-variant">
               <span class="material-symbols-outlined" style="font-size:20px;">location_on</span>
-              <span class="text-body-md">Pune, India</span>
+              <span class="text-body-md">Beed, India</span>
             </div>
           </div>
         </div>
@@ -798,7 +834,7 @@
             </a>
             <div class="flex items-center gap-3 text-on-surface-variant text-body-md">
               <span class="material-symbols-outlined" style="font-size:18px;">location_on</span>
-              Pune, India
+              Beed, India
             </div>
           </div>
         </div>

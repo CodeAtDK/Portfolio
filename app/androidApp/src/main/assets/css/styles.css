@@ -326,7 +326,7 @@ ul, ol {
 .main-content {
   flex: 1;
   padding-top: var(--top-bar-height);
-  padding-bottom: 80px;
+  padding-bottom: 24px;
   width: 100%;
 }
 
@@ -363,6 +363,16 @@ ul, ol {
 @keyframes fadeSection {
   from { opacity: 0; transform: translateY(16px) scale(0.99); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Responsive spacer — large on desktop, compact on mobile */
+.section-spacer {
+  height: 96px;
+}
+@media (max-width: 640px) {
+  .section-spacer {
+    height: 40px !important;
+  }
 }
 
 /* ---- Shader Background ---- */
@@ -767,8 +777,8 @@ ul, ol {
 .footer {
   position: relative;
   width: 100%;
-  margin-top: 96px;
-  padding-bottom: 96px;
+  margin-top: 64px;
+  padding-bottom: 24px;
 }
 
 @media (min-width: 768px) {
@@ -1433,8 +1443,33 @@ ul, ol {
   
   /* Guarantee fixed top navigation bars don't overlap top content */
   .main-content {
-    padding-top: 120px !important;
-    padding-bottom: 40px !important;
+    padding-top: 116px !important;
+    padding-bottom: 16px !important;
+  }
+
+  /* Reduce footer spacing on mobile */
+  .footer {
+    margin-top: 32px !important;
+    padding-bottom: 16px !important;
+  }
+  .footer__inner {
+    padding: 24px !important;
+    border-radius: 20px !important;
+  }
+  .footer__grid {
+    gap: 24px !important;
+  }
+  .footer__sep {
+    margin: 24px 0 !important;
+  }
+
+  /* Resume preview - use viewport height on mobile so the PDF is clearly readable */
+  .resume-preview-container {
+    height: 85vh !important;
+    min-height: 500px !important;
+  }
+  .resume-preview-container iframe {
+    min-height: 400px !important;
   }
 }
 

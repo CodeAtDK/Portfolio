@@ -5,96 +5,159 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.portfolio.ui.components.GlassCard
+import com.example.portfolio.ui.components.PortfolioCard
+import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.components.TechChip
 import com.example.portfolio.ui.theme.*
 
 @Composable
 fun SkillsSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isDesktop: Boolean = true
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+            .padding(vertical = 40.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        // Header
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(
-                text = "TECHNICAL SKILLS",
-                style = MaterialTheme.typography.labelSmall,
-                color = TertiaryCyan
-            )
-            Text(
-                text = "Tools I use to build Android experiences.",
-                style = MaterialTheme.typography.displayMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = "A growing Android-focused toolkit shaped by hands-on projects, API integrations, real-time features, modern UI development, and cross-platform learning.",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        SectionHeader(number = "02", title = "Skills")
 
-        // Bento Grid Items
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            // Card 1: Android Development
-            SkillGroupCard(
-                category = "HANDS-ON PROJECT EXPERIENCE",
-                categoryColor = PrimaryBlue,
-                title = "Android Development",
-                skills = listOf("Kotlin", "Android SDK", "Jetpack Compose", "MVVM", "Navigation")
-            )
+        Text(
+            text = "A growing Android-focused toolkit shaped by hands-on projects, API integrations, real-time features, modern UI development, and cross-platform learning.",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
-            // Card 2: Architecture & Perf
-            SkillGroupCard(
-                category = "STRONG FOUNDATION",
-                categoryColor = SecondaryPurple,
-                title = "Architecture & Performance",
-                skills = listOf("Coroutines", "Flow", "Hilt DI", "Room Database", "StateFlow")
-            )
+        if (isDesktop) {
+            // Bento Grid Desktop Layout
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                // Row 1
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    SkillGroupCard(
+                        category = "ANDROID & CROSS-PLATFORM",
+                        categoryColor = PrimaryGreen,
+                        title = "Core Development",
+                        skills = listOf("Kotlin", "Java", "Jetpack Compose", "XML", "MVVM / MVI", "Clean Architecture"),
+                        watermark = "📱",
+                        modifier = Modifier.weight(2f)
+                    )
+                    SkillGroupCard(
+                        category = "CORE LIBRARIES",
+                        categoryColor = SecondaryWarm,
+                        title = "Architecture & Perf",
+                        skills = listOf("Coroutines & Flow", "Hilt / Dagger", "Room DB", "Retrofit", "Navigation", "WorkManager", "StateFlow"),
+                        watermark = "⚙️",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                
+                // Row 2
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    SkillGroupCard(
+                        category = "INTEGRATIONS",
+                        categoryColor = TertiaryBlue,
+                        title = "Backend & Cloud",
+                        skills = listOf("Firebase", "Firestore", "REST APIs", "Gemini AI", "Postman"),
+                        watermark = "☁️",
+                        modifier = Modifier.weight(1f)
+                    )
+                    SkillGroupCard(
+                        category = "WORKFLOW",
+                        categoryColor = TextDim,
+                        title = "Tools & Practices",
+                        skills = listOf("Android Studio", "Git / GitHub", "Material Design 3", "JUnit", "Agile / Scrum"),
+                        watermark = "🔧",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
 
-            // Card 3: Backend & Cloud
-            SkillGroupCard(
-                category = "INTEGRATIONS",
-                categoryColor = TertiaryCyan,
-                title = "Backend & Cloud Services",
-                skills = listOf("Firebase", "REST APIs", "Retrofit", "Gemini AI SDK", "JSON Parsing")
-            )
-
-            // Card 4: Product UI
-            SkillGroupCard(
-                category = "DESIGN FOCUS",
-                categoryColor = PrimaryBlue,
-                title = "Product UI & Design",
-                skills = listOf("Figma to Compose", "Material 3 Design", "Accessibility", "Animations", "Responsive Layouts")
-            )
-
-            // Card 5: KMP (Featured)
-            SkillGroupCard(
-                category = "CURRENTLY EXPLORING",
-                categoryColor = TertiaryCyan,
-                title = "Growing Beyond Android (KMP)",
-                skills = listOf("Kotlin Multiplatform", "Compose Multiplatform", "Ktor Client", "WASM / Web", "iOS SwiftUI Host")
-            )
+                // Row 3
+                SkillGroupCard(
+                    category = "LANGUAGES & MULTIPLATFORM",
+                    categoryColor = PrimaryGreen,
+                    title = "Growing Beyond Android",
+                    description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
+                    skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
+                    watermark = "🌍",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        } else {
+            // Mobile Stacked Layout
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                SkillGroupCard(
+                    category = "ANDROID & CROSS-PLATFORM",
+                    categoryColor = PrimaryGreen,
+                    title = "Core Development",
+                    skills = listOf("Kotlin", "Java", "Jetpack Compose", "XML", "MVVM / MVI", "Clean Architecture"),
+                    watermark = "📱",
+                    modifier = Modifier.fillMaxWidth()
+                )
+                SkillGroupCard(
+                    category = "CORE LIBRARIES",
+                    categoryColor = SecondaryWarm,
+                    title = "Architecture & Perf",
+                    skills = listOf("Coroutines & Flow", "Hilt / Dagger", "Room DB", "Retrofit", "Navigation", "WorkManager", "StateFlow"),
+                    watermark = "⚙️",
+                    modifier = Modifier.fillMaxWidth()
+                )
+                SkillGroupCard(
+                    category = "INTEGRATIONS",
+                    categoryColor = TertiaryBlue,
+                    title = "Backend & Cloud",
+                    skills = listOf("Firebase", "Firestore", "REST APIs", "Gemini AI", "Postman"),
+                    watermark = "☁️",
+                    modifier = Modifier.fillMaxWidth()
+                )
+                SkillGroupCard(
+                    category = "WORKFLOW",
+                    categoryColor = TextDim,
+                    title = "Tools & Practices",
+                    skills = listOf("Android Studio", "Git / GitHub", "Material Design 3", "JUnit", "Agile / Scrum"),
+                    watermark = "🔧",
+                    modifier = Modifier.fillMaxWidth()
+                )
+                SkillGroupCard(
+                    category = "LANGUAGES & MULTIPLATFORM",
+                    categoryColor = PrimaryGreen,
+                    title = "Growing Beyond Android",
+                    description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
+                    skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
+                    watermark = "🌍",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
 
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 private fun SkillGroupCard(
     category: String,
-    categoryColor: androidx.compose.ui.graphics.Color,
+    categoryColor: Color,
     title: String,
-    skills: List<String>
+    description: String? = null,
+    skills: List<String>,
+    watermark: String? = null,
+    modifier: Modifier = Modifier
 ) {
-    GlassCard(modifier = Modifier.fillMaxWidth()) {
+    PortfolioCard(
+        modifier = modifier,
+        watermarkEmoji = watermark
+    ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(
                 text = category,
@@ -106,7 +169,18 @@ private fun SkillGroupCard(
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            FlowRowWrapper {
+            if (description != null) {
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 skills.forEach { skill ->
                     TechChip(text = skill)
                 }

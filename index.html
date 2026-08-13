@@ -1,864 +1,534 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dhruva Khatavkar | Android Developer Portfolio</title>
+  <title>Dhruva Khatavkar | Android Developer</title>
   <meta name="description" content="Dhruva Khatavkar — Android Developer specializing in Jetpack Compose, Kotlin, KMP, and AI integrations. Explore projects, skills, and experience.">
+  <meta name="author" content="Dhruva Khatavkar">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0D1117">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<!-- ============================================================
-     Shader Background
-     ============================================================ -->
-<div id="shader-bg"></div>
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
 
 <!-- ============================================================
-     Top App Bar
+     Navigation
      ============================================================ -->
-<header class="top-bar">
-  <a href="#home" class="top-bar__logo" onclick="switchSection('home')">Dhruva Khatavkar</a>
-  <div class="top-bar__actions">
-    <button id="theme-toggle-btn" class="top-bar__btn" aria-label="Toggle Light/Dark Theme">
-      <span id="theme-icon" class="material-symbols-outlined">light_mode</span>
+<header>
+  <nav class="wrap nav-bar">
+    <a href="#" class="logo">dhruva<span>.dev</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#ai">AI</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="status-pill">open to work</div>
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <button class="top-bar__btn" aria-label="Profile">
-      <span class="material-symbols-outlined">account_circle</span>
-    </button>
-  </div>
+  </nav>
 </header>
 
-<!-- ============================================================
-     Side Navigation Rail (Desktop)
-     ============================================================ -->
-<nav class="side-nav" aria-label="Main navigation">
-  <div class="side-nav__brand">D</div>
-  <a href="#home" class="nav-item active" data-section="home" aria-label="Home">
-    <span class="material-symbols-outlined">home</span>
-  </a>
-  <a href="#about" class="nav-item" data-section="about" aria-label="About">
-    <span class="material-symbols-outlined">person</span>
-  </a>
-  <a href="#skills" class="nav-item" data-section="skills" aria-label="Skills">
-    <span class="material-symbols-outlined">code</span>
-  </a>
-  <a href="#projects" class="nav-item" data-section="projects" aria-label="Projects">
-    <span class="material-symbols-outlined">terminal</span>
-  </a>
-  <a href="#experience" class="nav-item" data-section="experience" aria-label="Experience">
-    <span class="material-symbols-outlined">work</span>
-  </a>
-  <a href="#ai" class="nav-item" data-section="ai" aria-label="Dhruva AI">
-    <span class="material-symbols-outlined">smart_toy</span>
-  </a>
-  <a href="#contact" class="nav-item" data-section="contact" aria-label="Contact">
-    <span class="material-symbols-outlined">mail</span>
-  </a>
-</nav>
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#experience">Experience</a>
+  <a href="#ai">Dhruva AI</a>
+  <a href="#contact">Contact</a>
+</div>
 
 <!-- ============================================================
-     Main Content
+     Hero
      ============================================================ -->
-<main class="main-content">
-  <div class="container">
+<section class="hero" style="border-top:none;">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Android Developer • Kotlin • Jetpack Compose</span>
+        <h1>Building <span class="accent">native</span><br>Android experiences.</h1>
+        <p class="hero-desc">
+          I'm Dhruva Khatavkar — I build fluid, performant Android applications with Jetpack Compose, Kotlin, and modern architectural patterns. Currently exploring Kotlin Multiplatform.
+        </p>
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-primary">Explore My Work</a>
+          <a href="resume.html" class="btn btn-ghost">View Resume</a>
+          <a href="#ai" class="btn btn-ghost">Ask Dhruva AI →</a>
+        </div>
+      </div>
 
-    <!-- ========== HOME SECTION ========== -->
-    <section id="section-home" class="section active">
+      <!-- Device Mockup -->
+      <div class="device reveal">
+        <div class="device-bar">
+          <div class="dot-row"><span></span><span></span><span></span></div>
+          <span>DhruvaKhatavkar.kt</span>
+        </div>
+        <div id="terminal-output">
+          <div class="logline"><b>val</b> name = <span class="warm">"Dhruva Khatavkar"</span></div>
+          <div class="logline"><b>val</b> role = <span class="warm">"Android Developer"</span></div>
+          <div class="logline"><b>val</b> location = <span class="warm">"Beed, India"</span></div>
+          <div class="logline"><b>val</b> stack = <span class="blue">listOf</span>(</div>
+          <div class="logline">    <span class="warm">"Kotlin"</span>, <span class="warm">"Jetpack Compose"</span>,</div>
+          <div class="logline">    <span class="warm">"MVVM"</span>, <span class="warm">"Hilt"</span>, <span class="warm">"Room"</span></div>
+          <div class="logline">)</div>
+          <div class="logline"><b>val</b> exploring = <span class="warm">"Kotlin Multiplatform"</span></div>
+          <div class="logline"><b>val</b> status = <span class="warm">"Open to roles"</span> <span class="cursor"></span></div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><b>3+</b><span>Apps</span></div>
+          <div class="stat"><b>2+</b><span>Years</span></div>
+          <div class="stat"><b>1</b><span>Intern</span></div>
+          <div class="stat"><b>KMP</b><span>Learning</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <!-- Hero -->
-      <div class="hero">
-        <div class="hero__content">
-          <div class="hero__tags fade-up visible">
-            <span class="hero__tag glass-card">
-              <span class="material-symbols-outlined" style="font-size:16px">location_on</span>
-              Pune, India
-            </span>
-            <span class="hero__tag glass-card">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#4CAF50">fiber_manual_record</span>
-              Available for roles
-            </span>
+<!-- ============================================================
+     About
+     ============================================================ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">01 //</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="about-text reveal">
+      <p>I'm an Android Developer who has been building mobile applications since August 2023. I enjoy turning ideas into intuitive, polished Android experiences that solve real-world problems.</p>
+      <p>I graduated with a B.Tech in Electronics & Communication Engineering from Jaypee Institute of Information Technology, Noida (2022–2026). Android development keeps me engaged because it is both complex and constantly evolving.</p>
+      <p>Right now I'm diving deep into <strong>Kotlin Multiplatform</strong> — bridging the gap between Android, iOS, and Web while maximizing code sharing and maintaining native performance.</p>
+    </div>
+    <div class="about-cards reveal">
+      <div class="about-card">
+        <span class="card-icon">🎨</span>
+        <h3>Design for People</h3>
+        <p>Creating clean, intuitive UI that feels natural and reduces cognitive load for the end user.</p>
+      </div>
+      <div class="about-card">
+        <span class="card-icon">🛠️</span>
+        <h3>Solve Real Problems</h3>
+        <p>Focusing on practical mobile experiences that address actual user needs effectively.</p>
+      </div>
+      <div class="about-card">
+        <span class="card-icon">📚</span>
+        <h3>Keep Learning</h3>
+        <p>Actively learning new tools, architectures, and approaches to stay adaptable in a fast-moving ecosystem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Skills
+     ============================================================ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">02 //</span>
+      <h2 class="section-title">Skills</h2>
+    </div>
+    <p class="about-text reveal" style="margin-bottom:40px;">
+      A growing Android-focused toolkit shaped by hands-on projects, API integrations, real-time features, modern UI development, and cross-platform learning.
+    </p>
+
+    <div class="bento-grid reveal">
+      <!-- Android & Cross-Platform (span 2) -->
+      <div class="bento-card span-2">
+        <span class="watermark">📱</span>
+        <div class="card-label">Android & Cross-Platform</div>
+        <h3>Core Development</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Kotlin</span>
+          <span class="tech-tag">Java</span>
+          <span class="tech-tag">Jetpack Compose</span>
+          <span class="tech-tag">XML</span>
+          <span class="tech-tag">MVVM / MVI</span>
+          <span class="tech-tag">Clean Architecture</span>
+        </div>
+      </div>
+
+      <!-- Architecture & Perf -->
+      <div class="bento-card">
+        <span class="watermark">⚙️</span>
+        <div class="card-label warm">Core Libraries</div>
+        <h3>Architecture & Perf</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Coroutines & Flow</span>
+          <span class="tech-tag">Hilt / Dagger</span>
+          <span class="tech-tag">Room DB</span>
+          <span class="tech-tag">Retrofit</span>
+          <span class="tech-tag">Navigation</span>
+          <span class="tech-tag">WorkManager</span>
+          <span class="tech-tag">StateFlow</span>
+        </div>
+      </div>
+
+      <!-- Backend & Cloud -->
+      <div class="bento-card">
+        <span class="watermark">☁️</span>
+        <div class="card-label blue">Integrations</div>
+        <h3>Backend & Cloud</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Firebase</span>
+          <span class="tech-tag">Firestore</span>
+          <span class="tech-tag">REST APIs</span>
+          <span class="tech-tag">Gemini AI</span>
+          <span class="tech-tag">Postman</span>
+        </div>
+      </div>
+
+      <!-- Tools & Practices -->
+      <div class="bento-card">
+        <span class="watermark">🔧</span>
+        <div class="card-label dim">Workflow</div>
+        <h3>Tools & Practices</h3>
+        <div class="tech-tags">
+          <span class="tech-tag">Android Studio</span>
+          <span class="tech-tag">Git / GitHub</span>
+          <span class="tech-tag">Material Design 3</span>
+          <span class="tech-tag">JUnit</span>
+          <span class="tech-tag">Agile / Scrum</span>
+          <span class="tech-tag">ZegoCloud SDK</span>
+        </div>
+      </div>
+
+      <!-- KMP (span 2) -->
+      <div class="bento-card span-2" style="border-left: 2px solid var(--accent-dim);">
+        <span class="watermark">🌍</span>
+        <div class="card-label">Languages & Multiplatform</div>
+        <h3>Growing Beyond Android</h3>
+        <p>Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">KMP</span>
+          <span class="tech-tag">CMP</span>
+          <span class="tech-tag">Ktor</span>
+          <span class="tech-tag">C++ / C</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">SQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Projects
+     ============================================================ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">03 //</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+
+    <div class="projects-container">
+
+      <!-- FoodBridge -->
+      <div class="project-row reveal">
+        <div class="project-visual">
+          <div class="project-gradient" style="background: linear-gradient(135deg, rgba(61,220,132,0.15), rgba(88,166,255,0.08));"></div>
+          <span class="project-icon">🍽️</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">FoodBridge</h3>
+          <div class="project-meta">
+            <span class="tag">Kotlin</span>
+            <span class="tag">Compose</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Maps API</span>
           </div>
+          <p class="project-desc">A platform connecting surplus food donors with NGOs to reduce food waste and feed communities in need. Real-time matching with location-based services.</p>
+          <a href="foodbridge-case-study.html" class="project-link">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
 
-          <h1 class="text-display-lg-mobile fade-up visible" id="hero-heading" style="font-size:clamp(32px,5vw,48px);line-height:clamp(40px,5.5vw,56px);">
-            Building <span class="text-primary">Intelligent</span><br>Android Experiences.
-          </h1>
+      <!-- Agri Connect -->
+      <div class="project-row reveal">
+        <div class="project-visual">
+          <div class="project-gradient" style="background: linear-gradient(135deg, rgba(255,138,101,0.15), rgba(61,220,132,0.08));"></div>
+          <span class="project-icon">🌾</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Agri Connect</h3>
+          <div class="project-meta">
+            <span class="tag">Kotlin</span>
+            <span class="tag">MVVM</span>
+            <span class="tag">Retrofit</span>
+            <span class="tag">Room</span>
+          </div>
+          <p class="project-desc">A direct farmer-to-consumer marketplace enabling agricultural trade without middlemen. Features include real-time pricing, crop cataloging, and order management.</p>
+          <a href="agriconnect-case-study.html" class="project-link">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
 
-          <p class="text-body-lg text-on-surface-variant fade-up visible" style="max-width:576px;">
-            I'm Dhruva Khatavkar, an Android Developer specializing in Jetpack Compose, Kotlin, and AI integrations. I craft fluid, performant applications with a deep focus on modern architectural patterns.
+      <!-- CareNest -->
+      <div class="project-row reveal">
+        <div class="project-visual">
+          <div class="project-gradient" style="background: linear-gradient(135deg, rgba(88,166,255,0.15), rgba(255,138,101,0.08));"></div>
+          <span class="project-icon">❤️</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">CareNest</h3>
+          <div class="project-meta">
+            <span class="tag">Kotlin</span>
+            <span class="tag">Compose</span>
+            <span class="tag">Hilt</span>
+            <span class="tag">Gemini AI</span>
+          </div>
+          <p class="project-desc">An elderly care management application with medication tracking, health monitoring dashboards, and caregiver communication features.</p>
+          <a href="carenest-case-study.html" class="project-link">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Portfolio -->
+      <div class="project-row reveal">
+        <div class="project-visual">
+          <div class="project-gradient" style="background: linear-gradient(135deg, rgba(61,220,132,0.1), rgba(88,166,255,0.1));"></div>
+          <span class="project-icon">🌐</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">This Portfolio</h3>
+          <div class="project-meta">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <p class="project-desc">A developer-crafted portfolio site with a terminal-themed design system. Features an embedded AI assistant powered by Google Gemini.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Experience
+     ============================================================ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">04 //</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+
+    <div class="timeline reveal">
+
+      <!-- ADM Internship -->
+      <div class="timeline-item current">
+        <span class="timeline-date">Oct 2024 – Jan 2025 • Remote</span>
+        <div class="timeline-card">
+          <h3>Android Developer Intern</h3>
+          <div class="org">ADM Education and Welfare Society</div>
+          <ul>
+            <li>Built a modular Android application in Kotlin, following MVVM architecture, to manage internship placements for a large student base.</li>
+            <li>Designed responsive UIs with Jetpack Compose and structured state with Coroutines/Flow, improving user navigation flow by 25%.</li>
+            <li>Integrated Firebase Realtime Database and Auth with Hilt-based dependency injection to handle concurrent user sessions and secure data storage.</li>
+          </ul>
+          <div class="tech-tags" style="margin-top:16px;">
+            <span class="tech-tag">Kotlin</span>
+            <span class="tech-tag">Jetpack Compose</span>
+            <span class="tech-tag">MVVM</span>
+            <span class="tech-tag">Hilt</span>
+            <span class="tech-tag">Firebase</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education 1 -->
+      <div class="timeline-item">
+        <span class="timeline-date">2022 – 2026</span>
+        <div class="timeline-card">
+          <h3>B.Tech in Electronics & Communication</h3>
+          <div class="org">Jaypee Institute of Information Technology, Noida</div>
+          <p style="font-size:14px;color:var(--text-muted);margin-top:8px;">
+            Relevant Coursework: Data Structures, DBMS, OS, OOPS
           </p>
-
-          <div class="flex flex-wrap gap-4 fade-up visible" style="margin-top:16px;">
-            <button class="btn-primary" onclick="switchSection('projects')">
-              Explore My Work
-            </button>
-            <button class="btn-secondary" onclick="switchSection('ai')">
-              <span class="material-symbols-outlined">smart_toy</span>
-              Meet Dhruva AI
-            </button>
-          </div>
-        </div>
-
-        <div class="hero__visual float-anim">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpB7CpwBSFK7bfRHHTIvxUNLPjAcGTn8K9uH5JLprKxCdNVvzTeqbT2zsvB96MPSg7V5vvTE354_2nUan1DTAblNrkGzd4YbbUXuNp3pg7Hi5xFvW5bx0yNu5gNZnMGmgbcytS3fR3mdtu2aAso16s7dlqauFFH3-RE2yEj-p40oJbqVYS6FnitAERkUlxrsrkieGF3MgTQLwtih0BpO7Hvbc-QOb7n_uA7MEimo7ej-g-wqPbJq3Z" alt="Dhruva Khatavkar" class="hero__image glass-card">
         </div>
       </div>
 
-      <!-- Dhruva AI Teaser -->
-      <section class="py-24 fade-up">
-        <div class="ai-section glass-card">
-          <div class="ai-section__accent-bar"></div>
-          <div class="flex flex-col items-center text-center mb-8">
-            <span class="material-symbols-outlined text-tertiary" style="font-size:36px;margin-bottom:16px;">smart_toy</span>
-            <h2 class="text-headline-md font-bold mb-2">Ask Dhruva AI</h2>
-            <p class="text-body-md text-on-surface-variant max-w-2xl">Interact with an AI trained on my portfolio, technical skills, and project experience. Ask it anything about my work.</p>
-          </div>
-          <div class="max-w-3xl" style="margin:0 auto;">
-            <div class="ai-section__response">
-              <div class="flex gap-4" style="align-items:flex-start;">
-                <div style="width:32px;height:32px;border-radius:50%;background:rgba(61,90,254,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <span class="material-symbols-outlined text-primary" style="font-size:16px;">smart_toy</span>
-                </div>
-                <div>
-                  <p class="text-body-md">Here is an overview of Dhruva's experience with Jetpack Compose. He has utilized it extensively in his recent projects to build reactive, state-driven UIs.</p>
-                  <div class="ai-section__insight" style="margin-top:16px;">
-                    <h4 class="text-label-sm font-semibold mb-2" style="font-size:14px;">Project Insight: Compose Architect</h4>
-                    <p class="text-body-md text-on-surface-variant" style="font-size:14px;margin-bottom:12px;">A demonstration of advanced state management and custom layout implementations using modern Compose patterns.</p>
-                    <div class="flex flex-wrap gap-2">
-                      <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Kotlin</span>
-                      <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Jetpack Compose</span>
-                      <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Coroutines</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-section__prompts">
-              <button class="glass-card ai-section__prompt-btn ai-prompt-btn">What is your tech stack?</button>
-              <button class="glass-card ai-section__prompt-btn ai-prompt-btn">Explain your experience with AI integration.</button>
-              <button class="glass-card ai-section__prompt-btn ai-prompt-btn">Show me your best UI work.</button>
-            </div>
-
-            <div class="ai-section__input-wrap">
-              <input id="ai-input-home" class="ai-section__input" type="text" placeholder="Ask about my projects, skills, or experience...">
-              <div class="ai-section__input-actions">
-                <button class="ai-section__icon-btn" aria-label="Voice input">
-                  <span class="material-symbols-outlined">mic</span>
-                </button>
-                <button class="ai-section__send-btn" aria-label="Send" onclick="switchSection('ai')">
-                  <span class="material-symbols-outlined">send</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="text-center" style="margin-top:32px;">
-              <button class="text-tertiary text-body-md" style="text-decoration:underline;text-underline-offset:4px;" onclick="switchSection('ai')">
-                Open Full AI Workspace
-              </button>
-            </div>
-          </div>
+      <!-- Education 2 -->
+      <div class="timeline-item">
+        <span class="timeline-date">2019 – 2021</span>
+        <div class="timeline-card">
+          <h3>Higher Secondary Education (PCM)</h3>
+          <div class="org">Late M.E Bhore Junior College, Padali</div>
         </div>
-      </section>
-    </section>
+      </div>
 
-    <!-- ========== ABOUT SECTION ========== -->
-    <section id="section-about" class="section">
+    </div>
 
-      <!-- About Hero -->
-      <div class="hero" style="min-height:70vh;">
-        <div class="hero__content">
-          <span class="text-label-sm text-tertiary uppercase tracking-widest fade-up visible">About Me</span>
-          <h1 class="text-display-lg-mobile fade-up visible">
-            Building Android experiences through curiosity and constant learning.
-          </h1>
-          <p class="text-body-lg text-on-surface-variant fade-up visible" style="max-width:576px;">
-            I'm Dhruva Khatavkar, an Android Developer who has been building mobile applications since August 2023. I enjoy turning ideas into intuitive, polished Android experiences that solve real-world problems. Android development keeps me engaged because it is both complex and constantly evolving.
-          </p>
-        </div>
-        <div class="hero__visual">
-          <div class="glass-panel rounded-2xl" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:rgba(61,90,254,0.05);border-radius:50%;filter:blur(100px);animation:pulse-glow 3s infinite;"></div>
-            <div style="position:relative;z-index:10;width:75%;height:75%;display:flex;gap:16px;transform:rotate(-5deg);transition:transform 0.7s;">
-              <div class="glass-panel rounded-xl" style="flex:1;overflow:hidden;">
-                <div style="height:24px;background:var(--surface-container-highest);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;padding:0 12px;gap:8px;">
-                  <div style="width:8px;height:8px;border-radius:50%;background:var(--error);"></div>
-                  <div style="width:8px;height:8px;border-radius:50%;background:var(--tertiary);"></div>
-                </div>
-                <div style="padding:16px;display:flex;flex-direction:column;gap:12px;">
-                  <div style="height:16px;width:50%;background:var(--surface-variant);border-radius:6px;"></div>
-                  <div style="height:80px;width:100%;background:rgba(61,90,254,0.15);border-radius:6px;"></div>
-                  <div style="height:16px;width:75%;background:var(--surface-variant);border-radius:6px;"></div>
-                </div>
-              </div>
-            </div>
+    <!-- Resume Preview -->
+    <div style="margin-top:64px;" class="reveal">
+      <h3 class="section-title" style="font-size:22px;margin-bottom:16px;">Resume</h3>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;max-width:500px;">
+        Download or open my latest resume to review project depth, technical stack, and problem-solving track record.
+      </p>
+      <div class="resume-row">
+        <a href="Dhruva_Khatavkar_Resume.pdf" download class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </a>
+        <a href="resume.html" class="btn btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Resume
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AI Workspace
+     ============================================================ -->
+<section id="ai">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">05 //</span>
+      <h2 class="section-title">Dhruva AI</h2>
+    </div>
+    <p class="about-text reveal" style="margin-bottom:32px;">
+      An interactive AI assistant trained on my portfolio, projects, and technical expertise. Ask anything about my work — powered by Google Gemini.
+    </p>
+
+    <div class="ai-terminal reveal">
+      <div class="window-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="tab">DhruvaAI.kt</span>
+      </div>
+
+      <!-- Chat Area -->
+      <div class="ai-chat-area" id="ai-chat">
+        <div class="ai-msg bot">
+          <div class="avatar">🤖</div>
+          <div class="content">
+            👋 Hi! I'm <strong>Dhruva AI</strong>. I can answer questions about Dhruva's technical skills, projects, experience, and development philosophy. Try asking me something!
           </div>
         </div>
       </div>
 
-      <div style="height:96px;"></div>
-
-      <!-- My Journey Timeline -->
-      <div class="fade-up">
-        <h2 class="text-headline-md mb-8">My Journey</h2>
-        <div class="timeline">
-          <div class="timeline__line"></div>
-          <div class="timeline__items">
-
-            <div class="timeline__item">
-              <div class="timeline__half timeline__half--left hidden" style="display:none;">
-                <span class="timeline__date">Aug 2023</span>
-              </div>
-              <div class="timeline__dot"></div>
-              <div class="timeline__half timeline__half--right">
-                <span class="timeline__date">Aug 2023</span>
-                <div class="timeline__card glass-panel shimmer-border">
-                  <h3 class="text-body-lg font-semibold mb-2">Began Exploring</h3>
-                  <p class="text-body-md text-on-surface-variant">Began exploring Android development and Kotlin.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline__item">
-              <div class="timeline__half timeline__half--left hidden" style="display:none;">
-              </div>
-              <div class="timeline__dot" style="background:var(--surface-variant);border:2px solid var(--primary-container);box-shadow:none;"></div>
-              <div class="timeline__half timeline__half--right">
-                <span class="timeline__date">2023–2026</span>
-                <div class="timeline__card glass-panel shimmer-border">
-                  <h3 class="text-body-lg font-semibold mb-2">Skill Growth</h3>
-                  <p class="text-body-md text-on-surface-variant">Built Android projects while growing skills in UI design, Firebase, APIs, and real-world app development.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline__item">
-              <div class="timeline__half timeline__half--left hidden" style="display:none;">
-                <span class="timeline__date">2026</span>
-              </div>
-              <div class="timeline__dot" style="background:var(--surface-variant);border:2px solid var(--primary-container);box-shadow:none;"></div>
-              <div class="timeline__half timeline__half--right">
-                <span class="timeline__date">2026</span>
-                <div class="timeline__card glass-panel shimmer-border">
-                  <h3 class="text-body-lg font-semibold mb-2">Graduation</h3>
-                  <p class="text-body-md text-on-surface-variant">Graduated with a B.Tech in Electronics and Communication Engineering from Jaypee Institute of Information Technology.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline__item">
-              <div class="timeline__half timeline__half--left hidden" style="display:none;">
-              </div>
-              <div class="timeline__dot" style="background:var(--secondary-container);box-shadow:0 0 10px rgba(207,188,255,0.6);animation:pulse-glow 2s infinite;"></div>
-              <div class="timeline__half timeline__half--right">
-                <span class="timeline__date" style="color:var(--secondary);">Now</span>
-                <div class="timeline__card glass-panel shimmer-border" style="border-top-color:rgba(61,90,254,0.3);position:relative;overflow:hidden;">
-                  <div style="position:absolute;top:0;right:0;width:128px;height:128px;background:rgba(61,90,254,0.1);border-radius:50%;filter:blur(32px);"></div>
-                  <h3 class="text-body-lg font-semibold mb-2" style="position:relative;z-index:10;">Current Focus</h3>
-                  <p class="text-body-md text-on-surface-variant" style="position:relative;z-index:10;">Exploring Kotlin Multiplatform.</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
+      <!-- Suggested Prompts -->
+      <div class="ai-prompts">
+        <button class="ai-prompt-chip ai-prompt-btn">What is your tech stack?</button>
+        <button class="ai-prompt-chip ai-prompt-btn">Explain your experience with AI integration.</button>
+        <button class="ai-prompt-chip ai-prompt-btn">Show me your best UI work.</button>
       </div>
 
-      <div style="height:128px;"></div>
-
-      <!-- Development Philosophy -->
-      <div class="fade-up">
-        <h2 class="text-headline-md mb-8">Development Philosophy</h2>
-        <div class="grid-3">
-          <div class="glass-panel p-6 rounded-2xl shimmer-border flex flex-col gap-4">
-            <div style="width:48px;height:48px;border-radius:50%;background:var(--surface-container-highest);display:flex;align-items:center;justify-content:center;">
-              <span class="material-symbols-outlined text-primary">design_services</span>
-            </div>
-            <h3 class="text-body-lg font-semibold">Design for People</h3>
-            <p class="text-body-md text-on-surface-variant">Creating clean, intuitive UI that feels natural and reduces cognitive load for the end user.</p>
-          </div>
-          <div class="glass-panel p-6 rounded-2xl shimmer-border flex flex-col gap-4">
-            <div style="width:48px;height:48px;border-radius:50%;background:var(--surface-container-highest);display:flex;align-items:center;justify-content:center;">
-              <span class="material-symbols-outlined text-tertiary">build</span>
-            </div>
-            <h3 class="text-body-lg font-semibold">Solve Real Problems</h3>
-            <p class="text-body-md text-on-surface-variant">Focusing on practical mobile application experiences that address actual user needs effectively.</p>
-          </div>
-          <div class="glass-panel p-6 rounded-2xl shimmer-border flex flex-col gap-4" style="position:relative;overflow:hidden;">
-            <div style="width:48px;height:48px;border-radius:50%;background:var(--surface-container-highest);display:flex;align-items:center;justify-content:center;position:relative;z-index:10;">
-              <span class="material-symbols-outlined text-secondary">menu_book</span>
-            </div>
-            <h3 class="text-body-lg font-semibold" style="position:relative;z-index:10;">Keep Learning</h3>
-            <p class="text-body-md text-on-surface-variant" style="position:relative;z-index:10;">Actively learning new tools, architectures, and approaches to stay adaptable in a fast-moving ecosystem.</p>
-          </div>
-        </div>
+      <!-- Input -->
+      <div class="ai-input-row">
+        <input id="ai-input" type="text" placeholder="Ask about my projects, skills, or experience...">
+        <button id="ai-send" class="send-btn" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div style="height:128px;"></div>
+<!-- ============================================================
+     Contact
+     ============================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">06 //</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <p class="about-text reveal" style="margin-bottom:32px;">
+      I'm open to Android development roles and collaboration opportunities. Send me a message and I'll get back to you.
+    </p>
 
-      <!-- Strengths & Currently Exploring -->
-      <div class="fade-up" style="display:grid;grid-template-columns:1fr;gap:48px;">
-        <div>
-          <h2 class="text-headline-md mb-6">Core Strengths</h2>
-          <div class="flex flex-wrap gap-3">
-            <span class="tech-chip">UI Design</span>
-            <span class="tech-chip">Problem Solving</span>
-            <span class="tech-chip">Real-World App Dev</span>
-            <span class="tech-chip">REST API Integration</span>
-            <span class="tech-chip tech-chip--highlight">Android &amp; Kotlin</span>
-          </div>
-        </div>
-        <div>
-          <h2 class="text-headline-md mb-6">Currently Exploring</h2>
-          <div class="glass-panel rounded-2xl p-8" style="position:relative;overflow:hidden;border-color:rgba(207,188,255,0.2);box-shadow:0 0 30px rgba(207,188,255,0.05);">
-            <div style="position:absolute;right:-48px;top:-48px;width:192px;height:192px;background:rgba(207,188,255,0.1);border-radius:50%;filter:blur(40px);"></div>
-            <div class="flex gap-4" style="position:relative;z-index:10;align-items:flex-start;">
-              <div style="width:56px;height:56px;border-radius:var(--rounded-xl);background:linear-gradient(135deg,#7F52FF,#C757BC);padding:1px;">
-                <div style="width:100%;height:100%;background:var(--surface-dim);border-radius:var(--rounded-xl);display:flex;align-items:center;justify-content:center;">
-                  <span class="material-symbols-outlined" style="color:white;font-variation-settings:'FILL' 1;">devices</span>
-                </div>
-              </div>
-              <div style="flex:1;">
-                <h3 class="text-headline-md mb-2">Kotlin Multiplatform</h3>
-                <p class="text-body-md text-on-surface-variant">Bridging the gap between Android, iOS, and Web while maximizing code sharing and maintaining native performance.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="contact-container reveal">
+      <div class="window-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="tab" style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-left:8px;">ContactForm.kt</span>
       </div>
+      <div class="contact-body">
+        <form id="contact-form" class="contact-form">
+          <input type="hidden" name="_subject" value="New message from Portfolio 🚀">
+          <input type="text" name="_gotcha" style="display:none">
 
-      <div style="height:128px;"></div>
+          <div class="form-group">
+            <label for="contact-name">name</label>
+            <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">email</label>
+            <input type="email" id="contact-email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">message</label>
+            <textarea id="contact-message" name="message" placeholder="Your message here..." rows="5" required></textarea>
+          </div>
 
-      <!-- CTA -->
-      <div class="fade-up">
-        <div class="glass-panel rounded-2xl py-24 flex flex-col items-center text-center gap-8" style="position:relative;overflow:hidden;">
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;background:rgba(61,90,254,0.15);filter:blur(120px);border-radius:50%;pointer-events:none;"></div>
-          <h2 class="text-display-lg-mobile" style="position:relative;z-index:10;">Let's build something meaningful.</h2>
-          <div class="flex gap-4" style="position:relative;z-index:10;flex-wrap:wrap;justify-content:center;">
-            <button class="btn-primary btn-pill" onclick="switchSection('contact')">Get in Touch</button>
-            <button class="btn-secondary btn-pill" onclick="switchSection('projects')">View My Projects</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SKILLS SECTION ========== -->
-    <section id="section-skills" class="section">
-      <div class="mb-16 fade-up visible">
-        <span class="text-label-sm text-tertiary uppercase tracking-widest">Technical Skills</span>
-        <h1 class="text-display-lg-mobile" style="max-width:768px;margin-top:8px;">Tools I use to build Android experiences.</h1>
-        <p class="text-body-md text-on-surface-variant" style="max-width:672px;margin-top:16px;">
-          A growing Android-focused toolkit shaped by hands-on projects, API integrations, real-time features, modern UI development, and cross-platform learning.
-        </p>
-      </div>
-
-      <!-- Bento Grid -->
-      <div class="bento-grid mb-16">
-
-        <!-- Android Development (span 2) -->
-        <div class="glass-panel rounded-xl p-6 span-2 fade-up" style="position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;right:0;padding:16px;opacity:0.1;">
-            <span class="material-symbols-outlined text-primary" style="font-size:64px;">android</span>
-          </div>
-          <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-primary mb-2">Hands-On Project Experience</span>
-            <h3 class="text-headline-md mb-6">Android Development</h3>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">Kotlin</span>
-              <span class="tech-chip">Android SDK</span>
-              <span class="tech-chip">Jetpack Compose</span>
-              <span class="tech-chip">MVVM</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Architecture & Perf -->
-        <div class="glass-panel rounded-xl p-6 fade-up" style="position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;right:0;padding:16px;opacity:0.1;">
-            <span class="material-symbols-outlined text-secondary" style="font-size:64px;">memory</span>
-          </div>
-          <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-secondary mb-2">Strong Foundation</span>
-            <h3 class="text-headline-md mb-6">Architecture &amp; Perf</h3>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">Coroutines</span>
-              <span class="tech-chip">Flow</span>
-              <span class="tech-chip">Hilt</span>
-              <span class="tech-chip">Room</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Backend & Cloud -->
-        <div class="glass-panel rounded-xl p-6 fade-up" style="position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;right:0;padding:16px;opacity:0.1;">
-            <span class="material-symbols-outlined text-tertiary" style="font-size:64px;">cloud</span>
-          </div>
-          <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-tertiary mb-2">Integrations</span>
-            <h3 class="text-headline-md mb-6">Backend &amp; Cloud</h3>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">Firebase</span>
-              <span class="tech-chip">REST APIs</span>
-              <span class="tech-chip">Retrofit</span>
-              <span class="tech-chip">Gemini AI</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product UI -->
-        <div class="glass-panel rounded-xl p-6 fade-up" style="position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;right:0;padding:16px;opacity:0.1;">
-            <span class="material-symbols-outlined" style="font-size:64px;color:var(--primary-fixed-dim,#bbc3ff);">palette</span>
-          </div>
-          <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm mb-2" style="color:var(--primary-fixed-dim,#bbc3ff);">Design Focus</span>
-            <h3 class="text-headline-md mb-6">Product UI</h3>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">Figma</span>
-              <span class="tech-chip">Material Design</span>
-              <span class="tech-chip">Accessibility</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- KMP (Featured, span 2) -->
-        <div class="glass-panel rounded-xl p-6 span-2 fade-up" style="position:relative;overflow:hidden;border-top-color:var(--tertiary);border-left-color:var(--primary);background:linear-gradient(135deg,rgba(61,90,254,0.05) 0%,rgba(0,0,0,0) 100%);">
-          <div style="position:absolute;top:0;right:0;padding:16px;opacity:0.1;">
-            <span class="material-symbols-outlined text-tertiary" style="font-size:64px;">devices</span>
-          </div>
-          <div class="flex flex-col" style="height:100%;position:relative;z-index:10;">
-            <span class="text-label-sm text-tertiary mb-2">Currently Exploring</span>
-            <h3 class="text-headline-md mb-2">Growing Beyond Android</h3>
-            <p class="text-body-md text-on-surface-variant mb-6" style="max-width:512px;">Exploring cross-platform capabilities to share business logic and UI across iOS, Android, and Web.</p>
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="tech-chip">KMP</span>
-              <span class="tech-chip">Compose Multiplatform</span>
-              <span class="tech-chip">Ktor</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA -->
-      <div class="glass-panel rounded-xl p-8 text-center flex flex-col items-center fade-up" style="padding:48px;">
-        <h2 class="text-headline-md mb-8">Want to see these skills in action?</h2>
-        <div class="flex gap-4" style="flex-wrap:wrap;justify-content:center;">
-          <button class="btn-primary" onclick="switchSection('projects')">
-            Explore My Projects
-            <span class="material-symbols-outlined" style="font-size:20px;">arrow_forward</span>
+          <button type="submit" id="contact-submit" class="btn btn-primary btn-submit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
           </button>
-          <button class="btn-secondary" onclick="switchSection('ai')">
-            <span class="material-symbols-outlined" style="font-size:20px;">smart_toy</span>
-            Ask Dhruva AI
-          </button>
-        </div>
+        </form>
       </div>
-    </section>
+    </div>
 
-    <!-- ========== PROJECTS SECTION ========== -->
-    <section id="section-projects" class="section">
-      <div class="mb-16 fade-up visible">
-        <span class="text-label-sm text-tertiary uppercase tracking-widest">Projects</span>
-        <h1 class="text-display-lg-mobile" style="max-width:768px;margin-top:8px;">Real-world apps I've built.</h1>
-        <p class="text-body-md text-on-surface-variant" style="max-width:672px;margin-top:16px;">
-          Each project represents a hands-on journey through modern Android development — from architecture and APIs to polished UI with Jetpack Compose.
-        </p>
-      </div>
-
-      <div class="grid-2" style="margin-bottom:64px;">
-
-        <!-- FoodBridge -->
-        <a href="foodbridge-case-study.html" class="project-card glass-panel fade-up" style="display:block; text-decoration:none; color:inherit;">
-          <div class="project-card__image" style="background:linear-gradient(135deg,rgba(61,90,254,0.2),rgba(0,218,243,0.1));display:flex;align-items:center;justify-content:center;">
-            <span class="material-symbols-outlined" style="font-size:64px;color:var(--primary);opacity:0.3;">restaurant</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__category">Food Rescue Platform</div>
-            <h3 class="project-card__title">FoodBridge</h3>
-            <p class="project-card__desc">A platform connecting surplus food donors with NGOs to reduce food waste and feed communities in need. Real-time matching with location-based services.</p>
-            <div class="project-card__tags" style="margin-bottom: 20px;">
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Kotlin</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Compose</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Firebase</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Maps API</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 6px; color: var(--primary); font-size: 14px; font-weight: 600;">
-              View Case Study <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Agri Connect -->
-        <a href="agriconnect-case-study.html" class="project-card glass-panel fade-up" style="display:block; text-decoration:none; color:inherit;">
-          <div class="project-card__image" style="background:linear-gradient(135deg,rgba(0,218,243,0.2),rgba(98,0,234,0.1));display:flex;align-items:center;justify-content:center;">
-            <span class="material-symbols-outlined" style="font-size:64px;color:var(--tertiary);opacity:0.3;">agriculture</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__category">Farmer Marketplace</div>
-            <h3 class="project-card__title">Agri Connect</h3>
-            <p class="project-card__desc">A direct farmer-to-consumer marketplace enabling agricultural trade without middlemen. Features include real-time pricing, crop cataloging, and order management.</p>
-            <div class="project-card__tags" style="margin-bottom: 20px;">
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Kotlin</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">MVVM</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Retrofit</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Room</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 6px; color: var(--tertiary); font-size: 14px; font-weight: 600;">
-              View Case Study <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- CareNest -->
-        <a href="carenest-case-study.html" class="project-card glass-panel fade-up" style="display:block; text-decoration:none; color:inherit;">
-          <div class="project-card__image" style="background:linear-gradient(135deg,rgba(98,0,234,0.2),rgba(207,188,255,0.1));display:flex;align-items:center;justify-content:center;">
-            <span class="material-symbols-outlined" style="font-size:64px;color:var(--secondary);opacity:0.3;">favorite</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__category">Healthcare</div>
-            <h3 class="project-card__title">CareNest</h3>
-            <p class="project-card__desc">An elderly care management application with medication tracking, health monitoring dashboards, and caregiver communication features.</p>
-            <div class="project-card__tags" style="margin-bottom: 20px;">
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Kotlin</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Compose</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Hilt</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Gemini AI</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 6px; color: var(--secondary); font-size: 14px; font-weight: 600;">
-              View Case Study <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Portfolio -->
-        <div class="project-card glass-panel fade-up">
-          <div class="project-card__image" style="background:linear-gradient(135deg,rgba(61,90,254,0.15),rgba(98,0,234,0.15));display:flex;align-items:center;justify-content:center;">
-            <span class="material-symbols-outlined" style="font-size:64px;color:var(--primary);opacity:0.3;">web</span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__category">Portfolio</div>
-            <h3 class="project-card__title">This Portfolio</h3>
-            <p class="project-card__desc">A glassmorphic, shader-driven portfolio web app built to showcase Android development work with the Synthetic Noir design system.</p>
-            <div class="project-card__tags">
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">HTML/CSS/JS</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">WebGL</span>
-              <span class="tech-chip" style="font-size:12px;padding:4px 10px;">GLSL Shaders</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== EXPERIENCE SECTION ========== -->
-    <section id="section-experience" class="section">
-      <div class="mb-16 fade-up visible">
-        <span class="text-label-sm text-tertiary uppercase tracking-widest">Experience</span>
-        <h1 class="text-display-lg-mobile" style="max-width:768px;margin-top:8px;">My professional journey.</h1>
-        <p class="text-body-md text-on-surface-variant" style="max-width:672px;margin-top:16px;">
-          From academic foundations to hands-on Android development — every step has sharpened my craft.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-8">
-
-        <!-- Education -->
-        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--primary-container);">
-          <div class="flex gap-4" style="align-items:flex-start;">
-            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(61,90,254,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-primary">school</span>
-            </div>
-            <div style="flex:1;">
-              <span class="text-label-sm text-tertiary">2022 – 2026</span>
-              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">B.Tech — Electronics & Communication Engineering</h3>
-              <p class="text-body-md text-on-surface-variant">Jaypee Institute of Information Technology, Noida</p>
-              <p class="text-body-md text-on-surface-variant" style="margin-top:12px;">
-                Developed a strong foundation in programming, algorithms, and system design alongside my specialization in Android development.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Android Dev Journey -->
-        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--secondary-container);">
-          <div class="flex gap-4" style="align-items:flex-start;">
-            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(98,0,234,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-secondary">phone_android</span>
-            </div>
-            <div style="flex:1;">
-              <span class="text-label-sm text-tertiary">Aug 2023 – Present</span>
-              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">Android Developer — Self-Directed Projects</h3>
-              <p class="text-body-md text-on-surface-variant">Independent / Open Source</p>
-              <p class="text-body-md text-on-surface-variant" style="margin-top:12px;">
-                Built multiple production-quality Android applications using Kotlin, Jetpack Compose, MVVM, Firebase, and REST APIs. Projects include FoodBridge, Agri Connect, and CareNest — each solving real-world problems with modern Android architecture.
-              </p>
-              <div class="flex flex-wrap gap-2" style="margin-top:16px;">
-                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">3+ Apps Built</span>
-                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">Jetpack Compose</span>
-                <span class="tech-chip" style="font-size:12px;padding:4px 10px;">AI Integration</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Current -->
-        <div class="experience-card glass-panel shimmer-border fade-up" style="border-left:4px solid var(--tertiary-container);position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:rgba(0,218,243,0.05);border-radius:50%;filter:blur(60px);"></div>
-          <div class="flex gap-4" style="align-items:flex-start;position:relative;z-index:10;">
-            <div style="width:48px;height:48px;border-radius:var(--rounded-xl);background:rgba(0,218,243,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-tertiary">rocket_launch</span>
-            </div>
-            <div style="flex:1;">
-              <span class="text-label-sm" style="color:var(--tertiary);">Now</span>
-              <h3 class="text-headline-md" style="font-size:20px;margin:8px 0 4px;">Exploring Kotlin Multiplatform</h3>
-              <p class="text-body-md text-on-surface-variant">Expanding beyond Android</p>
-              <p class="text-body-md text-on-surface-variant" style="margin-top:12px;">
-                Currently learning KMP, Compose Multiplatform, and Ktor to share business logic across Android, iOS, and Web while preserving native UX quality.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== AI WORKSPACE SECTION ========== -->
-    <section id="section-ai" class="section">
-      <div class="mb-16 fade-up visible">
-        <span class="text-label-sm text-tertiary uppercase tracking-widest">AI Workspace</span>
-        <h1 class="text-display-lg-mobile" style="max-width:768px;margin-top:8px;">Chat with Dhruva AI.</h1>
-        <p class="text-body-md text-on-surface-variant" style="max-width:672px;margin-top:16px;">
-          An interactive AI assistant trained on my portfolio, projects, and technical expertise. Ask anything!
-        </p>
-      </div>
-
-      <div class="ai-section glass-card" style="max-width:900px;margin:0 auto;">
-        <div class="ai-section__accent-bar"></div>
-
-        <!-- Chat Area -->
-        <div id="ai-chat" style="max-height:400px;overflow-y:auto;margin-bottom:24px;padding:8px;">
-          <!-- Initial AI message -->
-          <div style="display:flex;gap:16px;align-items:flex-start;padding:16px;border-radius:16px;background:rgba(42,42,42,0.5);border:1px solid rgba(255,255,255,0.05);margin-bottom:12px;">
-            <div style="width:32px;height:32px;border-radius:50%;background:rgba(61,90,254,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined text-primary" style="font-size:16px;">smart_toy</span>
-            </div>
-            <div class="text-body-md">
-              👋 Hi! I'm <strong>Dhruva AI</strong>. I can answer questions about Dhruva's technical skills, projects, experience, and development philosophy. Try asking me something!
-            </div>
-          </div>
-        </div>
-
-        <!-- Suggested Prompts -->
-        <div class="ai-section__prompts">
-          <button class="glass-card ai-section__prompt-btn ai-prompt-btn">What is your tech stack?</button>
-          <button class="glass-card ai-section__prompt-btn ai-prompt-btn">Explain your experience with AI integration.</button>
-          <button class="glass-card ai-section__prompt-btn ai-prompt-btn">Show me your best UI work.</button>
-        </div>
-
-        <!-- Input -->
-        <div class="ai-section__input-wrap">
-          <input id="ai-input" class="ai-section__input" type="text" placeholder="Ask about my projects, skills, or experience...">
-          <div class="ai-section__input-actions">
-            <button class="ai-section__icon-btn" aria-label="Voice input">
-              <span class="material-symbols-outlined">mic</span>
-            </button>
-            <button id="ai-send" class="ai-section__send-btn" aria-label="Send">
-              <span class="material-symbols-outlined">send</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CONTACT SECTION ========== -->
-    <section id="section-contact" class="section">
-      <div class="mb-16 fade-up visible">
-        <span class="text-label-sm text-tertiary uppercase tracking-widest">Contact</span>
-        <h1 class="text-display-lg-mobile" style="max-width:768px;margin-top:8px;">Let's connect.</h1>
-        <p class="text-body-md text-on-surface-variant" style="max-width:672px;margin-top:16px;">
-          I'm open to Android development roles and exciting collaboration opportunities. Drop me a message!
-        </p>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr;gap:48px;max-width:900px;" class="contact-grid">
-
-        <!-- Contact Form -->
-        <div class="glass-panel rounded-2xl p-8 fade-up">
-          <form id="contact-form" class="contact-form">
-            <!-- Formspree hidden fields -->
-            <input type="hidden" name="_subject" value="New message from Portfolio 🚀">
-            <input type="text" name="_gotcha" style="display:none"> <!-- Spam trap -->
-
-            <div style="display:grid;grid-template-columns:1fr;gap:24px;">
-              <div class="form-group">
-                <label for="contact-name">Your Name</label>
-                <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
-              </div>
-              <div class="form-group">
-                <label for="contact-email">Email</label>
-                <input type="email" id="contact-email" name="email" placeholder="john@example.com" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="contact-subject">Subject</label>
-              <input type="text" id="contact-subject" name="subject" placeholder="Android development opportunity">
-            </div>
-            <div class="form-group">
-              <label for="contact-message">Message</label>
-              <textarea id="contact-message" name="message" placeholder="Tell me about your project or opportunity..." required></textarea>
-            </div>
-            <button type="submit" id="contact-submit" class="btn-primary" style="align-self:flex-start;">
-              <span class="material-symbols-outlined" style="font-size:20px;">send</span>
-              Send Message
-            </button>
-          </form>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="fade-up">
-          <h3 class="text-headline-md mb-6">Quick Links</h3>
-          <div class="flex flex-col gap-4">
-            <a href="mailto:khatavkardhruva@gmail.com" class="flex items-center gap-3 text-on-surface-variant" style="transition:color 0.3s;">
-              <span class="material-symbols-outlined" style="font-size:20px;">mail</span>
-              <span class="text-body-md">khatavkardhruva@gmail.com</span>
-            </a>
-            <a href="#" class="flex items-center gap-3 text-on-surface-variant" style="transition:color 0.3s;">
-              <span class="material-symbols-outlined" style="font-size:20px;">link</span>
-              <span class="text-body-md">LinkedIn</span>
-            </a>
-            <a href="#" class="flex items-center gap-3 text-on-surface-variant" style="transition:color 0.3s;">
-              <span class="material-symbols-outlined" style="font-size:20px;">terminal</span>
-              <span class="text-body-md">GitHub</span>
-            </a>
-            <div class="flex items-center gap-3 text-on-surface-variant">
-              <span class="material-symbols-outlined" style="font-size:20px;">location_on</span>
-              <span class="text-body-md">Pune, India</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </div><!-- /.container -->
-</main>
+    <!-- Direct Contact Links -->
+    <div class="reveal" style="margin-top:40px;display:flex;flex-wrap:wrap;gap:24px;">
+      <a href="mailto:khatavkardhruva@gmail.com" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-muted);transition:color 0.2s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        khatavkardhruva@gmail.com
+      </a>
+      <a href="https://github.com/codeAtDK" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-muted);transition:color 0.2s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/dhruva-khatavkar/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-muted);transition:color 0.2s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <span style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-dim);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Beed, India
+      </span>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================
      Footer
      ============================================================ -->
 <footer class="footer">
-  <div class="footer__glow"></div>
-  <div class="container">
-    <div class="footer__inner glass-card">
-      <div class="footer__grid">
-
-        <!-- Brand Column -->
-        <div class="flex flex-col gap-4">
-          <div class="flex items-center gap-4">
-            <div style="width:48px;height:48px;border-radius:50%;background:var(--primary-container);display:flex;align-items:center;justify-content:center;color:var(--on-primary-container);font-weight:700;font-size:20px;box-shadow:0 4px 12px rgba(61,90,254,0.2);">D</div>
-            <div>
-              <h3 class="text-headline-md font-bold">Dhruva Khatavkar</h3>
-              <p class="text-label-sm text-primary">Android Developer</p>
-            </div>
-          </div>
-          <p class="text-body-md text-on-surface-variant" style="max-width:400px;margin-top:8px;">
-            Building thoughtful Android experiences with Kotlin, Jetpack Compose, and Kotlin Multiplatform.
-          </p>
-        </div>
-
-        <!-- Explore Column -->
-        <div class="flex flex-col gap-4">
-          <h4 class="text-label-sm font-bold uppercase tracking-widest">Explore</h4>
-          <ul class="flex flex-col gap-2">
-            <li><a href="#home" class="text-body-md text-on-surface-variant" data-nav="home" style="transition:color 0.2s;">Home</a></li>
-            <li><a href="#about" class="text-body-md text-on-surface-variant" data-nav="about" style="transition:color 0.2s;">About</a></li>
-            <li><a href="#skills" class="text-body-md text-on-surface-variant" data-nav="skills" style="transition:color 0.2s;">Skills</a></li>
-            <li><a href="#projects" class="text-body-md text-on-surface-variant" data-nav="projects" style="transition:color 0.2s;">Projects</a></li>
-            <li><a href="#experience" class="text-body-md text-on-surface-variant" data-nav="experience" style="transition:color 0.2s;">Experience</a></li>
-          </ul>
-        </div>
-
-        <!-- Connect Column -->
-        <div class="flex flex-col gap-4">
-          <h4 class="text-label-sm font-bold uppercase tracking-widest">Connect</h4>
-          <div class="flex flex-col gap-3">
-            <a href="mailto:khatavkardhruva@gmail.com" class="flex items-center gap-3 text-on-surface-variant text-body-md" style="transition:color 0.3s;">
-              <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
-              khatavkardhruva@gmail.com
-            </a>
-            <a href="#" class="flex items-center gap-3 text-on-surface-variant text-body-md" style="transition:color 0.3s;">
-              <span class="material-symbols-outlined" style="font-size:18px;">link</span>
-              LinkedIn
-            </a>
-            <a href="#" class="flex items-center gap-3 text-on-surface-variant text-body-md" style="transition:color 0.3s;">
-              <span class="material-symbols-outlined" style="font-size:18px;">terminal</span>
-              GitHub
-            </a>
-            <div class="flex items-center gap-3 text-on-surface-variant text-body-md">
-              <span class="material-symbols-outlined" style="font-size:18px;">location_on</span>
-              Pune, India
-            </div>
-          </div>
-        </div>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-left">
+        © 2026 Dhruva Khatavkar. Built with Kotlin, curiosity, and clean code.
       </div>
-
-      <div class="footer__sep"></div>
-
-      <div class="footer__bottom">
-        <div class="flex flex-col gap-2" style="align-items:center;">
-          <p class="text-label-sm text-on-surface-variant">
-            © 2026 Dhruva Khatavkar. Built with Kotlin, curiosity, and clean UI.
-          </p>
-          <div class="status-badge">
-            <span class="status-badge__dot"></span>
-            <span class="text-label-sm text-on-surface-variant" style="font-size:10px;">Open to Android opportunities</span>
-          </div>
-        </div>
-        <button onclick="backToTop()" class="flex items-center gap-2 text-on-surface-variant text-label-sm" style="transition:color 0.3s;">
-          Back to Top
-          <span class="material-symbols-outlined">arrow_upward</span>
-        </button>
+      <div class="footer-links">
+        <a href="mailto:khatavkardhruva@gmail.com">Email</a>
+        <a href="https://github.com/codeAtDK" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/dhruva-khatavkar/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- ============================================================
-     Bottom Navigation (Mobile)
-     ============================================================ -->
-<nav class="bottom-nav" aria-label="Mobile navigation">
-  <a href="#home" class="bottom-nav__item active" data-section="home">
-    <span class="material-symbols-outlined" style="font-size:20px;">home</span>
-    <span class="bottom-nav__label">Home</span>
-  </a>
-  <a href="#about" class="bottom-nav__item" data-section="about">
-    <span class="material-symbols-outlined" style="font-size:20px;">person</span>
-    <span class="bottom-nav__label">About</span>
-  </a>
-  <a href="#skills" class="bottom-nav__item" data-section="skills">
-    <span class="material-symbols-outlined" style="font-size:20px;">code</span>
-    <span class="bottom-nav__label">Skills</span>
-  </a>
-  <a href="#projects" class="bottom-nav__item" data-section="projects">
-    <span class="material-symbols-outlined" style="font-size:20px;">terminal</span>
-    <span class="bottom-nav__label">Projects</span>
-  </a>
-  <a href="#experience" class="bottom-nav__item" data-section="experience">
-    <span class="material-symbols-outlined" style="font-size:20px;">work</span>
-    <span class="bottom-nav__label">Exp</span>
-  </a>
-  <a href="#ai" class="bottom-nav__item" data-section="ai">
-    <span class="material-symbols-outlined" style="font-size:20px;">smart_toy</span>
-    <span class="bottom-nav__label">AI</span>
-  </a>
-  <a href="#contact" class="bottom-nav__item" data-section="contact">
-    <span class="material-symbols-outlined" style="font-size:20px;">mail</span>
-    <span class="bottom-nav__label">Contact</span>
-  </a>
-</nav>
-
-<script type="module" src="js/app.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

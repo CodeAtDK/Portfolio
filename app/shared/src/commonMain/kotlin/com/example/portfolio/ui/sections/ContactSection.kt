@@ -1,8 +1,8 @@
 package com.example.portfolio.ui.sections
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -13,7 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.portfolio.ui.components.GlassCard
+import com.example.portfolio.ui.components.PortfolioCard
+import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.theme.*
 
 @Composable
@@ -26,123 +27,140 @@ fun ContactSection(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+            .padding(vertical = 40.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        // Section Header
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                text = "Get In Touch",
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = "Open to collaborative opportunities, Android architecture discussions, and innovative AI engineering challenges.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        SectionHeader(number = "06", title = "Contact")
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-            // Left Column: Interactive Message Form
-            GlassCard(
+            // Left Column: Interactive Form Terminal
+            PortfolioCard(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                contentPadding = 0.dp
             ) {
-                if (messageSent) {
-                    Column(
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    // Terminal Header
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                            .background(SurfaceContainerHighest)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "[SUCCESS] Message Sent Successfully!",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = TertiaryCyan
-                        )
-                        Text(
-                            text = "Thank you for reaching out. I will respond to your inquiry promptly.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center
-                        )
-                        Button(
-                            onClick = { messageSent = false; name = ""; email = ""; message = "" },
-                            colors = ButtonDefaults.buttonColors(containerColor = PrimaryContainer),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Text("Send Another Message", color = Color.White)
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFF5F56)))
+                            Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFFBD2E)))
+                            Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFF27C93F)))
                         }
-                    }
-                } else {
-                    Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
                         Text(
-                            text = "Send a Direct Message",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurface
+                            text = "dhruva-contact.sh",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = TextMuted
                         )
+                    }
 
-                        CustomFormTextField(
-                            value = name,
-                            onValueChange = { name = it },
-                            placeholder = "Your Name"
-                        )
-
-                        CustomFormTextField(
-                            value = email,
-                            onValueChange = { email = it },
-                            placeholder = "Email Address"
-                        )
-
-                        CustomFormTextField(
-                            value = message,
-                            onValueChange = { message = it },
-                            placeholder = "Project Inquiry / Message Details",
-                            modifier = Modifier.height(120.dp),
-                            singleLine = false
-                        )
-
-                        Button(
-                            onClick = { if (name.isNotBlank() && message.isNotBlank()) messageSent = true },
-                            colors = ButtonDefaults.buttonColors(containerColor = PrimaryContainer),
-                            shape = RoundedCornerShape(12.dp),
-                            contentPadding = PaddingValues(horizontal = 28.dp, vertical = 14.dp),
-                            modifier = Modifier.align(Alignment.End)
+                    if (messageSent) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(32.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text(
-                                text = "Send Message ->",
-                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-                                color = Color.White
+                                text = "[SUCCESS] Message Sent!",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = PrimaryGreen
                             )
+                            Text(
+                                text = "Thank you for reaching out. I will respond to your inquiry promptly.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center
+                            )
+                            Button(
+                                onClick = { messageSent = false; name = ""; email = ""; message = "" },
+                                colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Text("Send Another Message", color = BackgroundDark)
+                            }
+                        }
+                    } else {
+                        Column(
+                            modifier = Modifier.padding(24.dp),
+                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                        ) {
+                            Text(
+                                text = "> ./initiate_contact.sh",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = PrimaryGreen
+                            )
+
+                            CustomFormTextField(
+                                value = name,
+                                onValueChange = { name = it },
+                                placeholder = "Your Name"
+                            )
+
+                            CustomFormTextField(
+                                value = email,
+                                onValueChange = { email = it },
+                                placeholder = "Email Address"
+                            )
+
+                            CustomFormTextField(
+                                value = message,
+                                onValueChange = { message = it },
+                                placeholder = "Project Inquiry / Message Details",
+                                modifier = Modifier.height(120.dp),
+                                singleLine = false
+                            )
+
+                            Button(
+                                onClick = { if (name.isNotBlank() && message.isNotBlank()) messageSent = true },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = PrimaryGreen,
+                                    contentColor = BackgroundDark
+                                ),
+                                shape = RoundedCornerShape(8.dp),
+                                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp),
+                                modifier = Modifier.align(Alignment.End)
+                            ) {
+                                Text(
+                                    text = "Send Message ->",
+                                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
+                                )
+                            }
                         }
                     }
                 }
             }
 
-            // Right Column: Contact Details & Links (Stacked below on small widths via Column wrapper in responsive parent)
+            // Right Column: Contact Details & Links
             Column(
                 modifier = Modifier
                     .widthIn(min = 260.dp, max = 320.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                GlassCard(modifier = Modifier.fillMaxWidth()) {
+                PortfolioCard(modifier = Modifier.fillMaxWidth()) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text("Email", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = PrimaryBlue)
-                        Text("dhruva.khatavkar@example.com", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Email", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = PrimaryGreen)
+                        Text("dhruvakhatavkar29@gmail.com", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Location", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = TertiaryCyan)
-                        Text("Pune, Maharashtra, India\nOpen to Remote / Hybrid roles", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Location", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = TertiaryBlue)
+                        Text("Pune, Maharashtra, India\nOpen to Remote / Hybrid roles", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Tech Profiles", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = Color(0xFF4CAF50))
-                        Text("GitHub: github.com/dhruvasho\nLinkedIn: linkedin.com/in/dhruvasho", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Socials", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = SecondaryWarm)
+                        Text("GitHub: github.com/DhruvaKhatavkar\nLinkedIn: linkedin.com/in/dhruva-khatavkar", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -150,13 +168,13 @@ fun ContactSection(modifier: Modifier = Modifier) {
 
         // Footer Copyright
         Box(
-            modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Copyright 2026 Dhruva Khatavkar | Built with Compose Multiplatform Logic",
+                text = "© 2026 Dhruva Khatavkar // Built with Native Compose Multiplatform",
                 style = MaterialTheme.typography.labelSmall,
-                color = TextSecondary,
+                color = TextMuted,
                 textAlign = TextAlign.Center
             )
         }
@@ -174,11 +192,11 @@ private fun CustomFormTextField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = { Text(placeholder, color = TextSecondary) },
+        placeholder = { Text(placeholder, color = TextMuted) },
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(SurfaceContainerHigh),
+            .clip(RoundedCornerShape(8.dp))
+            .background(SurfaceDark),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,

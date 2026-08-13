@@ -12,23 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.portfolio.ui.theme.GlassBorder
-import com.example.portfolio.ui.theme.TechChipBackground
+import com.example.portfolio.ui.theme.BorderDark
 
 @Composable
 fun TechChip(
     text: String,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = TechChipBackground,
-    borderColor: Color = GlassBorder,
-    textColor: Color = MaterialTheme.colorScheme.onSurface
+    backgroundColor: Color = Color(0x0AFFFFFF), // 4% white
+    borderColor: Color = BorderDark,
+    textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant
 ) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(100.dp))
+            .clip(RoundedCornerShape(6.dp))
             .background(backgroundColor)
-            .border(1.dp, borderColor, RoundedCornerShape(100.dp))
-            .padding(horizontal = 14.dp, vertical = 6.dp)
+            .border(1.dp, borderColor, RoundedCornerShape(6.dp))
+            .padding(horizontal = 12.dp, vertical = 5.dp)
     ) {
         Text(
             text = text,

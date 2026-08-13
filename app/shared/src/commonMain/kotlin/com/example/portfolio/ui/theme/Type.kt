@@ -9,62 +9,62 @@ import androidx.compose.ui.unit.sp
 val PortfolioTypography = Typography(
     // Display Large (Hero Desktop headings) - 44sp / bold
     displayLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = FontFamily.Default, // Represents Space Grotesk in HTML
         fontWeight = FontWeight.Bold,
         fontSize = 42.sp,
         lineHeight = 50.sp,
         letterSpacing = (-0.02f).sp
     ),
-    // Display Medium (Mobile Hero & Section Titles) - 30sp / bold
+    // Display Medium (Mobile Hero & Section Titles) - 28sp / bold
     displayMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 30.sp,
-        lineHeight = 38.sp,
+        fontSize = 28.sp,
+        lineHeight = 36.sp,
         letterSpacing = (-0.02f).sp
     ),
-    // Headline Medium (Card & Section headings) - 22sp / semi-bold
+    // Headline Medium (Card & Section headings) - 20sp / semi-bold
     headlineMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 22.sp,
-        lineHeight = 30.sp,
+        fontSize = 20.sp,
+        lineHeight = 28.sp,
         letterSpacing = (-0.01f).sp
     ),
-    // Title Medium (Sub-card & list headings)
+    // Title Medium (Sub-card & list headings) - 16sp / semi-bold
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp,
+        fontSize = 16.sp,
         lineHeight = 24.sp
     ),
-    // Body Large (Hero & introduction paragraphs)
+    // Body Large (Hero & introduction paragraphs) - 17sp
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = FontFamily.Default, // Represents Inter in HTML
         fontWeight = FontWeight.Normal,
         fontSize = 17.sp,
         lineHeight = 26.sp
     ),
-    // Body Medium (Standard descriptive text & explanations)
+    // Body Medium (Standard descriptive text & explanations) - 15sp
     bodyMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 15.sp,
-        lineHeight = 23.sp
+        lineHeight = 24.sp
     ),
-    // Label Small / JetBrains Mono style (Category labels, dates, subtitles)
+    // Label Small / JetBrains Mono style (Category labels, dates, subtitles) - 13sp
     labelSmall = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.05.sp
+        fontSize = 13.sp,
+        lineHeight = 18.sp,
+        letterSpacing = 0.04.sp
     ),
-    // Label Medium / Code snippet style (Tech chips & AI tags)
+    // Label Medium / Code snippet style (Tech chips & AI tags) - 12sp
     labelMedium = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,
-        fontSize = 13.sp,
-        lineHeight = 18.sp
+        fontSize = 12.sp,
+        lineHeight = 16.sp
     )
 )

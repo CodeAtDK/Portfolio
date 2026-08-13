@@ -16,7 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.portfolio.ui.components.GlassCard
+import com.example.portfolio.ui.components.PortfolioCard
+import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.components.TechChip
 import com.example.portfolio.ui.theme.*
 import kotlinx.coroutines.delay
@@ -40,13 +41,12 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
         mutableStateListOf(
             ChatMessage(
                 isUser = false,
-                text = "Hi! I'm Dhruva AI, trained directly on Dhruva Khatavkar's codebase skills, project case studies, and engineering philosophy. How can I assist you today?",
-                insightTitle = "Quick Suggested Inquiries:",
+                text = "Hi! I'm Dhruva AI. I'm trained on Dhruva's codebase, projects, and resume. How can I help you?",
+                insightTitle = "Suggested questions:",
                 tags = listOf(
                     "What is your tech stack?",
-                    "Explain AI integration experience.",
-                    "Tell me about FoodBridge architecture.",
-                    "Why Kotlin Multiplatform over React Native?"
+                    "Tell me about FoodBridge.",
+                    "Why KMP over React Native?"
                 )
             )
         )
@@ -62,40 +62,34 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
         coroutineScope.launch {
             listState.animateScrollToItem(messages.size - 1)
             isThinking = true
-            delay(1100)
+            delay(1000)
             isThinking = false
 
             val q = cleanQuery.lowercase()
             val response = when {
                 q.contains("stack") || q.contains("skills") || q.contains("technologies") -> ChatMessage(
                     isUser = false,
-                    text = "My primary engineering domain resides within Kotlin, Jetpack Compose, and Kotlin Multiplatform (KMP). On the backend, I leverage Ktor and Supabase for real-time synchronization, supplemented by Firebase Auth and custom RESTful endpoints.",
+                    text = "My primary engineering domain resides within Kotlin, Jetpack Compose, and Kotlin Multiplatform (KMP). On the backend, I leverage Ktor and Firebase.",
                     insightTitle = "Key Capabilities:",
-                    tags = listOf("Kotlin", "Jetpack Compose", "KMP", "Ktor", "Supabase", "Coroutines")
-                )
-                q.contains("ai") || q.contains("ml") || q.contains("model") -> ChatMessage(
-                    isUser = false,
-                    text = "I integrate edge AI capabilities directly into Android environments using ONNX Runtime and TensorFlow Lite, while connecting cloud reasoning engines (OpenAI & Gemini API) to power dynamic, context-aware mobile features like automated crop anomaly detection in Agri Connect.",
-                    insightTitle = "AI Architecture Focus:",
-                    tags = listOf("ONNX", "TensorFlow Lite", "OpenAI API", "Gemini API", "Edge ML")
+                    tags = listOf("Kotlin", "Jetpack Compose", "KMP", "Firebase", "Coroutines")
                 )
                 q.contains("foodbridge") -> ChatMessage(
                     isUser = false,
-                    text = "FoodBridge is a real-time humanitarian application designed to connect surplus food donors with active volunteer networks. Built on Clean Architecture with MVVM, it uses Supabase Realtime WebSocket pipelines to broadcast expiring food supplies with zero latency.",
-                    insightTitle = "Architectural Pillars:",
-                    tags = listOf("Clean Architecture", "MVVM", "WebSockets", "Jetpack Compose")
+                    text = "FoodBridge is a platform designed to connect surplus food donors with active volunteer networks. Built on Clean Architecture with MVVM.",
+                    insightTitle = "Tech:",
+                    tags = listOf("Clean Architecture", "MVVM", "Compose", "Firebase")
                 )
                 q.contains("kmp") || q.contains("multiplatform") || q.contains("react") || q.contains("flutter") -> ChatMessage(
                     isUser = false,
-                    text = "Kotlin Multiplatform allows native performance and direct API access across Android, iOS, and the Web (WASM) without bridging bottlenecks or rendering compromises seen in hybrid JS layers. Sharing business logic while compiling to native composables is the modern standard for scaling apps.",
-                    insightTitle = "KMP Strategic Advantages:",
-                    tags = listOf("Native Performance", "WASM Compilation", "Zero Bridge Latency", "Shared Domain Layer")
+                    text = "Kotlin Multiplatform allows native performance and direct API access across Android, iOS, and the Web (WASM). It shares business logic while compiling to native composables.",
+                    insightTitle = "KMP Advantages:",
+                    tags = listOf("Native Performance", "WASM", "Shared Domain Layer")
                 )
                 else -> ChatMessage(
                     isUser = false,
-                    text = "I am specifically engineered to detail Dhruva Khatavkar's development experience, Android architectures, and open-source contributions! Try exploring his projects or technical stack.",
-                    insightTitle = "Recommended Inquiries:",
-                    tags = listOf("What is your tech stack?", "Explain AI integration experience.", "Why Kotlin Multiplatform over React Native?")
+                    text = "I am a local placeholder AI for this native KMP version. Real Gemini API integration is coming soon! Try asking about 'skills', 'KMP', or 'FoodBridge'.",
+                    insightTitle = "Try:",
+                    tags = listOf("What is your tech stack?", "Tell me about FoodBridge.")
                 )
             }
 
@@ -107,37 +101,47 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+            .padding(vertical = 40.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        // Section Header
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                text = "Interactive AI Workspace",
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = "Engage with a conversational simulator built on Dhruva's engineering philosophy and technical repository.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        SectionHeader(number = "05", title = "Dhruva AI")
 
-        // Chat Container
-        GlassCard(
+        // Chat Container (Terminal Styled)
+        PortfolioCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 400.dp, max = 540.dp),
-            contentPadding = 16.dp
+            contentPadding = 0.dp // Padding handled internally
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
+                // Terminal Header
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(SurfaceContainerHighest)
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFF5F56)))
+                        Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFFBD2E)))
+                        Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFF27C93F)))
+                    }
+                    Text(
+                        text = "dhruva-ai-terminal",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextMuted
+                    )
+                }
+
                 // Messages List
                 LazyColumn(
                     state = listState,
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
@@ -156,17 +160,19 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(SurfaceContainerHigh)
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .background(SurfaceContainerHighest)
+                        .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     TextField(
                         value = inputQuery,
                         onValueChange = { inputQuery = it },
-                        modifier = Modifier.weight(1f),
-                        placeholder = { Text("Ask about my skills, projects, or KMP philosophy...", color = TextSecondary) },
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(SurfaceDark),
+                        placeholder = { Text("Ask about my skills or projects...", color = TextMuted) },
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
@@ -181,15 +187,15 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .size(40.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(PrimaryContainer)
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(PrimaryGreen)
                             .clickable { submitQuery(inputQuery) }
                     ) {
                         Text(
-                            text = ">>",
+                            text = "->",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = Color.White
+                            color = BackgroundDark
                         )
                     }
                 }
@@ -204,7 +210,7 @@ private fun ChatMessageBubble(
     onTagClick: (String) -> Unit
 ) {
     val align = if (message.isUser) Alignment.End else Alignment.Start
-    val bgColor = if (message.isUser) PrimaryBlue.copy(alpha = 0.22f) else SurfaceContainerLow
+    val bgColor = if (message.isUser) PrimaryGreen.copy(alpha = 0.1f) else SurfaceContainerHighest
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -213,15 +219,15 @@ private fun ChatMessageBubble(
         Box(
             modifier = Modifier
                 .widthIn(max = 640.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(8.dp))
                 .background(bgColor)
                 .padding(16.dp)
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    text = if (message.isUser) "USER" else "DHRUVA AI",
+                    text = if (message.isUser) "> user_query" else "> dhruva_ai_response",
                     style = MaterialTheme.typography.labelSmall,
-                    color = if (message.isUser) PrimaryBlue else TertiaryCyan
+                    color = if (message.isUser) PrimaryGreen else TertiaryBlue
                 )
 
                 Text(
@@ -235,7 +241,7 @@ private fun ChatMessageBubble(
                         Text(
                             text = message.insightTitle,
                             style = MaterialTheme.typography.labelSmall,
-                            color = TextSecondary
+                            color = TextMuted
                         )
 
                         @OptIn(ExperimentalLayoutApi::class)
@@ -246,7 +252,7 @@ private fun ChatMessageBubble(
                             message.tags.forEach { tag ->
                                 TechChip(
                                     text = tag,
-                                    textColor = PrimaryBlue,
+                                    textColor = PrimaryGreen,
                                     modifier = Modifier.clickable { onTagClick(tag) }
                                 )
                             }
@@ -262,16 +268,16 @@ private fun ChatMessageBubble(
 private fun ThinkingBubble() {
     Row(
         modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(SurfaceContainerLow)
+            .clip(RoundedCornerShape(8.dp))
+            .background(SurfaceContainerHighest)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Dhruva AI is analyzing repository context...",
+            text = "> generating_response...",
             style = MaterialTheme.typography.labelSmall,
-            color = TextSecondary
+            color = TextMuted
         )
     }
 }

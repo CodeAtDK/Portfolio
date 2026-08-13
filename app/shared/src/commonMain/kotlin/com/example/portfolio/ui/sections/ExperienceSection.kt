@@ -1,12 +1,18 @@
 package com.example.portfolio.ui.sections
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.portfolio.ui.components.GlassCard
+import com.example.portfolio.ui.components.PortfolioCard
+import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.components.TechChip
 import com.example.portfolio.ui.theme.*
 
@@ -17,95 +23,144 @@ fun ExperienceSection(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+            .padding(vertical = 40.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        // Header
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(
-                text = "EXPERIENCE",
-                style = MaterialTheme.typography.labelSmall,
-                color = TertiaryCyan
-            )
-            Text(
-                text = "My professional journey.",
-                style = MaterialTheme.typography.displayMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = "From academic foundations in engineering to hands-on Android and Multiplatform development - every step has sharpened my product intuition and technical craftsmanship.",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        SectionHeader(number = "04", title = "Experience")
 
-        // Experience Items
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+        Box(
+            modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
         ) {
-            ExperienceCardItem(
-                timeframe = "2022 - 2026",
-                title = "B.Tech - Electronics & Communication Engineering",
-                subtitle = "Jaypee Institute of Information Technology, Noida",
-                description = "Developed a strong foundation in programming, algorithms, and embedded systems alongside specialization in modern Android mobile application architecture.",
-                tags = listOf("System Design", "Algorithms", "Kotlin", "Engineering")
+            // Background Timeline Line
+            Box(
+                modifier = Modifier
+                    .width(1.dp)
+                    .fillMaxHeight()
+                    .padding(top = 8.dp, bottom = 8.dp)
+                    .background(TimelineGradient)
+                    .offset(x = 5.dp)
             )
 
-            ExperienceCardItem(
-                timeframe = "Aug 2023 - Present",
-                title = "Android & KMP Developer",
-                subtitle = "Self-Directed Open Source Projects",
-                description = "Built production-quality mobile applications using Kotlin, Jetpack Compose, MVVM, Hilt, and Firebase. Implemented real-time features, REST APIs, and Gemini AI integration across multiple specialized domains including healthcare and agriculture.",
-                tags = listOf("3+ Real-World Apps", "Jetpack Compose", "Gemini AI Integration", "Architecture")
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(48.dp)
+            ) {
+                ExperienceCardItem(
+                    timeframe = "Oct 2024 – Jan 2025 • Remote",
+                    title = "Android Developer Intern",
+                    subtitle = "ADM Education and Welfare Society",
+                    bullets = listOf(
+                        "Built a modular Android application in Kotlin, following MVVM architecture, to manage internship placements for a large student base.",
+                        "Designed responsive UIs with Jetpack Compose and structured state with Coroutines/Flow, improving user navigation flow by 25%.",
+                        "Integrated Firebase Realtime Database and Auth with Hilt-based dependency injection to handle concurrent user sessions and secure data storage."
+                    ),
+                    tags = listOf("Kotlin", "Jetpack Compose", "MVVM", "Hilt", "Firebase"),
+                    isCurrent = true
+                )
 
-            ExperienceCardItem(
-                timeframe = "Current Focus",
-                title = "Exploring Kotlin Multiplatform (KMP)",
-                subtitle = "Expanding Beyond Single-Platform Mobile",
-                description = "Actively adopting KMP and Compose Multiplatform to unify UI design systems and backend business logic across Android, iOS, and Web without sacrificing native UX fluency.",
-                tags = listOf("KMP", "WASM", "iOS SwiftUI Host", "Shared UI")
-            )
+                ExperienceCardItem(
+                    timeframe = "2022 – 2026",
+                    title = "B.Tech in Electronics & Communication",
+                    subtitle = "Jaypee Institute of Information Technology, Noida",
+                    description = "Relevant Coursework: Data Structures, DBMS, OS, OOPS",
+                    tags = emptyList(),
+                    isCurrent = false
+                )
+
+                ExperienceCardItem(
+                    timeframe = "2019 – 2021",
+                    title = "Higher Secondary Education (PCM)",
+                    subtitle = "Late M.E Bhore Junior College, Padali",
+                    tags = emptyList(),
+                    isCurrent = false
+                )
+            }
         }
     }
 }
 
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 private fun ExperienceCardItem(
     timeframe: String,
     title: String,
     subtitle: String,
-    description: String,
-    tags: List<String>
+    description: String? = null,
+    bullets: List<String> = emptyList(),
+    tags: List<String>,
+    isCurrent: Boolean
 ) {
-    GlassCard(
-        modifier = Modifier.fillMaxWidth(),
-        borderColor = PrimaryBlue.copy(alpha = 0.25f)
-    ) {
-        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        // Timeline Dot Indicator
+        Box(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .size(12.dp)
+                .clip(CircleShape)
+                .background(if (isCurrent) PrimaryGreen else SurfaceDark)
+                .border(2.dp, if (isCurrent) PrimaryGreen else PrimaryGreenDim, CircleShape)
+        )
+        
+        Spacer(modifier = Modifier.width(20.dp))
+        
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = timeframe,
                 style = MaterialTheme.typography.labelSmall,
-                color = TertiaryCyan
+                color = SecondaryWarm,
+                modifier = Modifier.padding(bottom = 6.dp)
             )
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.bodyMedium.copy(color = PrimaryBlue),
-            )
-            Text(
-                text = description,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            FlowRowWrapper {
-                tags.forEach { tag ->
-                    TechChip(text = tag)
+            
+            PortfolioCard(
+                modifier = Modifier.fillMaxWidth(),
+                borderColor = if (isCurrent) PrimaryGreenDim.copy(alpha = 0.5f) else BorderDark
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextMuted
+                    )
+                    
+                    if (description != null) {
+                        Text(
+                            text = description,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    
+                    if (bullets.isNotEmpty()) {
+                        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            bullets.forEach { bullet ->
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Text("•", color = TextMuted)
+                                    Text(
+                                        text = bullet,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (tags.isNotEmpty()) {
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            tags.forEach { tag ->
+                                TechChip(text = tag)
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -5,29 +5,36 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColorScheme(
-    primary = PrimaryBlue,
-    onPrimary = OnPrimary,
-    primaryContainer = PrimaryContainer,
-    onPrimaryContainer = OnPrimaryContainer,
-    inversePrimary = InversePrimary,
-    secondary = SecondaryPurple,
-    onSecondary = OnSecondary,
-    secondaryContainer = SecondaryContainer,
-    onSecondaryContainer = OnSecondaryContainer,
-    tertiary = TertiaryCyan,
-    onTertiary = OnTertiary,
-    tertiaryContainer = TertiaryContainer,
-    onTertiaryContainer = OnTertiaryContainer,
-    background = CanvasBase,
-    onBackground = OnSurface,
+    primary = PrimaryGreen,
+    onPrimary = BackgroundDark,
+    primaryContainer = PrimaryGreenDim,
+    onPrimaryContainer = TextPrimary,
+    inversePrimary = PrimaryGreen,
+    
+    secondary = SecondaryWarm,
+    onSecondary = BackgroundDark,
+    secondaryContainer = SecondaryWarmGlow,
+    onSecondaryContainer = SecondaryWarm,
+    
+    tertiary = TertiaryBlue,
+    onTertiary = BackgroundDark,
+    tertiaryContainer = TertiaryBlueGlow,
+    onTertiaryContainer = TertiaryBlue,
+    
+    background = BackgroundDark,
+    onBackground = TextPrimary,
+    
     surface = SurfaceDark,
-    onSurface = OnSurface,
-    surfaceVariant = SurfaceVariantDark,
-    onSurfaceVariant = OnSurfaceVariant,
-    outline = OutlineDark,
-    outlineVariant = OutlineVariantDark,
+    onSurface = TextPrimary,
+    surfaceVariant = SurfaceBright,
+    onSurfaceVariant = TextMuted,
+    
+    outline = BorderDark,
+    outlineVariant = BorderLight,
+    
     error = ErrorLight,
-    onError = OnError,
+    onError = BackgroundDark,
+    
     surfaceContainerLowest = SurfaceContainerLowest,
     surfaceContainerLow = SurfaceContainerLow,
     surfaceContainer = SurfaceContainer,
