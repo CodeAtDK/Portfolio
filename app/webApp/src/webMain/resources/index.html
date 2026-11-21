@@ -9,8 +9,9 @@
     <meta http-equiv="Expires" content="0">
     <title>Dhruva Khatavkar | Portfolio</title>
     <link type="text/css" rel="stylesheet" href="styles.css?v=4">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
-        crossorigin="anonymous"></script>
+    <!-- AdSense temporarily disabled on localhost to avoid overlay blocking -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
+        crossorigin="anonymous"></script> -->
     <!-- Polyfill WebGL renderer info for Safari / WebKit to prevent Skiko context creation nullptr failure -->
     <script>
         (function () {
@@ -127,8 +128,8 @@
     </script>
 </head>
 
-<body>
-    <div id="root">
+<body style="background-color: #0D1117; margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden;">
+    <div id="root" style="width: 100%; height: 100%; background-color: #0D1117;">
         <div id="loading" class="loading-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 50 50" role="presentation">
                 <circle cx="25" cy="25" r="20" stroke="#21262d" stroke-width="4" fill="none" />
@@ -146,6 +147,7 @@
         var observer = new MutationObserver(function() {
             var canvas = document.querySelector('canvas');
             if (canvas) {
+                console.log('[PORTFOLIO] Canvas detected in DOM:', canvas.width, 'x', canvas.height);
                 var loading = document.getElementById('loading');
                 if (loading) loading.remove();
                 observer.disconnect();
@@ -158,7 +160,7 @@
             console.error('GLOBAL ERROR:', e.message, e.filename, e.lineno, e.error);
         });
     </script>
-    <script type="application/javascript" src="webApp.js?v=20261121_safari_v7"></script>
+    <script type="application/javascript" src="webApp.js?v=20261121_safari_v8"></script>
 </body>
 
 </html>
