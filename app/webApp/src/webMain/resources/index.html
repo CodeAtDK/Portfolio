@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Dhruva Khatavkar | Portfolio</title>
-    <link type="text/css" rel="stylesheet" href="styles.css?v=3">
+    <link type="text/css" rel="stylesheet" href="styles.css?v=4">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
         crossorigin="anonymous"></script>
     <!-- Polyfill WebGL renderer info for Safari / WebKit to prevent Skiko context creation nullptr failure -->
@@ -64,6 +64,12 @@
                         if (pname === UNMASKED_RENDERER_WEBGL || pname === 37446) {
                             return 'Apple GPU';
                         }
+                        if (pname === 0x0D57 || pname === 3415) { // STENCIL_BITS
+                            return 8;
+                        }
+                        if (pname === 0x0D56 || pname === 3414) { // DEPTH_BITS
+                            return 24;
+                        }
                         try {
                             var res = origGetParameter.apply(this, arguments);
                             if (res === null || res === undefined) {
@@ -82,6 +88,21 @@
                         }
                     };
                 }
+
+                if (proto.getError) {
+                    var origGetError = proto.getError;
+                    proto.getError = function () {
+                        try {
+                            var err = origGetError.apply(this, arguments);
+                            if (err === 1280 || err === 1282) {
+                                return 0;
+                            }
+                            return err;
+                        } catch (e) {
+                            return 0;
+                        }
+                    };
+                }
             }
 
             if (typeof WebGLRenderingContext !== 'undefined') {
@@ -94,6 +115,19 @@
             if (typeof HTMLCanvasElement !== 'undefined') {
                 var origGetContext = HTMLCanvasElement.prototype.getContext;
                 HTMLCanvasElement.prototype.getContext = function () {
+                    if (!this.width || this.width <= 0) {
+                        this.width = window.innerWidth || 1024;
+                    }
+                    if (!this.height || this.height <= 0) {
+                        this.height = window.innerHeight || 768;
+                    }
+                    if (arguments.length > 1 && typeof arguments[1] === 'object' && arguments[1] !== null) {
+                        var attrs = arguments[1];
+                        if (typeof attrs.stencil === 'number') attrs.stencil = true;
+                        if (typeof attrs.depth === 'number') attrs.depth = true;
+                        if (typeof attrs.alpha === 'number') attrs.alpha = true;
+                        if (typeof attrs.antialias === 'number') attrs.antialias = false;
+                    }
                     var ctx = origGetContext.apply(this, arguments);
                     if (ctx && (arguments[0] === 'webgl' || arguments[0] === 'webgl2' || arguments[0] === 'experimental-webgl')) {
                         patchContext(Object.getPrototypeOf(ctx));
@@ -132,7 +166,7 @@
         });
         observer.observe(document.body, { childList: true, subtree: true });
     </script>
-    <script type="application/javascript" src="webApp.js?v=20261117_safari_fix"></script>
+    <script type="application/javascript" src="webApp.js?v=20261121_safari_fix2"></script>
 </body>
 
 </html>

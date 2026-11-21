@@ -110,11 +110,7 @@ private fun HomeContent(
                 modifier = Modifier
                     .size(140.dp)
                     .clip(CircleShape)
-                    .background(
-                        Brush.radialGradient(
-                            colors = listOf(PrimaryGreen.copy(alpha = 0.25f), Color.Transparent)
-                        )
-                    )
+                    .background(PrimaryGreen.copy(alpha = 0.15f))
             )
             Image(
                 painter = painterResource(Res.drawable.profile),
