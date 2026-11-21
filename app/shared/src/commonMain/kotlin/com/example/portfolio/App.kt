@@ -98,9 +98,7 @@ private fun PortfolioHome(
 
                 // Hero — extra top breathing room
                 HomeSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["Home"] = it.positionInParent().y.toInt()
-                    },
+                    modifier = Modifier.trackSectionPosition("Home", sectionPositions),
                     onExploreWork = { scrollToSection("Projects") },
                     onViewResume = onOpenResumeFullScreen,
                     onAskAI = { scrollToSection("AI") },
@@ -110,57 +108,59 @@ private fun PortfolioHome(
                 // Major sections with responsive spacing
                 Spacer(modifier = Modifier.height(sectionSpacing))
                 AboutSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["About"] = it.positionInParent().y.toInt()
-                    }
+                    modifier = Modifier.trackSectionPosition("About", sectionPositions)
                 )
 
                 Spacer(modifier = Modifier.height(sectionSpacing))
                 SkillsSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["Skills"] = it.positionInParent().y.toInt()
-                    }
+                    modifier = Modifier.trackSectionPosition("Skills", sectionPositions)
                 )
 
                 Spacer(modifier = Modifier.height(projectSpacing))
                 ProjectsSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["Projects"] = it.positionInParent().y.toInt()
-                    },
+                    modifier = Modifier.trackSectionPosition("Projects", sectionPositions),
                     onOpenCaseStudy = onOpenCaseStudy
                 )
 
                 Spacer(modifier = Modifier.height(sectionSpacing))
                 ExperienceSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["Experience"] = it.positionInParent().y.toInt()
-                    }
+                    modifier = Modifier.trackSectionPosition("Experience", sectionPositions)
                 )
 
                 Spacer(modifier = Modifier.height(sectionSpacing))
                 ResumeSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["Resume"] = it.positionInParent().y.toInt()
-                    },
+                    modifier = Modifier.trackSectionPosition("Resume", sectionPositions),
                     onOpenFullScreen = onOpenResumeFullScreen
                 )
 
                 Spacer(modifier = Modifier.height(sectionSpacing))
                 AIWorkspaceSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["AI"] = it.positionInParent().y.toInt()
-                    }
+                    modifier = Modifier.trackSectionPosition("AI", sectionPositions)
                 )
 
                 Spacer(modifier = Modifier.height(if (isMobile) 36.dp else 60.dp))
                 ContactSection(
-                    modifier = Modifier.onGloballyPositioned {
-                        sectionPositions["Contact"] = it.positionInParent().y.toInt()
-                    }
+                    modifier = Modifier.trackSectionPosition("Contact", sectionPositions)
                 )
 
                 Spacer(modifier = Modifier.height(if (isMobile) 24.dp else 40.dp))
             }
+        }
+    }
+}
+
+private fun Modifier.trackSectionPosition(
+    sectionKey: String,
+    positionsMap: MutableMap<String, Int>
+): Modifier = this.onGloballyPositioned { coordinates ->
+    if (coordinates.isAttached) {
+        try {
+            val parent = coordinates.parentLayoutCoordinates
+            if (parent != null && parent.isAttached) {
+                positionsMap[sectionKey] = coordinates.positionInParent().y.toInt()
+            }
+        } catch (_: Throwable) {
+            // Ignore if layout coordinates are detached during measurement pass
         }
     }
 }
