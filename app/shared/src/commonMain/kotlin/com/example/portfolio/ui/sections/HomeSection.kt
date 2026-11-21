@@ -1,5 +1,6 @@
 package com.example.portfolio.ui.sections
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -110,8 +111,14 @@ private fun HomeContent(
                 modifier = Modifier
                     .size(140.dp)
                     .clip(CircleShape)
-                    .background(PrimaryGreen.copy(alpha = 0.15f))
-            )
+            ) {
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    val r = size.minDimension / 2f
+                    drawCircle(color = PrimaryGreen.copy(alpha = 0.06f), radius = r)
+                    drawCircle(color = PrimaryGreen.copy(alpha = 0.12f), radius = r * 0.82f)
+                    drawCircle(color = PrimaryGreen.copy(alpha = 0.22f), radius = r * 0.65f)
+                }
+            }
             Image(
                 painter = painterResource(Res.drawable.profile),
                 contentDescription = "Dhruva Khatavkar Profile Photo",

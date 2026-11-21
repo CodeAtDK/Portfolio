@@ -118,106 +118,108 @@ fun AnimatedMeshBackground(modifier: Modifier = Modifier) {
             .background(BackgroundDark)
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val w = size.width
-            val h = size.height
-            if (w <= 0f || h <= 0f) return@Canvas
+            try {
+                val w = size.width
+                val h = size.height
+                if (w <= 10f || h <= 10f || !w.isFinite() || !h.isFinite()) return@Canvas
 
-            // 0. Base dark canvas
-            drawRect(Color(0xFF0A0A0A))
+                // 0. Base dark canvas
+                drawRect(Color(0xFF0A0A0A))
 
-            // 1. Deep Cosmic Glowing Mesh Orbs (Shader-free multi-layer alpha gradient)
-            // Blob 1: Electric Blue orb orbiting smoothly
-            val x1 = w * (0.35f + 0.25f * sin(time * 2 * PI.toFloat()))
-            val y1 = h * (0.35f + 0.18f * cos(time * 2 * PI.toFloat() * 0.7f))
-            drawGlowingOrb(
-                center = Offset(x1, y1),
-                radius = maxOf(w, h) * 0.55f,
-                baseColor = Color(0xFF0A5AFF),
-                peakAlpha = 0.16f
-            )
-
-            // Blob 2: Deep Purple orb with breathing pulse
-            val x2 = w * (0.70f + 0.20f * cos(time * 2 * PI.toFloat() * 1.2f))
-            val y2 = h * (0.65f + 0.22f * sin(time * 2 * PI.toFloat() * 0.5f))
-            drawGlowingOrb(
-                center = Offset(x2, y2),
-                radius = maxOf(w, h) * 0.60f,
-                baseColor = Color(0xFF6200EA),
-                peakAlpha = 0.14f
-            )
-
-            // Blob 3: Vibrant Cyan accent orb
-            val x3 = w * (0.80f + 0.15f * sin(time * 2 * PI.toFloat() * 0.8f))
-            val y3 = h * (0.20f + 0.25f * cos(time * 2 * PI.toFloat() * 1.5f))
-            drawGlowingOrb(
-                center = Offset(x3, y3),
-                radius = maxOf(w, h) * 0.45f,
-                baseColor = Color(0xFF00DAF3),
-                peakAlpha = 0.10f
-            )
-
-            // 2. Drifting Dust & Starfield Particles
-            starParticles.forEach { star ->
-                val alphaCycle = abs(sin((loop + star.phase) * PI.toFloat() * 4))
-                val currentAlpha = (star.maxAlpha * (0.3f + 0.7f * alphaCycle)).coerceIn(0.05f, 0.8f)
-                val currentY = (star.y - (loop * 0.08f) + 1.0f) % 1.0f
-                val pos = Offset(star.x * w, currentY * h)
-
-                drawCircle(
-                    color = Color.White.copy(alpha = currentAlpha),
-                    radius = star.radius,
-                    center = pos
+                // 1. Deep Cosmic Glowing Mesh Orbs (Shader-free multi-layer alpha gradient)
+                // Blob 1: Electric Blue orb orbiting smoothly
+                val x1 = w * (0.35f + 0.25f * sin(time * 2 * PI.toFloat()))
+                val y1 = h * (0.35f + 0.18f * cos(time * 2 * PI.toFloat() * 0.7f))
+                drawGlowingOrb(
+                    center = Offset(x1, y1),
+                    radius = maxOf(maxOf(w, h) * 0.55f, 50f),
+                    baseColor = Color(0xFF3D5AFE),
+                    peakAlpha = 0.22f
                 )
-            }
 
-            // 3. Floating Geometric Boxes & Translucent Cubes
-            floatingBoxes.forEach { box ->
-                val yOffset = (box.initialY - (loop * box.speedY) + 1.0f) % 1.0f
-                val xOffset = (box.initialX + sin(loop * PI.toFloat() * 4) * box.speedX).coerceIn(0.02f, 0.98f)
+                // Blob 2: Deep Purple orb with breathing pulse
+                val x2 = w * (0.70f + 0.20f * cos(time * 2 * PI.toFloat() * 1.2f))
+                val y2 = h * (0.65f + 0.22f * sin(time * 2 * PI.toFloat() * 0.5f))
+                drawGlowingOrb(
+                    center = Offset(x2, y2),
+                    radius = maxOf(maxOf(w, h) * 0.60f, 50f),
+                    baseColor = Color(0xFF6200EA),
+                    peakAlpha = 0.18f
+                )
 
-                val centerPos = Offset(xOffset * w, yOffset * h)
-                val rotationAngle = (loop * box.rotSpeed * 360f)
-                val responsiveSize = (box.size * (minOf(w, h) / 700f).coerceIn(0.7f, 1.4f))
-                val boxSize = Size(responsiveSize, responsiveSize)
+                // Blob 3: Vibrant Cyan accent orb
+                val x3 = w * (0.80f + 0.15f * sin(time * 2 * PI.toFloat() * 0.8f))
+                val y3 = h * (0.20f + 0.25f * cos(time * 2 * PI.toFloat() * 1.5f))
+                drawGlowingOrb(
+                    center = Offset(x3, y3),
+                    radius = maxOf(maxOf(w, h) * 0.45f, 50f),
+                    baseColor = Color(0xFF00DAF3),
+                    peakAlpha = 0.14f
+                )
 
-                withTransform({
-                    rotate(degrees = rotationAngle, pivot = centerPos)
-                }) {
-                    val topLeft = Offset(centerPos.x - boxSize.width / 2f, centerPos.y - boxSize.height / 2f)
+                // 2. Drifting Dust & Starfield Particles
+                starParticles.forEach { star ->
+                    val alphaCycle = abs(sin((loop + star.phase) * PI.toFloat() * 4))
+                    val currentAlpha = (star.maxAlpha * (0.3f + 0.7f * alphaCycle)).coerceIn(0.05f, 0.8f)
+                    val currentY = (star.y - (loop * 0.08f) + 1.0f) % 1.0f
+                    val pos = Offset(star.x * w, currentY * h)
 
-                    if (box.isWireframe) {
-                        // Glowing wireframe floating box with subtle glow
-                        drawRoundRect(
-                            color = box.color.copy(alpha = 0.45f),
-                            topLeft = topLeft,
-                            size = boxSize,
-                            cornerRadius = CornerRadius(8f, 8f),
-                            style = Stroke(width = 2.0f)
-                        )
-                        // Faint inner glass sheen
-                        drawRoundRect(
-                            color = box.color.copy(alpha = 0.04f),
-                            topLeft = topLeft,
-                            size = boxSize,
-                            cornerRadius = CornerRadius(8f, 8f)
-                        )
-                    } else {
-                        // Translucent glass cube with crisp highlight edge
-                        drawRoundRect(
-                            color = box.color.copy(alpha = 0.15f),
-                            topLeft = topLeft,
-                            size = boxSize,
-                            cornerRadius = CornerRadius(8f, 8f)
-                        )
-                        drawRoundRect(
-                            color = Color.White.copy(alpha = 0.22f),
-                            topLeft = topLeft,
-                            size = boxSize,
-                            cornerRadius = CornerRadius(8f, 8f),
-                            style = Stroke(width = 1.5f)
-                        )
+                    drawCircle(
+                        color = Color.White.copy(alpha = currentAlpha),
+                        radius = star.radius,
+                        center = pos
+                    )
+                }
+
+                // 3. Floating Geometric Boxes & Cubes
+                floatingBoxes.forEach { box ->
+                    val yOffset = (box.initialY - (loop * box.speedY) + 1.0f) % 1.0f
+                    val xOffset = (box.initialX + sin(loop * PI.toFloat() * 2f * 2f) * box.speedX).coerceIn(0.02f, 0.98f)
+
+                    val centerPos = Offset(xOffset * w, yOffset * h)
+                    val rotationAngle = (loop * box.rotSpeed * 360f)
+
+                    val responsiveSize = (box.size * (minOf(w, h) / 700f).coerceIn(0.7f, 1.5f))
+                    val boxSize = Size(responsiveSize, responsiveSize)
+
+                    withTransform({
+                        rotate(degrees = rotationAngle, pivot = centerPos)
+                    }) {
+                        val topLeft = Offset(centerPos.x - boxSize.width / 2f, centerPos.y - boxSize.height / 2f)
+
+                        if (box.isWireframe) {
+                            drawRoundRect(
+                                color = box.color.copy(alpha = 0.45f),
+                                topLeft = topLeft,
+                                size = boxSize,
+                                cornerRadius = CornerRadius(8f, 8f),
+                                style = Stroke(width = 2.5f)
+                            )
+                            drawRoundRect(
+                                color = box.color.copy(alpha = 0.04f),
+                                topLeft = topLeft,
+                                size = boxSize,
+                                cornerRadius = CornerRadius(8f, 8f)
+                            )
+                        } else {
+                            drawRoundRect(
+                                color = box.color.copy(alpha = 0.15f),
+                                topLeft = topLeft,
+                                size = boxSize,
+                                cornerRadius = CornerRadius(8f, 8f)
+                            )
+                            drawRoundRect(
+                                color = Color.White.copy(alpha = 0.25f),
+                                topLeft = topLeft,
+                                size = boxSize,
+                                cornerRadius = CornerRadius(8f, 8f),
+                                style = Stroke(width = 1.5f)
+                            )
+                        }
                     }
                 }
+            } catch (t: Throwable) {
+                // Ignore any transient frame error
             }
         }
     }
@@ -234,12 +236,11 @@ private fun DrawScope.drawGlowingOrb(
     peakAlpha: Float
 ) {
     if (radius <= 0f) return
-    val steps = 7
+    val steps = 8
     for (i in steps downTo 1) {
         val fraction = i.toFloat() / steps
         val stepRadius = radius * fraction
-        // Smooth quadratic falloff simulates radial-gradient blur perfectly
-        val stepAlpha = peakAlpha * (1.0f - fraction) * (1.0f - fraction) * 0.45f
+        val stepAlpha = (peakAlpha * (1.0f - fraction * 0.75f) * 0.45f).coerceIn(0.01f, 1.0f)
         drawCircle(
             color = baseColor.copy(alpha = stepAlpha),
             radius = stepRadius,

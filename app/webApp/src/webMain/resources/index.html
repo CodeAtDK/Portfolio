@@ -8,128 +8,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Dhruva Khatavkar | Portfolio</title>
-    <link type="text/css" rel="stylesheet" href="styles.css?v=4">
-    <!-- AdSense temporarily disabled on localhost to avoid overlay blocking -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
-        crossorigin="anonymous"></script> -->
-    <!-- Polyfill WebGL renderer info for Safari / WebKit to prevent Skiko context creation nullptr failure -->
-    <script>
-        (function () {
-            var UNMASKED_VENDOR_WEBGL = 0x9245;
-            var UNMASKED_RENDERER_WEBGL = 0x9246;
-
-            function patchContext(proto) {
-                if (!proto || proto._skiko_patched) return;
-                proto._skiko_patched = true;
-
-                var origGetParameter = proto.getParameter;
-                var origGetExtension = proto.getExtension;
-                var origGetSupportedExtensions = proto.getSupportedExtensions;
-
-                if (origGetExtension) {
-                    proto.getExtension = function (name) {
-                        if (name === 'WEBGL_debug_renderer_info') {
-                            return {
-                                UNMASKED_VENDOR_WEBGL: UNMASKED_VENDOR_WEBGL,
-                                UNMASKED_RENDERER_WEBGL: UNMASKED_RENDERER_WEBGL
-                            };
-                        }
-                        try {
-                            return origGetExtension.apply(this, arguments);
-                        } catch (e) {
-                            return null;
-                        }
-                    };
-                }
-
-                if (origGetSupportedExtensions) {
-                    proto.getSupportedExtensions = function () {
-                        try {
-                            var exts = origGetSupportedExtensions.apply(this, arguments) || [];
-                            if (exts.indexOf('WEBGL_debug_renderer_info') === -1) {
-                                exts = Array.from(exts);
-                                exts.push('WEBGL_debug_renderer_info');
-                            }
-                            return exts;
-                        } catch (e) {
-                            return ['WEBGL_debug_renderer_info'];
-                        }
-                    };
-                }
-
-                if (origGetParameter) {
-                    proto.getParameter = function (pname) {
-                        if (pname === UNMASKED_VENDOR_WEBGL || pname === 37445) {
-                            return 'Apple Inc.';
-                        }
-                        if (pname === UNMASKED_RENDERER_WEBGL || pname === 37446) {
-                            return 'Apple GPU';
-                        }
-                        try {
-                            var res = origGetParameter.apply(this, arguments);
-                            if (res === null || res === undefined) {
-                                if (pname === 0x1F00 || pname === 7936) return 'WebKit';
-                                if (pname === 0x1F01 || pname === 7937) return 'WebKit WebGL';
-                                if (pname === 0x1F02 || pname === 7938) return 'WebGL 2.0';
-                                if (pname === 0x8B8C || pname === 35724) return 'WebGL GLSL ES 3.00';
-                            }
-                            return res;
-                        } catch (e) {
-                            if (pname === 0x1F00 || pname === 7936) return 'WebKit';
-                            if (pname === 0x1F01 || pname === 7937) return 'WebKit WebGL';
-                            if (pname === 0x1F02 || pname === 7938) return 'WebGL 2.0';
-                            if (pname === 0x8B8C || pname === 35724) return 'WebGL GLSL ES 3.00';
-                            return null;
-                        }
-                    };
-                }
-
-                if (proto.getError) {
-                    var origGetError = proto.getError;
-                    proto.getError = function () {
-                        try {
-                            var err = origGetError.apply(this, arguments);
-                            if (err === 1280 || err === 1282) {
-                                return 0;
-                            }
-                            return err;
-                        } catch (e) {
-                            return 0;
-                        }
-                    };
-                }
-            }
-
-            if (typeof WebGLRenderingContext !== 'undefined') {
-                patchContext(WebGLRenderingContext.prototype);
-            }
-            if (typeof WebGL2RenderingContext !== 'undefined') {
-                patchContext(WebGL2RenderingContext.prototype);
-            }
-
-            if (typeof HTMLCanvasElement !== 'undefined') {
-                var origGetContext = HTMLCanvasElement.prototype.getContext;
-                HTMLCanvasElement.prototype.getContext = function () {
-                    if (!this.width || this.width <= 0) {
-                        this.width = window.innerWidth || 1024;
-                    }
-                    if (!this.height || this.height <= 0) {
-                        this.height = window.innerHeight || 768;
-                    }
-                    var ctx = origGetContext.apply(this, arguments);
-                    if (ctx && (arguments[0] === 'webgl' || arguments[0] === 'webgl2' || arguments[0] === 'experimental-webgl')) {
-                        patchContext(Object.getPrototypeOf(ctx));
-                        patchContext(ctx);
-                    }
-                    return ctx;
-                };
-            }
-        })();
-    </script>
+    <link type="text/css" rel="stylesheet" href="styles.css?v=6">
 </head>
 
-<body style="background-color: #0D1117; margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden;">
-    <div id="root" style="width: 100%; height: 100%; background-color: #0D1117;">
+<body>
+    <div id="root">
         <div id="loading" class="loading-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 50 50" role="presentation">
                 <circle cx="25" cy="25" r="20" stroke="#21262d" stroke-width="4" fill="none" />
@@ -147,7 +30,6 @@
         var observer = new MutationObserver(function() {
             var canvas = document.querySelector('canvas');
             if (canvas) {
-                console.log('[PORTFOLIO] Canvas detected in DOM:', canvas.width, 'x', canvas.height);
                 var loading = document.getElementById('loading');
                 if (loading) loading.remove();
                 observer.disconnect();
@@ -156,14 +38,43 @@
         observer.observe(document.body, { childList: true, subtree: true });
     </script>
     <script>
+        var errorCount = 0;
         window.addEventListener('error', function(e) {
             console.error('GLOBAL ERROR:', e.message, e.filename, e.lineno, e.error);
+            if (errorCount++ < 10) {
+                var stack = '';
+                if (e.error) {
+                    stack = e.error.stack || e.error.toString();
+                }
+                fetch('/log_error', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        message: e.message || 'unknown error',
+                        stack: stack,
+                        filename: e.filename,
+                        lineno: e.lineno
+                    })
+                }).catch(function(){});
+            }
         });
         window.addEventListener('unhandledrejection', function(e) {
             console.error('UNHANDLED PROMISE REJECTION:', e.reason);
+            if (errorCount++ < 10) {
+                fetch('/log_error', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        message: 'Unhandled Rejection: ' + (e.reason ? (e.reason.message || e.reason.toString()) : 'unknown'),
+                        stack: e.reason ? (e.reason.stack || e.reason.toString()) : '',
+                        filename: 'promise',
+                        lineno: 0
+                    })
+                }).catch(function(){});
+            }
         });
     </script>
-    <script type="application/javascript" src="webApp.js?v=20261121_v11"></script>
+    <script type="application/javascript" src="webApp.js?v=20261121_stable_v1"></script>
 </body>
 
-                
+</html>
