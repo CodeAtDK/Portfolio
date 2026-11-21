@@ -159,8 +159,11 @@
         window.addEventListener('error', function(e) {
             console.error('GLOBAL ERROR:', e.message, e.filename, e.lineno, e.error);
         });
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('UNHANDLED PROMISE REJECTION:', e.reason);
+        });
     </script>
-    <script type="application/javascript" src="webApp.js?v=20261121_safari_v8"></script>
+    <script type="application/javascript" src="webApp.js?v=20261121_v11"></script>
 </body>
 
-</html>
+                
