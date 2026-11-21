@@ -79,8 +79,14 @@ Here is Dhruva's complete profile and career details to answer user inquiries ac
 
     if (!geminiResponse.ok) {
       const errorText = await geminiResponse.text();
-      return res.status(geminiResponse.status).json({
-        error: errorText,
+      let errorJson = null;
+      try { errorJson = JSON.parse(errorText); } catch(e) {}
+      const errMsg = errorJson?.error?.message || errorText;
+      return res.status(200).json({
+        reply: `⚠️ **Gemini API Key Notice (${geminiResponse.status})**:\n${errMsg}\n\n👉 **How to fix**:\n1. Open [Google AI Studio](https://aistudio.google.com/apikey).\n2. Click **"Create API key"** and choose **"Create key in new project"** (free tier with 15 requests/min).\n3. Update **GEMINI_API_KEY** in your Vercel Dashboard (or enter it in the **[ ⚡ Set Key ]** button above).`,
+        tokenCount: "quota-limit",
+        modelVersion: "gemini-2.0-flash",
+        latency: elapsedSeconds,
         isLive: false
       });
     }
