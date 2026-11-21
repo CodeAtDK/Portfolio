@@ -28,10 +28,10 @@ jobs:
           ./gradlew :app:webApp:wasmJsBrowserDistribution --no-daemon
 
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: team_qll3zocF7FEg6DBemdOqqIui
-          vercel-project-id: prj_kXYhGJfS6queVKAjIuNaJ9kqkupT
-          vercel-args: '--prod'
-          working-directory: ./app/webApp/build/dist/wasmJs/productionExecutable
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_qll3zocF7FEg6DBemdOqqIui
+          VERCEL_PROJECT_ID: prj_kXYhGJfS6queVKAjIuNaJ9kqkupT
+        run: |
+          cp vercel.json ./app/webApp/build/dist/wasmJs/productionExecutable/
+          npx vercel@latest deploy ./app/webApp/build/dist/wasmJs/productionExecutable --prod --token="$VERCEL_TOKEN" --yes
