@@ -33,5 +33,6 @@ jobs:
           VERCEL_ORG_ID: team_qll3zocF7FEg6DBemdOqqIui
           VERCEL_PROJECT_ID: prj_kXYhGJfS6queVKAjIuNaJ9kqkupT
         run: |
+          cp -r api ./app/webApp/build/dist/wasmJs/productionExecutable/
           cp vercel.json ./app/webApp/build/dist/wasmJs/productionExecutable/
           npx vercel@latest deploy ./app/webApp/build/dist/wasmJs/productionExecutable --prod --token="$VERCEL_TOKEN" --yes

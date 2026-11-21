@@ -10,10 +10,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -51,13 +51,16 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
     val listState = rememberLazyListState()
     var inputQuery by remember { mutableStateOf("") }
     var isThinking by remember { mutableStateOf(false) }
+    var showKeyInput by remember { mutableStateOf(false) }
+    var apiKeyInput by remember { mutableStateOf(GeminiService.apiKey) }
+    var isKeySet by remember { mutableStateOf(GeminiService.apiKey.isNotBlank()) }
 
     val messages = remember {
         mutableStateListOf(
             ChatMessage(
                 isUser = false,
                 text = "Hi! I'm Dhruva AI, powered by Google Gemini. I'm connected to Dhruva's multiplatform codebase, project architecture, and career profile. Ask me anything!",
-                modelVersion = "gemini-3.6-flash",
+                modelVersion = "gemini-2.0-flash",
                 tokenCount = "live",
                 latency = "online",
                 isLive = true,
@@ -121,11 +124,11 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
         PortfolioCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 420.dp, max = 560.dp),
+                .heightIn(min = 420.dp, max = 580.dp),
             contentPadding = 0.dp // Padding handled internally
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                // Terminal Header with status indicator
+                // Terminal Header with status indicator and API Key configuration button
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -134,31 +137,145 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFF5F56)))
-                        Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFFBD2E)))
-                        Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFF27C93F)))
-                    }
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFF5F56)))
+                            Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFFFFBD2E)))
+                            Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(Color(0xFF27C93F)))
+                        }
+                        Text(
+                            text = "dhruva-ai.sh // gemini-2.0-flash",
+                            style = MaterialTheme.typography.labelSmall.copy(fontFamily = FontFamily.Monospace),
+                            color = TextMuted
+                        )
+                    }
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         // Pulsing status dot
                         val statusAlpha = rememberPulseAlpha(minAlpha = 0.3f, maxAlpha = 1f, durationMs = 2000)
-                        Box(
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(6.dp)
+                                    .clip(CircleShape)
+                                    .background(PrimaryGreen.copy(alpha = statusAlpha))
+                            )
+                            Text(
+                                text = "live",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontSize = 11.sp,
+                                    fontFamily = FontFamily.Monospace
+                                ),
+                                color = PrimaryGreen
+                            )
+                        }
+
+                        // API Key toggle pill
+                        Row(
                             modifier = Modifier
-                                .size(6.dp)
-                                .clip(CircleShape)
-                                .background(PrimaryGreen.copy(alpha = statusAlpha))
-                        )
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(if (isKeySet) PrimaryGreen.copy(alpha = 0.15f) else SurfaceDark)
+                                .border(1.dp, if (isKeySet) PrimaryGreen.copy(alpha = 0.4f) else GlassBorder, RoundedCornerShape(6.dp))
+                                .clickable { showKeyInput = !showKeyInput }
+                                .padding(horizontal = 8.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Bolt,
+                                contentDescription = "API Key",
+                                tint = if (isKeySet) PrimaryGreen else SecondaryWarm,
+                                modifier = Modifier.size(12.dp)
+                            )
+                            Text(
+                                text = if (isKeySet) "Key: Set" else "Set Key",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontSize = 10.sp,
+                                    fontFamily = FontFamily.Monospace
+                                ),
+                                color = if (isKeySet) PrimaryGreen else SecondaryWarm
+                            )
+                        }
+                    }
+                }
+
+                // Expandable API Key Terminal Config Row
+                if (showKeyInput) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(SurfaceDark)
+                            .padding(horizontal = 16.dp, vertical = 10.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         Text(
-                            text = "gemini-3.6-flash • live",
+                            text = "> configure_gemini_api_key (for custom key or set GEMINI_API_KEY on Vercel):",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                fontSize = 11.sp,
-                                fontFamily = FontFamily.Monospace
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 11.sp
                             ),
-                            color = PrimaryGreen
+                            color = TextMuted
                         )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            TextField(
+                                value = apiKeyInput,
+                                onValueChange = { apiKeyInput = it },
+                                placeholder = { Text("AIzaSy...", color = TextMuted, fontSize = 12.sp) },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(48.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(SurfaceContainerHighest)
+                                    .border(1.dp, GlassBorder, RoundedCornerShape(8.dp)),
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = Color.Transparent,
+                                    unfocusedContainerColor = Color.Transparent,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                                ),
+                                singleLine = true
+                            )
+                            Button(
+                                onClick = {
+                                    GeminiService.apiKey = apiKeyInput.trim()
+                                    isKeySet = GeminiService.apiKey.isNotBlank()
+                                    showKeyInput = false
+                                },
+                                shape = RoundedCornerShape(8.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
+                                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp)
+                            ) {
+                                Text("Save", color = BackgroundDark, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                            }
+                            if (isKeySet) {
+                                OutlinedButton(
+                                    onClick = {
+                                        GeminiService.apiKey = ""
+                                        apiKeyInput = ""
+                                        isKeySet = false
+                                    },
+                                    shape = RoundedCornerShape(8.dp),
+                                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 8.dp)
+                                ) {
+                                    Text("Clear", color = Color(0xFFFF8B85), fontSize = 12.sp)
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -225,7 +342,7 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                             .clickable { submitQuery(inputQuery) }
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Send,
+                            imageVector = Icons.AutoMirrored.Filled.Send,
                             contentDescription = "Send",
                             tint = BackgroundDark,
                             modifier = Modifier.size(18.dp)

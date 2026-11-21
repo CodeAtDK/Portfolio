@@ -11,6 +11,20 @@ import io.ktor.http.isSuccess
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class GeminiProxyRequest(
+    val message: String
+)
+
+@Serializable
+data class GeminiProxyResponse(
+    val reply: String = "",
+    val tokenCount: String = "live",
+    val modelVersion: String = "gemini-2.0-flash",
+    val latency: String = "0.6s",
+    val isLive: Boolean = true
+)
+
+@Serializable
 data class GeminiRequest(
     val systemInstruction: GeminiContent? = null,
     val contents: List<GeminiContent>,
@@ -65,8 +79,9 @@ data class GeminiResult(
 object GeminiService {
     var apiKey: String = ""
 
-    private const val MODEL_NAME = "gemini-3.6-flash"
+    private const val MODEL_NAME = "gemini-2.0-flash"
     private const val BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+    private const val PROXY_URL = "/api/gemini"
 
     private const val DHRUVA_CONTEXT =
         """You are "Dhruva AI", an upbeat, highly intelligent, and concise professional AI assistant embedded in Dhruva Khatavkar's Android Developer portfolio website.
@@ -87,56 +102,77 @@ Here is Dhruva's complete profile and career details to answer user inquiries ac
         userQuery: String,
         client: HttpClient = HttpClientProvider.client
     ): GeminiResult {
-        if (apiKey.isBlank() || apiKey == "YOUR_GEMINI_API_KEY") {
-            return fallbackResponse(userQuery, "0.1s")
-        }
-
-        return try {
-            val url = "$BASE_URL/$MODEL_NAME:generateContent?key=$apiKey"
-            val requestBody = GeminiRequest(
-                systemInstruction = GeminiContent(
-                    parts = listOf(GeminiPart(text = DHRUVA_CONTEXT))
-                ),
-                contents = listOf(
-                    GeminiContent(
-                        role = "user",
-                        parts = listOf(GeminiPart(text = userQuery))
-                    )
-                ),
-                generationConfig = GeminiGenerationConfig(
-                    temperature = 0.7,
-                    maxOutputTokens = 1024
-                )
-            )
-
-            val response = client.post(url) {
+        // 1. Try serverless backend proxy (/api/gemini) on Vercel
+        try {
+            val response = client.post(PROXY_URL) {
                 contentType(ContentType.Application.Json)
                 header("Accept", "application/json")
-                setBody(requestBody)
+                setBody(GeminiProxyRequest(message = userQuery))
             }
-
             if (response.status.isSuccess()) {
-                val geminiResponse: GeminiResponse = response.body()
-                val textReply = geminiResponse.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
-                if (!textReply.isNullOrBlank()) {
-                    val tokens = geminiResponse.usageMetadata?.totalTokenCount?.toString() ?: "—"
-                    val modelVer = (geminiResponse.modelVersion ?: MODEL_NAME).replace("models/", "")
-                    GeminiResult(
-                        reply = textReply.trim(),
-                        tokenCount = "$tokens tokens",
-                        modelVersion = modelVer,
-                        latency = "0.7s",
+                val proxyResult: GeminiProxyResponse = response.body()
+                if (proxyResult.reply.isNotBlank()) {
+                    return GeminiResult(
+                        reply = proxyResult.reply.trim(),
+                        tokenCount = proxyResult.tokenCount,
+                        modelVersion = proxyResult.modelVersion,
+                        latency = proxyResult.latency,
                         isLive = true
                     )
-                } else {
-                    fallbackResponse(userQuery, "0.1s")
                 }
-            } else {
-                fallbackResponse(userQuery, "0.1s")
             }
-        } catch (e: Exception) {
-            fallbackResponse(userQuery, "0.1s")
+        } catch (_: Exception) {
+            // Serverless proxy unavailable, proceed to client-side API key check
         }
+
+        // 2. Direct client-side API key if set by user
+        if (apiKey.isNotBlank() && apiKey != "YOUR_GEMINI_API_KEY") {
+            try {
+                val url = "$BASE_URL/$MODEL_NAME:generateContent?key=$apiKey"
+                val requestBody = GeminiRequest(
+                    systemInstruction = GeminiContent(
+                        parts = listOf(GeminiPart(text = DHRUVA_CONTEXT))
+                    ),
+                    contents = listOf(
+                        GeminiContent(
+                            role = "user",
+                            parts = listOf(GeminiPart(text = userQuery))
+                        )
+                    ),
+                    generationConfig = GeminiGenerationConfig(
+                        temperature = 0.7,
+                        maxOutputTokens = 1024
+                    )
+                )
+
+                val response = client.post(url) {
+                    contentType(ContentType.Application.Json)
+                    header("Accept", "application/json")
+                    setBody(requestBody)
+                }
+
+                if (response.status.isSuccess()) {
+                    val geminiResponse: GeminiResponse = response.body()
+                    val textReply = geminiResponse.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
+                    if (!textReply.isNullOrBlank()) {
+                        val tokens = geminiResponse.usageMetadata?.totalTokenCount?.toString() ?: "—"
+                        val modelVer = (geminiResponse.modelVersion ?: MODEL_NAME).replace("models/", "")
+                        return GeminiResult(
+                            reply = textReply.trim(),
+                            tokenCount = "$tokens tokens",
+                            modelVersion = modelVer,
+                            latency = "0.7s",
+                            isLive = true
+                        )
+                    }
+                }
+            } catch (_: Exception) {
+                // Fall through to offline knowledge base
+            }
+        }
+
+        // 3. Fallback response with offline portfolio knowledge
+        return fallbackResponse(userQuery, "0.1s")
     }
 
     private fun fallbackResponse(query: String, latency: String): GeminiResult {
@@ -144,6 +180,10 @@ Here is Dhruva's complete profile and career details to answer user inquiries ac
         val text = when {
             q.contains("stack") || q.contains("skills") || q.contains("tech") -> {
                 "Dhruva's primary engineering stack centers around **Kotlin** and modern Android development. He builds reactive, declarative UIs using **Jetpack Compose**, manages asynchronous concurrency with **Coroutines & Flow**, implements clean modular architecture with **Hilt** and **Room**, and integrates **Firebase** and **Google Gemini AI**. He is actively expanding with **Kotlin Multiplatform (KMP)**."
+            }
+
+            q.contains("inkspace") || q.contains("notebook") -> {
+                "**Inkspace Notebook** is Dhruva's cross-platform digital inking and PDF cloud studio built on **Kotlin Multiplatform (KMP)**. It delivers sub-8ms stroke latency with Bézier smoothing, 11 inking tools, Supabase cloud sync, and audio recording. Try the live demo at https://notes.dhruva.website or get it on Google Play!"
             }
 
             q.contains("foodbridge") -> {
@@ -167,14 +207,14 @@ Here is Dhruva's complete profile and career details to answer user inquiries ac
             }
 
             else -> {
-                "I'm Dhruva's AI assistant. I can answer anything about his **Android & KMP development**, **featured projects** (FoodBridge, Agri Connect, CareNest), **technical skills**, or **career background**. Feel free to ask a question!"
+                "I'm Dhruva's AI assistant. I can answer anything about his **Android & KMP development**, **featured projects** (Inkspace Notebook, FoodBridge, Agri Connect, CareNest), **technical skills**, or **career background**. Feel free to ask a question!\n\n*(Running in portfolio offline mode. Set GEMINI_API_KEY in Vercel or click \"Set Key\" above for live Gemini reasoning.)*"
             }
         }
 
         return GeminiResult(
             reply = text,
             tokenCount = "offline",
-            modelVersion = "offline-fallback",
+            modelVersion = "offline-knowledge",
             latency = latency,
             isLive = false
         )

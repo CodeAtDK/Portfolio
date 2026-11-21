@@ -16,7 +16,7 @@
       ]
     },
     {
-      "source": "/(.*).js",
+      "source": "/webApp.js",
       "headers": [
         {
           "key": "Cache-Control",
