@@ -23,6 +23,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
+     crossorigin="anonymous"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: ["class", '[data-theme="dark"]'],
@@ -334,6 +336,18 @@
                 icons.forEach(icon => icon.textContent = 'dark_mode');
             }
         });
+
+        // Hide standalone navigation elements if this resume is embedded in an iframe preview
+        if (window.self !== window.top) {
+            document.querySelectorAll('nav').forEach(nav => nav.style.display = 'none');
+            const breadcrumbs = document.querySelector('.flex.justify-between.items-center.mb-12.reveal');
+            if (breadcrumbs) breadcrumbs.style.display = 'none';
+            const mainContent = document.querySelector('main');
+            if (mainContent) {
+                mainContent.classList.remove('md:ml-[80px]', 'pt-20', 'md:pt-16');
+                mainContent.classList.add('pt-4', 'pb-4');
+            }
+        }
     </script>
 </body>
 </html>

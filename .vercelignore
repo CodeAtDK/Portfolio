@@ -1,0 +1,16 @@
+.gradle/
+.git/
+.idea/
+.kotlin/
+kotlin-js-store/
+node_modules/
+build/
+app/build/
+app/shared/
+app/webApp/build/classes/
+app/webApp/build/compileSync/
+app/webApp/build/kotlin-webpack/
+app/webApp/src/
+core/
+server/
+*.map

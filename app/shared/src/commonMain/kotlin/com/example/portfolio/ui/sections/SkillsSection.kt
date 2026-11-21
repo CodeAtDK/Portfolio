@@ -17,10 +17,12 @@ import com.example.portfolio.ui.theme.*
 fun SkillsSection(
     modifier: Modifier = Modifier
 ) {
+    val isMobile = LocalIsMobile.current
+
     Column(
         modifier = modifier
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(40.dp)
+        verticalArrangement = Arrangement.spacedBy(if (isMobile) 24.dp else 40.dp)
     ) {
         SectionHeader(number = "02", title = "Skills")
 
@@ -30,12 +32,12 @@ fun SkillsSection(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        // Bento Grid Desktop Layout
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            // Row 1
-            Row(
+        // Bento Grid Layout (Mobile Responsive)
+        val isMobile = LocalIsMobile.current
+        if (isMobile) {
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 SkillGroupCard(
                     category = "ANDROID & CROSS-PLATFORM",
@@ -43,8 +45,7 @@ fun SkillsSection(
                     accentColor = AccentGreen,
                     title = "Core Development",
                     skills = listOf("Kotlin", "Java", "Jetpack Compose", "XML", "MVVM / MVI", "Clean Architecture"),
-                    watermark = "📱",
-                    modifier = Modifier.weight(2f).fadeInSlideUp(delayMs = 0)
+                    modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 0)
                 )
                 SkillGroupCard(
                     category = "CORE LIBRARIES",
@@ -52,24 +53,15 @@ fun SkillsSection(
                     accentColor = AccentOrange,
                     title = "Architecture & Perf",
                     skills = listOf("Coroutines & Flow", "Hilt / Dagger", "Room DB", "Retrofit", "Navigation", "WorkManager", "StateFlow"),
-                    watermark = "⚙️",
-                    modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 100)
+                    modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 100)
                 )
-            }
-            
-            // Row 2
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
                 SkillGroupCard(
                     category = "INTEGRATIONS",
                     categoryColor = TertiaryBlue,
                     accentColor = AccentBlue,
                     title = "Backend & Cloud",
                     skills = listOf("Firebase", "Firestore", "REST APIs", "Gemini AI", "Postman"),
-                    watermark = "☁️",
-                    modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 150)
+                    modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 150)
                 )
                 SkillGroupCard(
                     category = "WORKFLOW",
@@ -77,22 +69,77 @@ fun SkillsSection(
                     accentColor = AccentMuted,
                     title = "Tools & Practices",
                     skills = listOf("Android Studio", "Git / GitHub", "Material Design 3", "JUnit", "Agile / Scrum"),
-                    watermark = "🔧",
-                    modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 200)
+                    modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 200)
+                )
+                SkillGroupCard(
+                    category = "LANGUAGES & MULTIPLATFORM",
+                    categoryColor = PrimaryGreen,
+                    accentColor = AccentGreen,
+                    title = "Growing Beyond Android",
+                    description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
+                    skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
+                    modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 250)
                 )
             }
+        } else {
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                // Row 1
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    SkillGroupCard(
+                        category = "ANDROID & CROSS-PLATFORM",
+                        categoryColor = PrimaryGreen,
+                        accentColor = AccentGreen,
+                        title = "Core Development",
+                        skills = listOf("Kotlin", "Java", "Jetpack Compose", "XML", "MVVM / MVI", "Clean Architecture"),
+                        modifier = Modifier.weight(2f).fadeInSlideUp(delayMs = 0)
+                    )
+                    SkillGroupCard(
+                        category = "CORE LIBRARIES",
+                        categoryColor = SecondaryWarm,
+                        accentColor = AccentOrange,
+                        title = "Architecture & Perf",
+                        skills = listOf("Coroutines & Flow", "Hilt / Dagger", "Room DB", "Retrofit", "Navigation", "WorkManager", "StateFlow"),
+                        modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 100)
+                    )
+                }
+                
+                // Row 2
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    SkillGroupCard(
+                        category = "INTEGRATIONS",
+                        categoryColor = TertiaryBlue,
+                        accentColor = AccentBlue,
+                        title = "Backend & Cloud",
+                        skills = listOf("Firebase", "Firestore", "REST APIs", "Gemini AI", "Postman"),
+                        modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 150)
+                    )
+                    SkillGroupCard(
+                        category = "WORKFLOW",
+                        categoryColor = TextDim,
+                        accentColor = AccentMuted,
+                        title = "Tools & Practices",
+                        skills = listOf("Android Studio", "Git / GitHub", "Material Design 3", "JUnit", "Agile / Scrum"),
+                        modifier = Modifier.weight(1f).fadeInSlideUp(delayMs = 200)
+                    )
+                }
 
-            // Row 3
-            SkillGroupCard(
-                category = "LANGUAGES & MULTIPLATFORM",
-                categoryColor = PrimaryGreen,
-                accentColor = AccentGreen,
-                title = "Growing Beyond Android",
-                description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
-                skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
-                watermark = "🌍",
-                modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 250)
-            )
+                // Row 3
+                SkillGroupCard(
+                    category = "LANGUAGES & MULTIPLATFORM",
+                    categoryColor = PrimaryGreen,
+                    accentColor = AccentGreen,
+                    title = "Growing Beyond Android",
+                    description = "Comfortable across the modern stack and exploring cross-platform delivery with KMP/CMP.",
+                    skills = listOf("KMP", "CMP", "Ktor", "C++ / C", "Python", "SQL"),
+                    modifier = Modifier.fillMaxWidth().fadeInSlideUp(delayMs = 250)
+                )
+            }
         }
     }
 }
@@ -106,12 +153,10 @@ private fun SkillGroupCard(
     title: String,
     description: String? = null,
     skills: List<String>,
-    watermark: String? = null,
     modifier: Modifier = Modifier
 ) {
     PortfolioCard(
         modifier = modifier,
-        watermarkEmoji = watermark,
         accentBorderColor = accentColor.copy(alpha = 0.5f) // Colored left accent
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {

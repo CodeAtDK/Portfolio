@@ -1,20 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link type="text/css" rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Dhruva Khatavkar | Portfolio</title>
+    <link type="text/css" rel="stylesheet" href="styles.css?v=3">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
+        crossorigin="anonymous"></script>
+    <!-- Polyfill WebGL renderer info for Safari / WebKit to prevent Skiko context creation nullptr failure -->
+    <script>
+        (function () {
+            var UNMASKED_VENDOR_WEBGL = 0x9245;
+            var UNMASKED_RENDERER_WEBGL = 0x9246;
+
+            function patchContext(proto) {
+                if (!proto || proto._skiko_patched) return;
+                proto._skiko_patched = true;
+
+                var origGetParameter = proto.getParameter;
+                var origGetExtension = proto.getExtension;
+                var origGetSupportedExtensions = proto.getSupportedExtensions;
+
+                if (origGetExtension) {
+                    proto.getExtension = function (name) {
+                        if (name === 'WEBGL_debug_renderer_info') {
+                            return {
+                                UNMASKED_VENDOR_WEBGL: UNMASKED_VENDOR_WEBGL,
+                                UNMASKED_RENDERER_WEBGL: UNMASKED_RENDERER_WEBGL
+                            };
+                        }
+                        try {
+                            return origGetExtension.apply(this, arguments);
+                        } catch (e) {
+                            return null;
+                        }
+                    };
+                }
+
+                if (origGetSupportedExtensions) {
+                    proto.getSupportedExtensions = function () {
+                        try {
+                            var exts = origGetSupportedExtensions.apply(this, arguments) || [];
+                            if (exts.indexOf('WEBGL_debug_renderer_info') === -1) {
+                                exts = Array.from(exts);
+                                exts.push('WEBGL_debug_renderer_info');
+                            }
+                            return exts;
+                        } catch (e) {
+                            return ['WEBGL_debug_renderer_info'];
+                        }
+                    };
+                }
+
+                if (origGetParameter) {
+                    proto.getParameter = function (pname) {
+                        if (pname === UNMASKED_VENDOR_WEBGL || pname === 37445) {
+                            return 'Apple Inc.';
+                        }
+                        if (pname === UNMASKED_RENDERER_WEBGL || pname === 37446) {
+                            return 'Apple GPU';
+                        }
+                        try {
+                            var res = origGetParameter.apply(this, arguments);
+                            if (res === null || res === undefined) {
+                                if (pname === 0x1F00 || pname === 7936) return 'WebKit';
+                                if (pname === 0x1F01 || pname === 7937) return 'WebKit WebGL';
+                                if (pname === 0x1F02 || pname === 7938) return 'WebGL 2.0';
+                                if (pname === 0x8B8C || pname === 35724) return 'WebGL GLSL ES 3.00';
+                            }
+                            return res;
+                        } catch (e) {
+                            if (pname === 0x1F00 || pname === 7936) return 'WebKit';
+                            if (pname === 0x1F01 || pname === 7937) return 'WebKit WebGL';
+                            if (pname === 0x1F02 || pname === 7938) return 'WebGL 2.0';
+                            if (pname === 0x8B8C || pname === 35724) return 'WebGL GLSL ES 3.00';
+                            return null;
+                        }
+                    };
+                }
+            }
+
+            if (typeof WebGLRenderingContext !== 'undefined') {
+                patchContext(WebGLRenderingContext.prototype);
+            }
+            if (typeof WebGL2RenderingContext !== 'undefined') {
+                patchContext(WebGL2RenderingContext.prototype);
+            }
+
+            if (typeof HTMLCanvasElement !== 'undefined') {
+                var origGetContext = HTMLCanvasElement.prototype.getContext;
+                HTMLCanvasElement.prototype.getContext = function () {
+                    var ctx = origGetContext.apply(this, arguments);
+                    if (ctx && (arguments[0] === 'webgl' || arguments[0] === 'webgl2' || arguments[0] === 'experimental-webgl')) {
+                        patchContext(Object.getPrototypeOf(ctx));
+                        patchContext(ctx);
+                    }
+                    return ctx;
+                };
+            }
+        })();
+    </script>
 </head>
-<body style="text-align: center; align-content: center">
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 50 50" role="presentation">
-        <circle cx="25" cy="25" r="20" stroke="#ccc" stroke-width="4" fill="none"/>
-        <circle cx="25" cy="25" r="20" stroke="#333" stroke-width="4" fill="none" stroke-linecap="round"
-                stroke-dasharray="90 125">
-            <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s"
-                              repeatCount="indefinite"/>
-        </circle>
-    </svg>
-    <script type="application/javascript" src="webApp.js"></script>
+
+<body>
+    <div id="root">
+        <div id="loading" class="loading-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 50 50" role="presentation">
+                <circle cx="25" cy="25" r="20" stroke="#21262d" stroke-width="4" fill="none" />
+                <circle cx="25" cy="25" r="20" stroke="#3ddc84" stroke-width="4" fill="none" stroke-linecap="round"
+                    stroke-dasharray="90 125">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s"
+                        repeatCount="indefinite" />
+                </circle>
+            </svg>
+            <p class="loading-text">Loading Portfolio...</p>
+        </div>
+    </div>
+    <script>
+        // Ensure loading indicator is removed as soon as the Compose canvas appears
+        var observer = new MutationObserver(function() {
+            var canvas = document.querySelector('canvas');
+            if (canvas) {
+                var loading = document.getElementById('loading');
+                if (loading) loading.remove();
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+    <script type="application/javascript" src="webApp.js?v=20261117_safari_fix"></script>
 </body>
+
 </html>

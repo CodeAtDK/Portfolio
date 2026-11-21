@@ -16,21 +16,58 @@ function initScrollProgress() {
   }, { passive: true });
 }
 
-// ---- Scroll Reveal (Intersection Observer) ----
+// ---- Scroll Reveal (Intersection Observer & Safari Viewport Fallback) ----
 function initScrollReveal() {
   const elements = document.querySelectorAll('.reveal');
   if (!elements.length) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+  function makeVisible(el) {
+    el.classList.add('visible');
+  }
+
+  // Check elements already in or near viewport immediately (vital for Safari / WebKit)
+  function checkViewport() {
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    elements.forEach(el => {
+      if (!el.classList.contains('visible')) {
+        const rect = el.getBoundingClientRect();
+        // Trigger if element top is within viewport or element is already in view
+        if (rect.top <= windowHeight && rect.bottom >= 0) {
+          makeVisible(el);
+        }
       }
     });
-  }, { threshold: 0.1 });
+  }
 
-  elements.forEach(el => observer.observe(el));
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting || entry.intersectionRatio > 0) {
+          makeVisible(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0, // 0 ensures immediate firing in Safari without ratio rounding traps
+      rootMargin: '0px 0px -20px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+  } else {
+    // Immediate fallback if IntersectionObserver is unavailable or blocked
+    elements.forEach(makeVisible);
+  }
+
+  // Trigger viewport check across initial render frames to resolve Safari layout timing
+  checkViewport();
+  requestAnimationFrame(checkViewport);
+  setTimeout(checkViewport, 150);
+  setTimeout(checkViewport, 500);
+
+  // Safari bfcache / pageshow support & scroll fallback
+  window.addEventListener('pageshow', checkViewport);
+  window.addEventListener('scroll', checkViewport, { passive: true });
 }
 
 // ---- Mobile Menu Toggle ----
@@ -90,12 +127,13 @@ function initAIWorkspace() {
 Here is Dhruva's complete profile and career details to answer user inquiries accurately:
 - Role & Focus: Android Developer specializing in Kotlin, Jetpack Compose, Android SDK, MVVM architecture, Coroutines/Flow, Hilt, Room, and AI integrations (Gemini AI).
 - Current Exploration: Kotlin Multiplatform (KMP), Compose Multiplatform, and Ktor to bridge Android, iOS, and Web.
-- Experience: Developing mobile applications independently and open-source since August 2023. Built 3+ production-quality real-world apps.
+- Experience: Developing mobile applications independently and open-source since August 2023. Built 4+ production-quality real-world apps.
 - Featured Projects:
-  1) FoodBridge: A food rescue platform connecting surplus food donors with NGOs using location-based services and real-time matching (Kotlin, Compose, Firebase, Maps API).
-  2) Agri Connect: A direct farmer-to-consumer marketplace without middlemen featuring real-time pricing and crop cataloging (Kotlin, MVVM, Retrofit, Room).
-  3) CareNest: An elderly care management app with medication tracking and health monitoring dashboards (Kotlin, Compose, Hilt, Gemini AI).
-  4) This Portfolio: A developer-crafted portfolio site with terminal-themed design and embedded AI chat.
+  1) Inkspace Notebook: Cross-Platform Digital Inking, Multi-Page PDF & Cloud Studio on Kotlin Multiplatform (Compose Multiplatform, Supabase, SQLDelight, Skiko Canvas, Ktor). Available on Google Play (https://play.google.com/store/apps/details?id=dev.dhruva.notebook) and Live Demo (https://notes.dhruva.website).
+  2) FoodBridge: A food rescue platform connecting surplus food donors with NGOs using location-based services and real-time matching (Kotlin, Compose, Firebase, Maps API).
+  3) Agri Connect: A direct farmer-to-consumer marketplace without middlemen featuring real-time pricing and crop cataloging (Kotlin, MVVM, Retrofit, Room).
+  4) CareNest: An elderly care management app with medication tracking and health monitoring dashboards (Kotlin, Compose, Hilt, Gemini AI).
+  5) This Portfolio: A developer-crafted portfolio site with terminal-themed design and embedded AI chat.
 - Education: B.Tech in Electronics & Communication Engineering (ECE) from Jaypee Institute of Information Technology, Noida (Graduating 2026).
 - Location & Availability: Based in Beed, India. Fully open and available for Android developer opportunities, internships, and full-time roles!
 - Contact: khatavkardhruva@gmail.com
@@ -138,7 +176,7 @@ Guidelines: Be warm, professional, engaging, and enthusiastic about Android & Ko
   }
 
   async function callGeminiAI(userQuery) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
 
     const requestBody = {
       systemInstruction: {

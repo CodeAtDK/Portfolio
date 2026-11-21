@@ -26,15 +26,17 @@ import com.example.portfolio.ui.theme.*
 fun ExperienceSection(
     modifier: Modifier = Modifier
 ) {
+    val isMobile = LocalIsMobile.current
+
     Column(
         modifier = modifier
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(40.dp)
+        verticalArrangement = Arrangement.spacedBy(if (isMobile) 24.dp else 40.dp)
     ) {
         SectionHeader(number = "04", title = "Experience")
 
         Box(
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
+            modifier = Modifier.fillMaxWidth().padding(start = if (isMobile) 4.dp else 16.dp)
         ) {
             // Background Timeline Line — gradient from green to transparent
             Box(
@@ -48,8 +50,22 @@ fun ExperienceSection(
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(48.dp)
+                verticalArrangement = Arrangement.spacedBy(if (isMobile) 28.dp else 48.dp)
             ) {
+                ExperienceCardItem(
+                    timeframe = "Feb 2025 – Aug 2025",
+                    title = "Android Developer Intern",
+                    subtitle = "GneInfra Pvt Ltd",
+                    bullets = listOf(
+                        "Collaborated on developing and optimizing internal Android applications, focusing on performance and user experience.",
+                        "Implemented responsive UI components using Jetpack Compose and integrated them with backend services.",
+                        "Worked closely with the development team to troubleshoot issues and implement new features following clean architecture principles."
+                    ),
+                    tags = listOf("Kotlin", "Jetpack Compose", "Coroutines", "API Integration"),
+                    isCurrent = true,
+                    modifier = Modifier.fadeInSlideUp(delayMs = 0)
+                )
+
                 ExperienceCardItem(
                     timeframe = "Oct 2024 – Jan 2025 • Remote",
                     title = "Android Developer Intern",
@@ -60,8 +76,8 @@ fun ExperienceSection(
                         "Integrated Firebase Realtime Database and Auth with Hilt-based dependency injection to handle concurrent user sessions and secure data storage."
                     ),
                     tags = listOf("Kotlin", "Jetpack Compose", "MVVM", "Hilt", "Firebase"),
-                    isCurrent = true,
-                    modifier = Modifier.fadeInSlideUp(delayMs = 0)
+                    isCurrent = false,
+                    modifier = Modifier.fadeInSlideUp(delayMs = 150)
                 )
 
                 ExperienceCardItem(
@@ -71,7 +87,7 @@ fun ExperienceSection(
                     description = "Relevant Coursework: Data Structures, DBMS, OS, OOPS",
                     tags = emptyList(),
                     isCurrent = false,
-                    modifier = Modifier.fadeInSlideUp(delayMs = 150)
+                    modifier = Modifier.fadeInSlideUp(delayMs = 300)
                 )
 
                 ExperienceCardItem(
@@ -80,7 +96,7 @@ fun ExperienceSection(
                     subtitle = "Late M.E Bhore Junior College, Padali",
                     tags = emptyList(),
                     isCurrent = false,
-                    modifier = Modifier.fadeInSlideUp(delayMs = 300)
+                    modifier = Modifier.fadeInSlideUp(delayMs = 450)
                 )
             }
         }

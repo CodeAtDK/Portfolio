@@ -4,6 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -12,7 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
@@ -31,30 +36,69 @@ import com.example.portfolio.ui.theme.*
 
 @Composable
 fun HomeSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onExploreWork: () -> Unit = {},
+    onViewResume: () -> Unit = {},
+    onAskAI: () -> Unit = {},
+    onContact: () -> Unit = {}
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 80.dp, bottom = 60.dp), // Hero needs to breathe
-        horizontalArrangement = Arrangement.spacedBy(56.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        HomeContent(
-            modifier = Modifier.weight(1.15f)
-        )
-        TerminalMockup(
-            modifier = Modifier
-                .weight(0.85f)
-                .fadeInSlideUp(durationMs = 700, delayMs = 300)
-        )
+    val isMobile = LocalIsMobile.current
+    if (isMobile) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(36.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HomeContent(
+                modifier = Modifier.fillMaxWidth(),
+                onExploreWork = onExploreWork,
+                onViewResume = onViewResume,
+                onAskAI = onAskAI,
+                onContact = onContact
+            )
+            TerminalMockup(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fadeInSlideUp(durationMs = 700, delayMs = 200)
+            )
+        }
+    } else {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 80.dp, bottom = 60.dp),
+            horizontalArrangement = Arrangement.spacedBy(56.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            HomeContent(
+                modifier = Modifier.weight(1.15f),
+                onExploreWork = onExploreWork,
+                onViewResume = onViewResume,
+                onAskAI = onAskAI,
+                onContact = onContact
+            )
+            TerminalMockup(
+                modifier = Modifier
+                    .weight(0.85f)
+                    .fadeInSlideUp(durationMs = 700, delayMs = 300)
+            )
+        }
     }
 }
 
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 private fun HomeContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onExploreWork: () -> Unit = {},
+    onViewResume: () -> Unit = {},
+    onAskAI: () -> Unit = {},
+    onContact: () -> Unit = {}
 ) {
+    val isMobile = LocalIsMobile.current
+
     Column(
         modifier = modifier.fadeInSlideUp(durationMs = 600),
         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -66,8 +110,11 @@ private fun HomeContent(
                 modifier = Modifier
                     .size(140.dp)
                     .clip(CircleShape)
-                    .background(PrimaryGreen.copy(alpha = 0.12f))
-                    .blur(20.dp)
+                    .background(
+                        Brush.radialGradient(
+                            colors = listOf(PrimaryGreen.copy(alpha = 0.25f), Color.Transparent)
+                        )
+                    )
             )
             Image(
                 painter = painterResource(Res.drawable.profile),
@@ -94,7 +141,7 @@ private fun HomeContent(
                 }
                 append("\nAndroid experiences.")
             },
-            style = MaterialTheme.typography.displayLarge,
+            style = if (isMobile) MaterialTheme.typography.displayMedium else MaterialTheme.typography.displayLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
 
@@ -102,17 +149,17 @@ private fun HomeContent(
             text = "I'm Dhruva Khatavkar — I build fluid, performant Android applications with Jetpack Compose, Kotlin, and modern architectural patterns. Currently exploring Kotlin Multiplatform.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(bottom = 12.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        // Action Buttons — consistent 12dp radius
-        Row(
+        // Action Buttons — responsive wrapping for mobile
+        FlowRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { /* Scroll to projects */ },
+                onClick = onExploreWork,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = PrimaryGreen,
                     contentColor = BackgroundDark
@@ -127,13 +174,39 @@ private fun HomeContent(
             }
 
             OutlinedButton(
-                onClick = { /* View Resume */ },
+                onClick = onContact,
+                shape = RoundedCornerShape(12.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGreen.copy(alpha = 0.5f)),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = PrimaryGreen
+                ),
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Get in Touch",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = "Get in Touch",
+                        tint = PrimaryGreen,
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
+            }
+
+            OutlinedButton(
+                onClick = onViewResume,
                 shape = RoundedCornerShape(12.dp),
                 border = androidx.compose.foundation.BorderStroke(1.dp, GlassBorder),
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp)
             ) {
                 Text(
                     text = "View Resume",
@@ -142,18 +215,35 @@ private fun HomeContent(
             }
 
             OutlinedButton(
-                onClick = { /* Scroll to AI workspace */ },
+                onClick = onAskAI,
                 shape = RoundedCornerShape(12.dp),
                 border = androidx.compose.foundation.BorderStroke(1.dp, GlassBorder),
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp)
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp)
             ) {
-                Text(
-                    text = "Ask Dhruva AI ->",
-                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
-                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.AutoAwesome,
+                        contentDescription = "AI",
+                        tint = PrimaryGreen,
+                        modifier = Modifier.size(15.dp)
+                    )
+                    Text(
+                        text = "Ask Dhruva AI",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = "Open AI",
+                        tint = TextMuted,
+                        modifier = Modifier.size(13.dp)
+                    )
+                }
             }
         }
     }

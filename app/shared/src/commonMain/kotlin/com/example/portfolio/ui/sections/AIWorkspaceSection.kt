@@ -9,26 +9,38 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.portfolio.data.remote.GeminiResult
+import com.example.portfolio.data.remote.GeminiService
 import com.example.portfolio.ui.components.PortfolioCard
 import com.example.portfolio.ui.components.SectionHeader
 import com.example.portfolio.ui.components.TechChip
 import com.example.portfolio.ui.components.rememberPulseAlpha
 import com.example.portfolio.ui.components.rememberTypingDots
 import com.example.portfolio.ui.theme.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private data class ChatMessage(
     val isUser: Boolean,
     val text: String,
+    val latency: String? = null,
+    val modelVersion: String? = null,
+    val tokenCount: String? = null,
+    val isLive: Boolean = true,
     val insightTitle: String? = null,
     val tags: List<String> = emptyList()
 )
@@ -44,9 +56,14 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
         mutableStateListOf(
             ChatMessage(
                 isUser = false,
-                text = "Hi! I'm Dhruva AI. I'm trained on Dhruva's codebase, projects, and resume. How can I help you?",
+                text = "Hi! I'm Dhruva AI, powered by Google Gemini. I'm connected to Dhruva's multiplatform codebase, project architecture, and career profile. Ask me anything!",
+                modelVersion = "gemini-3.6-flash",
+                tokenCount = "live",
+                latency = "online",
+                isLive = true,
                 insightTitle = "Suggested questions:",
                 tags = listOf(
+                    "Tell me about Inkspace Notebook",
                     "What is your tech stack?",
                     "Tell me about FoodBridge.",
                     "Why KMP over React Native?"
@@ -65,45 +82,37 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
         coroutineScope.launch {
             listState.animateScrollToItem(messages.size - 1)
             isThinking = true
-            delay(1000)
-            isThinking = false
 
-            val q = cleanQuery.lowercase()
-            val response = when {
-                q.contains("stack") || q.contains("skills") || q.contains("technologies") -> ChatMessage(
-                    isUser = false,
-                    text = "My primary engineering domain resides within Kotlin, Jetpack Compose, and Kotlin Multiplatform (KMP). On the backend, I leverage Ktor and Firebase.",
-                    insightTitle = "Key Capabilities:",
-                    tags = listOf("Kotlin", "Jetpack Compose", "KMP", "Firebase", "Coroutines")
-                )
-                q.contains("foodbridge") -> ChatMessage(
-                    isUser = false,
-                    text = "FoodBridge is a platform designed to connect surplus food donors with active volunteer networks. Built on Clean Architecture with MVVM.",
-                    insightTitle = "Tech:",
-                    tags = listOf("Clean Architecture", "MVVM", "Compose", "Firebase")
-                )
-                q.contains("kmp") || q.contains("multiplatform") || q.contains("react") || q.contains("flutter") -> ChatMessage(
-                    isUser = false,
-                    text = "Kotlin Multiplatform allows native performance and direct API access across Android, iOS, and the Web (WASM). It shares business logic while compiling to native composables.",
-                    insightTitle = "KMP Advantages:",
-                    tags = listOf("Native Performance", "WASM", "Shared Domain Layer")
-                )
-                else -> ChatMessage(
-                    isUser = false,
-                    text = "I am a local placeholder AI for this native KMP version. Real Gemini API integration is coming soon! Try asking about 'skills', 'KMP', or 'FoodBridge'.",
-                    insightTitle = "Try:",
-                    tags = listOf("What is your tech stack?", "Tell me about FoodBridge.")
+            val result: GeminiResult = try {
+                GeminiService.generateResponse(cleanQuery)
+            } catch (e: Exception) {
+                GeminiResult(
+                    reply = "I'm Dhruva's AI assistant. I can answer anything about his **Multiplatform & Android development**, **featured projects** (Inkspace Notebook, FoodBridge, Agri Connect, CareNest), or **technical skills**.",
+                    tokenCount = "offline",
+                    modelVersion = "offline-fallback",
+                    latency = "0.1s",
+                    isLive = false
                 )
             }
 
-            messages.add(response)
+            isThinking = false
+
+            messages.add(
+                ChatMessage(
+                    isUser = false,
+                    text = result.reply,
+                    latency = result.latency,
+                    modelVersion = result.modelVersion,
+                    tokenCount = result.tokenCount,
+                    isLive = result.isLive
+                )
+            )
             listState.animateScrollToItem(messages.size - 1)
         }
     }
 
     Column(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         SectionHeader(number = "05", title = "Dhruva AI")
@@ -112,7 +121,7 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
         PortfolioCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 400.dp, max = 540.dp),
+                .heightIn(min = 420.dp, max = 560.dp),
             contentPadding = 0.dp // Padding handled internally
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
@@ -143,9 +152,12 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                                 .background(PrimaryGreen.copy(alpha = statusAlpha))
                         )
                         Text(
-                            text = "dhruva-ai-terminal",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = TextMuted
+                            text = "gemini-3.6-flash • live",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontSize = 11.sp,
+                                fontFamily = FontFamily.Monospace
+                            ),
+                            color = PrimaryGreen
                         )
                     }
                 }
@@ -192,7 +204,7 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                             .clip(RoundedCornerShape(12.dp))
                             .background(SurfaceDark)
                             .border(1.dp, GlassBorder, RoundedCornerShape(12.dp)),
-                        placeholder = { Text("Ask about my skills or projects...", color = TextMuted) },
+                        placeholder = { Text("Ask about Inkspace, KMP, or Android skills...", color = TextMuted) },
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
@@ -212,10 +224,11 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                             .background(PrimaryGreen)
                             .clickable { submitQuery(inputQuery) }
                     ) {
-                        Text(
-                            text = "->",
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = BackgroundDark
+                        Icon(
+                            imageVector = Icons.Filled.Send,
+                            contentDescription = "Send",
+                            tint = BackgroundDark,
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
@@ -238,7 +251,7 @@ private fun ChatMessageBubble(
     ) {
         Row(
             modifier = Modifier
-                .widthIn(max = 640.dp)
+                .widthIn(max = 680.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(bgColor)
         ) {
@@ -254,22 +267,64 @@ private fun ChatMessageBubble(
 
             Column(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(
-                    text = if (message.isUser) "> user_query" else "> dhruva_ai_response",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = if (message.isUser) PrimaryGreen else TertiaryBlue
-                )
+                // Header line with model info & telemetry
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = if (message.isUser) "> user_query" else "> dhruva_ai_response",
+                        style = MaterialTheme.typography.labelSmall.copy(fontFamily = FontFamily.Monospace),
+                        color = if (message.isUser) PrimaryGreen else TertiaryBlue
+                    )
+
+                    if (!message.isUser && message.latency != null) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            if (message.modelVersion != null) {
+                                Text(
+                                    text = message.modelVersion,
+                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, fontFamily = FontFamily.Monospace),
+                                    color = TextDim
+                                )
+                            }
+                            if (!message.tokenCount.isNullOrBlank()) {
+                                Text(
+                                    text = "•",
+                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
+                                    color = TextDim
+                                )
+                                Text(
+                                    text = message.tokenCount,
+                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, color = TertiaryBlue, fontFamily = FontFamily.Monospace)
+                                )
+                            }
+                            Text(
+                                text = "•",
+                                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
+                                color = TextDim
+                            )
+                            Text(
+                                text = message.latency,
+                                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, color = PrimaryGreen, fontFamily = FontFamily.Monospace)
+                            )
+                        }
+                    }
+                }
 
                 Text(
                     text = message.text,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 22.sp),
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
                 if (message.insightTitle != null) {
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 4.dp)) {
                         Text(
                             text = message.insightTitle,
                             style = MaterialTheme.typography.labelSmall,
@@ -308,9 +363,15 @@ private fun ThinkingBubble() {
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            imageVector = Icons.Filled.AutoAwesome,
+            contentDescription = "Thinking",
+            tint = PrimaryGreen,
+            modifier = Modifier.size(14.dp)
+        )
         Text(
-            text = "> generating_response$dots",
-            style = MaterialTheme.typography.labelSmall,
+            text = "Gemini is thinking$dots",
+            style = MaterialTheme.typography.labelSmall.copy(fontFamily = FontFamily.Monospace),
             color = TextMuted
         )
     }

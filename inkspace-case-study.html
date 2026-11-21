@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Inkspace Notebook - Project Case Study</title>
+    <!-- Prevent Theme Flash -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('portfolio_theme');
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            const currentTheme = savedTheme || (prefersLight ? 'light' : 'dark');
+            if (currentTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5203487867784291"
+     crossorigin="anonymous"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: ["class", '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "var(--background, #0b0f19)",
+                        "surface": "var(--surface, #111827)",
+                        "surface-container-high": "var(--surface-container-high, #1e293b)",
+                        "surface-tint": "var(--surface-tint, #38bdf8)",
+                        "primary-container": "var(--primary-container, #2563eb)",
+                        "on-surface": "var(--on-surface, #f8fafc)",
+                        "on-primary": "var(--on-primary, #ffffff)",
+                        "on-surface-variant": "var(--on-surface-variant, #94a3b8)",
+                        "primary": "var(--primary, #38bdf8)",
+                        "secondary": "var(--secondary, #818cf8)",
+                        "tertiary": "var(--tertiary, #00daf3)",
+                        "outline": "var(--outline, #64748b)",
+                        "outline-variant": "var(--outline-variant, #334155)",
+                        "surface-container-lowest": "var(--surface-container-lowest, #050811)"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "sm": "12px",
+                        "xl": "64px",
+                        "lg": "40px",
+                        "base": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter", "sans-serif"],
+                        "label-sm": ["JetBrains Mono", "monospace"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "code-snippet": ["JetBrains Mono", "monospace"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "code-snippet": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+        }
+        [data-theme="light"] .glass-panel {
+            background: rgba(255, 255, 255, 0.88) !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
+        }
+        [data-theme="light"] nav.fixed {
+            background: rgba(255, 255, 255, 0.92) !important;
+            border-color: rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+        }
+        .glow-border-hover:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden mesh-bg relative">
+    <!-- SideNavBar (Desktop) -->
+    <nav class="hidden md:flex flex-col items-center py-8 gap-6 fixed left-0 top-0 h-full w-[80px] bg-background/80 backdrop-blur-xl border-r border-white/10 shadow-[0_0_20px_rgba(37,99,235,0.08)] z-50">
+        <a href="index.html" class="font-headline-md text-headline-md font-bold text-primary mb-4 text-decoration-none">
+            D.K
+        </a>
+        <a aria-label="Home" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out" href="index.html#home">
+            <span class="material-symbols-outlined">home</span>
+        </a>
+        <a aria-label="About" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out" href="index.html#about">
+            <span class="material-symbols-outlined">person</span>
+        </a>
+        <a aria-label="Skills" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out" href="index.html#skills">
+            <span class="material-symbols-outlined">code</span>
+        </a>
+        <a aria-label="Projects" class="relative flex items-center justify-center w-12 h-12 bg-primary-container text-white rounded-full shadow-[0_0_15px_rgba(56,189,248,0.4)] scale-110 duration-200 ease-in-out" href="index.html#projects">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+        </a>
+        <a aria-label="Experience" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out" href="index.html#experience">
+            <span class="material-symbols-outlined">work</span>
+        </a>
+        <a aria-label="Dhruva AI" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out" href="index.html#ai">
+            <span class="material-symbols-outlined">smart_toy</span>
+        </a>
+        <button onclick="toggleTheme()" aria-label="Toggle Theme" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out cursor-pointer mt-auto" title="Toggle Light/Dark Mode">
+            <span class="material-symbols-outlined theme-icon-display">light_mode</span>
+        </button>
+        <a aria-label="Contact" class="flex items-center justify-center w-12 h-12 text-on-surface-variant hover:text-primary transition-all duration-300 hover:bg-surface-variant/20 rounded-full hover:scale-110 ease-in-out" href="index.html#contact">
+            <span class="material-symbols-outlined">mail</span>
+        </a>
+    </nav>
+
+    <!-- Fixed Top Web Navigation Bar (Mobile) -->
+    <nav class="md:hidden fixed top-0 left-0 w-full h-[56px] bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-md z-50 flex justify-around items-center px-2 font-label-sm text-label-sm">
+        <a aria-label="Home" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="index.html#home">
+            <span class="material-symbols-outlined">home</span>
+        </a>
+        <a aria-label="About" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="index.html#about">
+            <span class="material-symbols-outlined">person</span>
+        </a>
+        <a aria-label="Skills" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="index.html#skills">
+            <span class="material-symbols-outlined">code</span>
+        </a>
+        <a aria-label="Projects" class="flex flex-col items-center justify-center bg-primary-container text-white rounded-xl px-3 py-1 active:scale-95 transition-transform" href="index.html#projects">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+        </a>
+        <a aria-label="Experience" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="index.html#experience">
+            <span class="material-symbols-outlined">work</span>
+        </a>
+        <a aria-label="AI" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="index.html#ai">
+            <span class="material-symbols-outlined">smart_toy</span>
+        </a>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="md:ml-[80px] min-h-screen pt-20 md:pt-16 pb-16 px-6 md:px-12 lg:px-24 max-w-container-max mx-auto">
+        <!-- Breadcrumbs & Back & Theme Toggle -->
+        <div class="flex justify-between items-center mb-12 reveal">
+            <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm group font-semibold" href="index.html#projects">
+                <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Back to Projects
+            </a>
+            <div class="flex items-center gap-4">
+                <div class="font-label-sm text-label-sm text-on-surface-variant hidden sm:block">
+                    Projects <span class="mx-2 opacity-50">/</span> <span class="text-on-surface font-semibold">Inkspace Notebook</span>
+                </div>
+                <button onclick="toggleTheme()" aria-label="Toggle Theme" class="p-2.5 rounded-full glass-panel flex items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-300 hover:scale-110 cursor-pointer shadow-md" title="Toggle White/Dark Theme">
+                    <span class="material-symbols-outlined theme-icon-display text-[20px]">light_mode</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32 relative reveal">
+            <div class="space-y-8 z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-[#38bdf8]/30 text-[#38bdf8] font-label-sm text-label-sm shadow-[0_0_15px_rgba(56,189,248,0.15)]">
+                    <span class="material-symbols-outlined text-[16px]">edit_note</span>
+                    Cross-Platform Studio & Inking Engine • Lead Engineer
+                </div>
+                <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg gradient-text font-bold tracking-tight">
+                    Inkspace Notebook
+                </h1>
+                <p class="font-headline-md text-headline-md text-on-surface-variant">
+                    Cross-Platform Digital Inking, Multi-Page PDF & Cloud Studio on Kotlin Multiplatform.
+                </p>
+                <p class="font-body-lg text-body-lg text-on-surface-variant/80 max-w-xl leading-relaxed">
+                    A high-performance handwriting and document studio delivering sub-8ms stroke latency with quadratic Bézier smoothing, a 3-tier adaptive editor toolbar, 11 precision inking tools, audio-synchronized recording, multi-page PDF annotation, and real-time Supabase cloud sync with 95%+ shared codebase across Android, iOS, Web, and Desktop.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a class="flex items-center gap-2 bg-[#01875F] hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-label-sm text-label-sm font-semibold shadow-[0_0_20px_rgba(1,135,95,0.35)] transition-all hover:scale-105" href="https://play.google.com/store/apps/details?id=dev.dhruva.notebook" rel="noopener noreferrer" target="_blank">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3.609 1.814L13.793 12 3.61 22.186a2.372 2.372 0 0 1-.61-.318A2.35 2.35 0 0 1 2 20.082V3.918c0-.68.28-1.299.736-1.745.27-.265.578-.456.873-.359zm11.255 11.257l2.368 2.369-12.21 6.945 9.842-9.314zM4.943 3.515l12.29 6.99-2.368 2.368-9.922-9.358zm13.385 7.614l2.97 1.69c.805.458.805 1.196 0 1.654l-2.97 1.69-2.073-2.517 2.073-2.517z"/></svg>
+                        <span>Google Play</span>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    <a class="flex items-center gap-2 bg-[#2563EB] hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-label-sm text-label-sm font-semibold shadow-[0_0_20px_rgba(37,99,235,0.35)] transition-all hover:scale-105" href="https://notes.dhruva.website" rel="noopener noreferrer" target="_blank">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        <span>Live Demo</span>
+                    </a>
+                    <a class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-variant text-on-surface px-6 py-3 rounded-lg font-label-sm text-label-sm font-semibold border border-white/10 transition-all hover:scale-105" href="https://github.com/CodeAtDK/NotesApplications" rel="noopener noreferrer" target="_blank">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        <span>View Source on GitHub</span>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Visual (Floating Tablet Mockup) -->
+            <div class="relative flex justify-center lg:justify-end items-center h-[500px] lg:h-[600px] animate-float">
+                <div class="absolute w-[320px] h-[320px] bg-[#2563EB]/20 rounded-full blur-[100px] -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="absolute w-[220px] h-[220px] bg-[#38bdf8]/20 rounded-full blur-[80px] -z-10 top-1/4 left-1/4"></div>
+                <div class="relative w-full max-w-[380px] aspect-[4/5] rounded-[36px] border-4 border-surface-container-high bg-[#0f172a] overflow-hidden shadow-[0_0_50px_rgba(37,99,235,0.2)] glow-border-hover transition-all duration-500 flex flex-col justify-between p-2">
+                    <div class="w-full h-full flex flex-col bg-[#090d16] rounded-[28px] overflow-hidden text-white border border-white/5">
+                        <!-- Tablet Top Bar -->
+                        <div class="h-10 w-full bg-[#0f172a] flex justify-between px-4 items-center text-[11px] text-white/80 font-mono border-b border-white/10">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">edit</span>
+                                <span class="font-bold text-white text-[11px]">Inkspace Studio</span>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <span class="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-bold">● Rec 04:18</span>
+                                <div class="w-2 h-2 rounded-full bg-[#3ddc84]"></div>
+                            </div>
+                        </div>
+
+                        <!-- 3-Tier GoodNotes Toolbar Mockup -->
+                        <div class="bg-[#1e293b] px-3 py-2 border-b border-white/10 flex flex-col gap-2">
+                            <!-- Tool icons row -->
+                            <div class="flex justify-between items-center text-on-surface-variant text-[14px]">
+                                <span class="p-1 rounded bg-[#2563EB] text-white material-symbols-outlined text-[15px]">edit</span>
+                                <span class="p-1 material-symbols-outlined text-[15px]">brush</span>
+                                <span class="p-1 material-symbols-outlined text-[15px]">format_color_fill</span>
+                                <span class="p-1 material-symbols-outlined text-[15px]">auto_fix_normal</span>
+                                <span class="p-1 material-symbols-outlined text-[15px]">crop_free</span>
+                                <span class="p-1 material-symbols-outlined text-[15px]">category</span>
+                                <span class="p-1 material-symbols-outlined text-[15px]">highlight</span>
+                            </div>
+                            <!-- Color Dots & Thickness -->
+                            <div class="flex justify-between items-center pt-1 border-t border-white/5">
+                                <div class="flex gap-1.5 items-center">
+                                    <div class="w-3 h-3 rounded-full bg-[#38bdf8] ring-2 ring-white"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#10b981]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ef4444]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#f59e0b]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#8b5cf6]"></div>
+                                </div>
+                                <span class="text-[10px] text-primary font-mono font-bold">&lt; 8ms Latency</span>
+                            </div>
+                        </div>
+
+                        <!-- Inking Note Canvas -->
+                        <div class="p-4 flex-1 flex flex-col justify-between bg-[#111827] relative overflow-hidden">
+                            <div class="space-y-2">
+                                <div class="inline-block px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-[10px] font-bold">
+                                    KMP + Skiko Inking Core
+                                </div>
+                                <div class="font-mono text-[12px] text-white/90">
+                                    ∫ (Quadratic Bézier Smoothing) dt
+                                </div>
+                                <div class="text-[11px] text-on-surface-variant/90 leading-relaxed bg-white/5 p-2.5 rounded-lg border border-white/5">
+                                    <span class="text-primary font-semibold">● Velocity-Based Taper:</span> Dynamic thickness modulation computes natural pen-on-paper feel.
+                                </div>
+                            </div>
+                            <div class="bg-[#1e293b]/90 border border-white/10 rounded-xl p-2.5 flex items-center justify-between shadow-lg">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[18px] text-[#3ddc84]">cloud_done</span>
+                                    <span class="text-[10px] font-mono text-white/90">Supabase 3-Way Merge Active</span>
+                                </div>
+                                <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#3ddc84]/20 text-[#3ddc84] font-bold">Synced</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Engineering Metrics Bar -->
+        <section class="mb-32 reveal">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass-panel p-6 rounded-2xl glow-border-hover text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-primary font-mono mb-1">&lt; 8ms</div>
+                    <div class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Inking Latency</div>
+                    <div class="text-[11px] text-on-surface-variant/70 mt-1">Skiko GPU acceleration</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl glow-border-hover text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-[#3ddc84] font-mono mb-1">95%+</div>
+                    <div class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Code Sharing</div>
+                    <div class="text-[11px] text-on-surface-variant/70 mt-1">4 targets from 1 codebase</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl glow-border-hover text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-[#f59e0b] font-mono mb-1">100%</div>
+                    <div class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Offline-First</div>
+                    <div class="text-[11px] text-on-surface-variant/70 mt-1">SQLDelight & Supabase</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl glow-border-hover text-center">
+                    <div class="text-3xl lg:text-4xl font-extrabold text-[#c084fc] font-mono mb-1">11 Tools</div>
+                    <div class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Precision Inking</div>
+                    <div class="text-[11px] text-on-surface-variant/70 mt-1">Fountain, Lasso, Laser</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenge & Solution -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32 reveal">
+            <div class="glass-panel p-8 rounded-2xl glow-border-hover transition-all duration-300">
+                <div class="flex items-center gap-3 mb-6 text-[#ef4444]">
+                    <span class="material-symbols-outlined text-[28px]">warning</span>
+                    <h3 class="font-headline-md text-headline-md font-bold">The Challenge</h3>
+                </div>
+                <p class="text-on-surface-variant font-body-md text-body-md leading-relaxed">
+                    Traditional digital handwriting apps like GoodNotes and Notability are locked into the Apple ecosystem, leaving Android, Web, and Desktop users with fragmented, high-latency alternatives that lack real-time multi-device cloud synchronization.
+                </p>
+            </div>
+            <div class="glass-panel p-8 rounded-2xl glow-border-hover transition-all duration-300 border-t-2 border-t-[#38bdf8]">
+                <div class="flex items-center gap-3 mb-6 text-primary">
+                    <span class="material-symbols-outlined text-[28px]">lightbulb</span>
+                    <h3 class="font-headline-md text-headline-md font-bold">The Solution</h3>
+                </div>
+                <p class="text-on-surface-variant font-body-md text-body-md leading-relaxed">
+                    Inkspace Notebook delivers an uncompromised zero-latency digital notebook experience across Android, iOS, Web browsers, and Desktop from a single shared Kotlin codebase—featuring GPU-accelerated Skiko vector handwriting, time-stamped audio sync, multi-tab document management, and Supabase offline-first cloud synchronization.
+                </p>
+            </div>
+        </section>
+
+        <!-- System Architecture Breakdown -->
+        <section class="mb-32 reveal">
+            <h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-12 text-center font-bold">System Architecture</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-2xl glow-border-hover transition-all duration-300 flex flex-col justify-between group">
+                    <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined">palette</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline-md text-headline-md mb-2 font-bold text-on-surface">🎨 Shared UI Layer (Compose Multiplatform)</h4>
+                        <p class="text-on-surface-variant font-body-md text-body-md leading-relaxed">100% declarative UI sharing across all targets. Adaptive layout engine dynamically switching between mobile bottom navigation, tablet split-screen, and desktop collapsible sidebars.</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-8 rounded-2xl glow-border-hover transition-all duration-300 flex flex-col justify-between group">
+                    <div class="w-12 h-12 rounded-full bg-[#00daf3]/20 flex items-center justify-center text-[#00daf3] mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined">bolt</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline-md text-headline-md mb-2 font-bold text-on-surface">⚡ Real-Time Inking Engine (Skiko & Canvas)</h4>
+                        <p class="text-on-surface-variant font-body-md text-body-md leading-relaxed">Low-latency quadratic Bézier smoothing, pressure curves, vector lasso selection, eraser stroke splitting, shape snapping, and alpha-blended highlighter rendering.</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-8 rounded-2xl glow-border-hover transition-all duration-300 flex flex-col justify-between group">
+                    <div class="w-12 h-12 rounded-full bg-[#818cf8]/20 flex items-center justify-center text-[#818cf8] mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined">database</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline-md text-headline-md mb-2 font-bold text-on-surface">💾 Local-First Data Layer (SQLDelight)</h4>
+                        <p class="text-on-surface-variant font-body-md text-body-md leading-relaxed">Type-safe SQLite database with Kotlin Coroutines Flow reactive streams, ensuring zero UI lag and full functionality when working offline.</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-8 rounded-2xl glow-border-hover transition-all duration-300 flex flex-col justify-between group">
+                    <div class="w-12 h-12 rounded-full bg-[#3ddc84]/20 flex items-center justify-center text-[#3ddc84] mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined">cloud_sync</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline-md text-headline-md mb-2 font-bold text-on-surface">☁️ Cloud Sync & Auth (Supabase & Ktor)</h4>
+                        <p class="text-on-surface-variant font-body-md text-body-md leading-relaxed">Bi-directional real-time cloud synchronization with row-level security, optimistic UI updates, and automated 3-way conflict resolution for multi-device concurrent edits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep-Dive Challenges -->
+        <section class="mb-32 reveal space-y-8">
+            <h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-12 text-center font-bold">Engineering Deep-Dives</h2>
+
+            <div class="glass-panel p-8 rounded-2xl glow-border-hover">
+                <div class="flex items-center gap-3 mb-4 text-primary">
+                    <span class="material-symbols-outlined text-[24px]">speed</span>
+                    <h3 class="text-xl font-bold">01. Sub-8ms Inking Latency on Mobile & Web</h3>
+                </div>
+                <p class="text-on-surface-variant mb-4 leading-relaxed">
+                    Standard touch event dispatch loops introduce noticeable inking lag (20–40ms). Inkspace Notebook employs Skiko GPU hardware acceleration combined with quadratic Bézier curve interpolation that computes velocity-dependent stroke thickness and dynamic tail tapering directly on the GPU render thread.
+                </p>
+                <div class="bg-black/50 p-4 rounded-xl font-mono text-xs text-[#38bdf8] border border-white/10 overflow-x-auto">
+                    <code>// Quadratic Bézier Path Interpolation with Velocity Tapering<br>val midX = (prevPoint.x + currentPoint.x) / 2f<br>val midY = (prevPoint.y + currentPoint.y) / 2f<br>skikoPath.quadTo(prevPoint.x, prevPoint.y, midX, midY)<br>val dynamicWidth = computeTaperWidth(velocity, pressure)</code>
+                </div>
+            </div>
+
+            <div class="glass-panel p-8 rounded-2xl glow-border-hover">
+                <div class="flex items-center gap-3 mb-4 text-[#3ddc84]">
+                    <span class="material-symbols-outlined text-[24px]">sync_alt</span>
+                    <h3 class="text-xl font-bold">02. 3-Way Offline Conflict Resolution</h3>
+                </div>
+                <p class="text-on-surface-variant mb-4 leading-relaxed">
+                    To prevent data loss when notes are edited simultaneously offline across tablet and desktop, vector stroke deltas are stamped with UUIDs and logical Lamport clocks. Reconnection triggers an automated 3-way merge that preserves non-overlapping strokes seamlessly.
+                </p>
+            </div>
+
+            <div class="glass-panel p-8 rounded-2xl glow-border-hover">
+                <div class="flex items-center gap-3 mb-4 text-[#c084fc]">
+                    <span class="material-symbols-outlined text-[24px]">view_quilt</span>
+                    <h3 class="text-xl font-bold">03. Responsive 3-Tier GoodNotes Toolbar</h3>
+                </div>
+                <p class="text-on-surface-variant mb-4 leading-relaxed">
+                    GoodNotes 5 features 15+ navigation actions and 11 inking tools. On mobile screens (360dp–410dp), desktop-wide toolbars cause severe clipping. The responsive 3-zone header dynamically collapses Tier 1 into essentials, while Tier 3 features smooth 60fps horizontal swiping across all 11 tools and 8-color preset dots.
+                </p>
+            </div>
+        </section>
+
+        <!-- Technology Stack -->
+        <section class="mb-32 reveal">
+            <div class="glass-panel p-10 rounded-[32px] text-center border-[#38bdf8]/20 relative overflow-hidden">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-[#38bdf8] to-transparent opacity-50"></div>
+                <h3 class="font-headline-md text-headline-md mb-8 font-bold text-on-surface">Technology Stack</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-primary hover:bg-white/10 transition-colors">Kotlin 2.0</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-primary hover:bg-white/10 transition-colors">Kotlin Multiplatform</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-primary hover:bg-white/10 transition-colors">Compose Multiplatform 1.7</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-tertiary hover:bg-white/10 transition-colors">Skiko Canvas Engine</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-secondary hover:bg-white/10 transition-colors">SQLDelight SQLite</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-[#3ddc84] hover:bg-white/10 transition-colors">Supabase Realtime</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-secondary hover:bg-white/10 transition-colors">Ktor HTTP Client</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-[#f59e0b] hover:bg-white/10 transition-colors">Coroutines & Flow</span>
+                    <span class="px-4 py-2 rounded-full bg-surface-container-high border border-white/10 font-code-snippet text-code-snippet text-on-surface hover:bg-white/10 transition-colors">Material 3 Theming</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-12 mt-32 bg-surface-container-lowest/50 border-t border-white/5 backdrop-blur-xl z-40 relative md:ml-[80px]">
+        <div class="max-w-container-max mx-auto px-6 md:px-12 lg:px-24">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div class="space-y-4">
+                    <div class="font-headline-md text-headline-md font-bold text-primary">D.K</div>
+                    <p class="text-on-surface-variant/80 font-body-md max-w-xs leading-relaxed">
+                        Crafting digital experiences through code and design, focusing on inking engines and multiplatform systems.
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-widest">Navigation</h4>
+                    <nav class="flex flex-col gap-2">
+                        <a href="index.html#home" class="text-on-surface-variant hover:text-primary transition-colors font-body-md">Home</a>
+                        <a href="index.html#about" class="text-on-surface-variant hover:text-primary transition-colors font-body-md">About</a>
+                        <a href="index.html#projects" class="text-on-surface-variant hover:text-primary transition-colors font-body-md">Projects</a>
+                        <a href="index.html#experience" class="text-on-surface-variant hover:text-primary transition-colors font-body-md">Experience</a>
+                    </nav>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-widest">Connect</h4>
+                    <div class="flex gap-4">
+                        <a href="https://github.com/CodeAtDK" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-surface-variant hover:text-primary hover:scale-110 transition-all">
+                            <span class="material-symbols-outlined text-[20px]">code</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/dhruv-khatavkar-203362241" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-surface-variant hover:text-primary hover:scale-110 transition-all">
+                            <span class="material-symbols-outlined text-[20px]">person</span>
+                        </a>
+                        <a href="mailto:dhruv.khatavakar.saraswati@gmail.com" class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-surface-variant hover:text-primary hover:scale-110 transition-all">
+                            <span class="material-symbols-outlined text-[20px]">mail</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="font-code-snippet text-code-snippet text-on-surface-variant/70">
+                    © 2026 Dhruva Khatavkar • Built with Compose & Web Standards
+                </div>
+                <div class="flex gap-6 font-label-sm text-label-sm">
+                    <a href="foodbridge-case-study.html" class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group font-semibold">
+                        FoodBridge <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        function toggleTheme() {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            const themeIcons = document.querySelectorAll('.theme-icon-display');
+            if (isLight) {
+                document.documentElement.removeAttribute('data-theme');
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('portfolio_theme', 'dark');
+                themeIcons.forEach(icon => icon.textContent = 'light_mode');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('portfolio_theme', 'light');
+                themeIcons.forEach(icon => icon.textContent = 'dark_mode');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            document.querySelectorAll('.theme-icon-display').forEach(icon => {
+                icon.textContent = isLight ? 'dark_mode' : 'light_mode';
+            });
+        });
+    </script>
+</body>
+</html>

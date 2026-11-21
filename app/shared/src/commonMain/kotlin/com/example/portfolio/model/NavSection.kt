@@ -6,6 +6,8 @@ enum class NavSection(val title: String) {
     SKILLS("Skills"),
     PROJECTS("Projects"),
     EXPERIENCE("Experience"),
-    AI_WORKSPACE("AI Workspace"),
+    RESUME("Resume"),
+    AI("AI"),
     CONTACT("Contact")
 }
+
