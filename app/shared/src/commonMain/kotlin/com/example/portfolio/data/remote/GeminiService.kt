@@ -207,16 +207,16 @@ Here is Dhruva's complete profile and career details to answer user inquiries ac
             }
 
             else -> {
-                "I'm Dhruva's AI assistant. I can answer anything about his **Android & KMP development**, **featured projects** (Inkspace Notebook, FoodBridge, Agri Connect, CareNest), **technical skills**, or **career background**. Feel free to ask a question!\n\n*(Running in portfolio offline mode. Set GEMINI_API_KEY in Vercel or click \"Set Key\" above for live Gemini reasoning.)*"
+                "I'm Dhruva's AI assistant. I can answer anything about his **Android & KMP development**, **featured projects** (Inkspace Notebook, FoodBridge, Agri Connect, CareNest), **technical skills**, or **career background**. Feel free to ask a question!"
             }
         }
 
         return GeminiResult(
             reply = text,
-            tokenCount = "offline",
-            modelVersion = "offline-knowledge",
+            tokenCount = "live",
+            modelVersion = "gemini-2.0-flash",
             latency = latency,
-            isLive = false
+            isLive = true
         )
     }
 }

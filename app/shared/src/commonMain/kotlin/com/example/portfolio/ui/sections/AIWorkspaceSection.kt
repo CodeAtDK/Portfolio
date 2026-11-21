@@ -51,9 +51,6 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
     val listState = rememberLazyListState()
     var inputQuery by remember { mutableStateOf("") }
     var isThinking by remember { mutableStateOf(false) }
-    var showKeyInput by remember { mutableStateOf(false) }
-    var apiKeyInput by remember { mutableStateOf(GeminiService.apiKey) }
-    var isKeySet by remember { mutableStateOf(GeminiService.apiKey.isNotBlank()) }
 
     val messages = remember {
         mutableStateListOf(
@@ -154,128 +151,25 @@ fun AIWorkspaceSection(modifier: Modifier = Modifier) {
                     }
 
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         // Pulsing status dot
                         val statusAlpha = rememberPulseAlpha(minAlpha = 0.3f, maxAlpha = 1f, durationMs = 2000)
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(6.dp)
-                                    .clip(CircleShape)
-                                    .background(PrimaryGreen.copy(alpha = statusAlpha))
-                            )
-                            Text(
-                                text = "live",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontSize = 11.sp,
-                                    fontFamily = FontFamily.Monospace
-                                ),
-                                color = PrimaryGreen
-                            )
-                        }
-
-                        // API Key toggle pill
-                        Row(
+                        Box(
                             modifier = Modifier
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(if (isKeySet) PrimaryGreen.copy(alpha = 0.15f) else SurfaceDark)
-                                .border(1.dp, if (isKeySet) PrimaryGreen.copy(alpha = 0.4f) else GlassBorder, RoundedCornerShape(6.dp))
-                                .clickable { showKeyInput = !showKeyInput }
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Bolt,
-                                contentDescription = "API Key",
-                                tint = if (isKeySet) PrimaryGreen else SecondaryWarm,
-                                modifier = Modifier.size(12.dp)
-                            )
-                            Text(
-                                text = if (isKeySet) "Key: Set" else "Set Key",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontSize = 10.sp,
-                                    fontFamily = FontFamily.Monospace
-                                ),
-                                color = if (isKeySet) PrimaryGreen else SecondaryWarm
-                            )
-                        }
-                    }
-                }
-
-                // Expandable API Key Terminal Config Row
-                if (showKeyInput) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(SurfaceDark)
-                            .padding(horizontal = 16.dp, vertical = 10.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = "> configure_gemini_api_key (for custom key or set GEMINI_API_KEY on Vercel):",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                fontFamily = FontFamily.Monospace,
-                                fontSize = 11.sp
-                            ),
-                            color = TextMuted
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(PrimaryGreen.copy(alpha = statusAlpha))
                         )
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            TextField(
-                                value = apiKeyInput,
-                                onValueChange = { apiKeyInput = it },
-                                placeholder = { Text("AIzaSy...", color = TextMuted, fontSize = 12.sp) },
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(48.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(SurfaceContainerHighest)
-                                    .border(1.dp, GlassBorder, RoundedCornerShape(8.dp)),
-                                colors = TextFieldDefaults.colors(
-                                    focusedContainerColor = Color.Transparent,
-                                    unfocusedContainerColor = Color.Transparent,
-                                    focusedIndicatorColor = Color.Transparent,
-                                    unfocusedIndicatorColor = Color.Transparent,
-                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
-                                ),
-                                singleLine = true
-                            )
-                            Button(
-                                onClick = {
-                                    GeminiService.apiKey = apiKeyInput.trim()
-                                    isKeySet = GeminiService.apiKey.isNotBlank()
-                                    showKeyInput = false
-                                },
-                                shape = RoundedCornerShape(8.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
-                                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp)
-                            ) {
-                                Text("Save", color = BackgroundDark, fontWeight = FontWeight.Bold, fontSize = 12.sp)
-                            }
-                            if (isKeySet) {
-                                OutlinedButton(
-                                    onClick = {
-                                        GeminiService.apiKey = ""
-                                        apiKeyInput = ""
-                                        isKeySet = false
-                                    },
-                                    shape = RoundedCornerShape(8.dp),
-                                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 8.dp)
-                                ) {
-                                    Text("Clear", color = Color(0xFFFF8B85), fontSize = 12.sp)
-                                }
-                            }
-                        }
+                        Text(
+                            text = "gemini-2.0-flash • live",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontSize = 11.sp,
+                                fontFamily = FontFamily.Monospace
+                            ),
+                            color = PrimaryGreen
+                        )
                     }
                 }
 
