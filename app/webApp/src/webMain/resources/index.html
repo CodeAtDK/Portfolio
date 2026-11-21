@@ -64,12 +64,6 @@
                         if (pname === UNMASKED_RENDERER_WEBGL || pname === 37446) {
                             return 'Apple GPU';
                         }
-                        if (pname === 0x0D57 || pname === 3415) { // STENCIL_BITS
-                            return 8;
-                        }
-                        if (pname === 0x0D56 || pname === 3414) { // DEPTH_BITS
-                            return 24;
-                        }
                         try {
                             var res = origGetParameter.apply(this, arguments);
                             if (res === null || res === undefined) {
@@ -121,13 +115,6 @@
                     if (!this.height || this.height <= 0) {
                         this.height = window.innerHeight || 768;
                     }
-                    if (arguments.length > 1 && typeof arguments[1] === 'object' && arguments[1] !== null) {
-                        var attrs = arguments[1];
-                        if (typeof attrs.stencil === 'number') attrs.stencil = true;
-                        if (typeof attrs.depth === 'number') attrs.depth = true;
-                        if (typeof attrs.alpha === 'number') attrs.alpha = true;
-                        if (typeof attrs.antialias === 'number') attrs.antialias = false;
-                    }
                     var ctx = origGetContext.apply(this, arguments);
                     if (ctx && (arguments[0] === 'webgl' || arguments[0] === 'webgl2' || arguments[0] === 'experimental-webgl')) {
                         patchContext(Object.getPrototypeOf(ctx));
@@ -166,7 +153,12 @@
         });
         observer.observe(document.body, { childList: true, subtree: true });
     </script>
-    <script type="application/javascript" src="webApp.js?v=20261121_clean_final"></script>
+    <script>
+        window.addEventListener('error', function(e) {
+            console.error('GLOBAL ERROR:', e.message, e.filename, e.lineno, e.error);
+        });
+    </script>
+    <script type="application/javascript" src="webApp.js?v=20261121_safari_v5"></script>
 </body>
 
 </html>
